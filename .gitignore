@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# Temporary files
+*.tmp
+*.bak
+~$*
+.DS_Store
+Thumbs.db
+
+# Virtual machines
+*.vdi
+*.vmdk
+*.vbox-prev
+
+# Temporary experiment data
+*.temp
