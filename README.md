@@ -1,39 +1,4 @@
-<<<<<<< HEAD
-$files = @(
-    "README.md",
-    ".gitignore",
-    "HUONGDAN.md",
 
-    "SETUP/README.md",
-    "SETUP/environment/lab_config.md",
-    "SETUP/installation/install_guide.md",
-    "SETUP/checklist/setup_checklist.md",
-
-    "SOURCE/simulator/README.md",
-    "SOURCE/tests/README.md",
-    "SOURCE/tests/test_checklist.md",
-
-    "SOURCE/config/lab_config.example",
-    "SOURCE/config/backup_config.example",
-
-    "THESIS/templates/report_outline.md",
-    "THESIS/templates/slide_outline.md",
-    "THESIS/runbook/Runbook_template.md",
-
-    "SOFT/README.md",
-
-    "docs/CHECKLIST_YEU_CAU.md",
-    "docs/PHAN_CONG_CONG_VIEC.md",
-    "docs/KICH_BAN_DEMO.md",
-    "docs/NHAT_KY_THUC_NGHIEM.md"
-)
-
-foreach ($file in $files) {
-    if (!(Test-Path $file)) {
-        New-Item -ItemType File -Path $file -Force
-    }
-}
-=======
 # ĐÁNH GIÁ KHẢ NĂNG PHỤC HỒI TRƯỚC SỰ CỐ MÃ HÓA TỐNG TIỀN BẰNG MÔ PHỎNG AN TOÀN
 
 ## 1. Thông tin đề tài
@@ -87,6 +52,3 @@ Xây dựng môi trường mô phỏng an toàn nhằm đánh giá khả năng p
 ## 7. Kết quả
 
 Các kết quả thực nghiệm, bảng đo lường, hình ảnh và video demo được lưu trong Repository.
-
-
->>>>>>> 886c7b395fb95c9a1bd6d27e7b21ed0c4cd654bd
