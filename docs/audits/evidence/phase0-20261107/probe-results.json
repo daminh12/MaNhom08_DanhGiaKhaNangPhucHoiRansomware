@@ -1,0 +1,128 @@
+{
+  "python": "3.12.14",
+  "source_commit": "0594b121ca71a051fc3bb26a182f1cce3f6f02e6",
+  "checks": [
+    {
+      "name": "known_sha256_abc",
+      "expected": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+      "actual": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "cli_unchanged_exit",
+      "expected": 0,
+      "actual": 0,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "same_size_change_detected",
+      "expected": [
+        1,
+        [
+          "example.csv"
+        ]
+      ],
+      "actual": [
+        1,
+        [
+          "example.csv"
+        ]
+      ],
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "parent_traversal_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "absolute_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "backslash_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "duplicate_entry_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "manifest_inside_dataset_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "manifest_inside_dataset_not_written",
+      "expected": false,
+      "actual": false,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "child_symlink_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "root_symlink_rejected_exit",
+      "expected": 2,
+      "actual": 0,
+      "status": "FAIL",
+      "detail": "{\n  \"passed\": true,\n  \"matched\": 1,\n  \"total_expected\": 1,\n  \"missing\": [],\n  \"modified\": [],\n  \"unexpected\": []\n}"
+    },
+    {
+      "name": "missing_root_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "malformed_json_exit",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "non_object_manifest_exit",
+      "expected": 2,
+      "actual": 1,
+      "status": "FAIL",
+      "detail": "AttributeError: 'list' object has no attribute 'get'"
+    },
+    {
+      "name": "empty_dataset_current_behavior",
+      "expected": true,
+      "actual": true,
+      "status": "PASS",
+      "detail": "Observation only: must not count this as successful application recovery; no non-empty gate exists."
+    },
+    {
+      "name": "fixture_unchanged_after_verification",
+      "expected": "616263",
+      "actual": "616263",
+      "status": "PASS",
+      "detail": null
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+Captured UTC: 2026-11-07T07:03:14.944422+00:00
+
+$ python3 --version
+Python 3.12.14
+exit_code=0
+
+$ git rev-parse HEAD
+0594b121ca71a051fc3bb26a182f1cce3f6f02e6
+exit_code=0
+
+$ python3 -m unittest discover -s SOURCE/tests -v
+test_changed_file_is_detected (test_verify_hashes.IntegrityTests.test_changed_file_is_detected) ... ok
+test_missing_and_unexpected_files_are_detected (test_verify_hashes.IntegrityTests.test_missing_and_unexpected_files_are_detected) ... ok
+test_path_traversal_manifest_is_rejected (test_verify_hashes.IntegrityTests.test_path_traversal_manifest_is_rejected) ... ok
+test_symlink_is_rejected (test_verify_hashes.IntegrityTests.test_symlink_is_rejected) ... ok
+test_unmodified_dataset_passes (test_verify_hashes.IntegrityTests.test_unmodified_dataset_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK
+exit_code=0
+
+$ python3 SOURCE/verification/verify_hashes.py manifest --root SOURCE/data/synthetic --manifest /workspace/work/phase0-evidence/baseline.sha256.json
+Created SHA-256 manifest for 1 files at /workspace/work/phase0-evidence/baseline.sha256.json
+exit_code=0
+
+$ python3 SOURCE/verification/verify_hashes.py verify --root SOURCE/data/synthetic --manifest /workspace/work/phase0-evidence/baseline.sha256.json
+{
+  "passed": true,
+  "matched": 1,
+  "total_expected": 1,
+  "missing": [],
+  "modified": [],
+  "unexpected": []
+}
+exit_code=0
+
+$ git diff --exit-code
+exit_code=0
