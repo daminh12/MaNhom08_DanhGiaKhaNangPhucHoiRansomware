@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "hash_algorithm": "SHA-256",
+  "files": [
+    {
+      "path": "records.csv",
+      "size_bytes": 189,
+      "sha256": "59be1f296a70ac1fbae353831ba0fb6e38805e5da06412f3dfb7124becb613ca"
+    }
+  ]
+}
