@@ -1,0 +1,4 @@
+record_id,created_at_utc,customer_alias,amount_vnd
+LAB-0001,2026-11-07T05:00:00Z,Sample_A,100000
+LAB-0002,2026-11-07T05:02:00Z,Sample_B,250000
+LAB-0003,2026-11-07T05:04:00Z,Sample_C,175000
