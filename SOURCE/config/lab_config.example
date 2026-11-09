@@ -1,0 +1,29 @@
+# Phase 1: cấu hình tham chiếu, KHÔNG phải file được ứng dụng nạp.
+# Cấu hình thực thi: compose.yaml; WEB_PORT trong .env cục bộ.
+# Mật khẩu do SETUP/installation/init_lab.ps1 tạo trong secrets/ (gitignored).
+COMPOSE_PROJECT_NAME=group08-lab
+WEB_HOST_BIND=127.0.0.1
+WEB_PORT=8080
+DB_SERVICE=db
+DB_ENGINE=MySQL
+DB_VERSION=8.4.7
+DB_NAME=lab_config
+DB_TABLE=orders
+DB_USER=group08_app
+DB_PORT_INTERNAL=3306
+DB_HOST_PORT=NOT_PUBLISHED
+DB_NETWORK=lab
+DB_NETWORK_INTERNAL=true
+WEB_NETWORKS=frontend,lab
+WEB_OUTBOUND_INTERNET=NOT_BLOCKED_BY_FRONTEND
+DB_DATA_VOLUME=group08-lab_db_data
+DB_DATA_CONTAINER_PATH=/var/lib/mysql
+DB_APP_PASSWORD_FILE=secrets/db_app_password.txt
+DB_ROOT_PASSWORD_FILE=secrets/db_root_password.txt
+INITIAL_SYNTHETIC_ORDERS=100
+TIMEZONE=UTC
+# Phase 2 chưa triển khai: không gán đường dẫn giả làm nơi lưu backup thực tế.
+BACKUP_PATH=NOT_CONFIGURED_PHASE_2
+RESTIC_REPOSITORY=NOT_CONFIGURED_PHASE_2
+# Phase 4 chưa triển khai: không có script phá hoại trong Phase 1.
+INCIDENT_SCRIPT=NOT_IMPLEMENTED_PHASE_4

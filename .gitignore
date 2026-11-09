@@ -27,3 +27,7 @@ Thumbs.db
 
 # Temporary experiment data
 *.temp
+
+# Local lab verification outputs
+work/
+*.log

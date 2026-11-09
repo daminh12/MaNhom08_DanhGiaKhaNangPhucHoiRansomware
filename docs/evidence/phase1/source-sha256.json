@@ -1,0 +1,18 @@
+{
+  ".env.example": "48bdd61e42a4af38ae2171e5b40b69794b3f9d59804c92d15c410ee6acdbecfb",
+  "SETUP/installation/init_lab.ps1": "a64815e19d1fced1bbce9e77f916aa70bdcc850404265aa7ea77f07b3cd99528",
+  "SOURCE/app/.dockerignore": "ea09f59010c1a3d922d35b16e933baddb7c4d59f27f4636adcfabf04435e51da",
+  "SOURCE/app/Dockerfile": "78b74ba8a0f8520053b9a38225feb192e385f0b877bb1dee46cf15ac0e66c68b",
+  "SOURCE/app/app.py": "935f788f76d2f758b6c481dd1dfb63d8a85aa87629a01c89ca57452ef7763f3e",
+  "SOURCE/app/requirements.txt": "8ce3553786fccfdc82d176058eb8a8442e878236a96c265d5f32e510f91e8756",
+  "SOURCE/app/static/app.css": "f73341d681eff07f4f78f1a6caa6bef563cfeb9305462a4135a79426e7b4952d",
+  "SOURCE/app/static/app.js": "04430f9fc10a519b417269a8567d2c3f0ab87675dd22074c93b9c3aa06c9545b",
+  "SOURCE/app/templates/index.html": "6c083e3a8c05aa17fe0baddbe1d3349c90b3205227552e51c09ebc480ef3c188",
+  "SOURCE/database/01_schema.sql": "4ae40cbb209b9d89b86997a763b0a72099bf6a8efdc556a76545e1dcb6603849",
+  "SOURCE/database/02_seed.sql": "c1d4461fab20456128f33bc83ec9002ca0e44c881e0293b4763ac8595c633a01",
+  "SOURCE/database/03_privileges.sql": "8f087712445660f560262c1465d31b5465d370cd607144822ff3cb2066f3a724",
+  "SOURCE/tests/runtime_phase1.py": "886ddf378f21399a6be55ae891aec3ae1f88a90eaed8bbc0211448fd99070e8e",
+  "SOURCE/tests/smoke_phase1.py": "e8b779df97d6aeae2c35c138e6c19c7e9d1361ec37d51661a8265da060124bb5",
+  "SOURCE/tests/test_app.py": "eea79460f1cf928ba0ea50741abc29dc16f245ff7134f34c47a18ac27c1f2103",
+  "compose.yaml": "72a99a166840223cbca731cfe66bae21cd90883638c87c7dec7a61f8a509ace8"
+}

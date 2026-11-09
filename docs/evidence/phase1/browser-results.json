@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "captured_at_utc": "2026-11-09T02:01:27.985619+00:00",
+  "browser": "Chromium 156.0.8078.79",
+  "desktop": "1440x1000",
+  "mobile": "390x844",
+  "orders_before": 102,
+  "orders_after": 103,
+  "checks": [
+    "load orders",
+    "create LAB-BROWSER",
+    "new count and row readback",
+    "success feedback",
+    "no page JS errors",
+    "no mobile page overflow"
+  ],
+  "screenshots": [
+    "desktop.png",
+    "mobile.png"
+  ]
+}
