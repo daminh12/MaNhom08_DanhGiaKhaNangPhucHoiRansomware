@@ -31,3 +31,6 @@ Thumbs.db
 # Local lab verification outputs
 work/
 *.log
+
+# Local plaintext dump artifacts and encrypted Restic repository
+/backups/

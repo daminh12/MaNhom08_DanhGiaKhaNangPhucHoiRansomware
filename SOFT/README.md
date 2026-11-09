@@ -19,3 +19,10 @@ Tham khảo thiết kế networks/healthcheck/secrets từ
 https://github.com/docker/awesome-compose/tree/master/nginx-flask-mysql (CC0-1.0).
 Không sao chép nguyên stack mẫu. Restic và rest-server dành cho Phase 2, chưa cài
 hoặc dùng để tạo kết quả backup trong Phase 1.
+
+Phase 2 dùng image `restic/restic:0.18.1` để lấy binary vào image Python 3.12.12
+riêng cho công cụ backup (Restic BSD-2-Clause). Không cài Python/MySQL/Restic
+trực tiếp trên Windows. Không sao chép mã nguồn Restic vào dự án.
+Hướng dẫn chính thức đã đối chiếu theo tag v0.18.1:
+https://github.com/restic/restic/blob/v0.18.1/doc/040_backup.rst và
+https://github.com/restic/restic/blob/v0.18.1/doc/045_working_with_repos.rst.

@@ -1,0 +1,12 @@
+{
+  "SOURCE/backup/Dockerfile": "8e64e5c74aac7fb79ec396154520535f252bb2d7e3b00fdc4e1d41943c367769",
+  "SOURCE/backup/README.md": "2eb14fb78544687065f9fa03a36ce63f78e0b92ab23e99f80a624d66aeee8d72",
+  "SOURCE/backup/backup.ps1": "5e52e73c3817996f845f7dfe98db4444dc070ee3e674e243e8f14fa0bfd50859",
+  "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad",
+  "SOURCE/backup/backup.sh": "6aff8d6b0a1fabfa9a1708a38a18b816bea9961bca3017c8d2c2dd4fd7e85689",
+  "SOURCE/backup/db_dump.sh": "ffec580bf368057b1e7f38f96158fe5ac1f6c2946f990c312302400b35a28a59",
+  "SOURCE/backup/register_daily_backup.ps1": "8498907138a00aa4760ed629f672a5b0877db99f0d69a15e2dd6cfbcc598d811",
+  "SOURCE/tests/integration_backup.py": "d36fd1e5e7924c6915d20befd87f20c577e3da293abf6f37a2f065b866a50353",
+  "SOURCE/tests/test_backup.py": "2b6be4eb2714cf9b26960cb36fb31105d55ac3b80651ffdf059c05f6e217ffc0",
+  "compose.backup.yaml": "7d8ae673235b0e717136db817091fddc8a6d8f7fce21cb04bddb1e1e66bf5656"
+}

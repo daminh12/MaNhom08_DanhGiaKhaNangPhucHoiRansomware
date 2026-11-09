@@ -1,0 +1,54 @@
+[
+  {
+    "schema_version": 1,
+    "run_id": "p2-20261109T135131Z-742a4652976a",
+    "status": "PASS",
+    "started_at_utc": "2026-11-09T13:51:35.017617+00:00",
+    "snapshot_id": "5044d86ed493778891581971975300df590c94f17245707f566bab14bc852581",
+    "dump_metadata": {
+      "schema_version": 1,
+      "run_id": "p2-20261109T135131Z-742a4652976a",
+      "database": "lab_config",
+      "tables": [
+        "orders"
+      ],
+      "engine": "InnoDB",
+      "dump_started_at_utc": "2026-11-09T13:51:32Z",
+      "dump_finished_at_utc": "2026-11-09T13:51:32Z",
+      "consistency": "mysqldump single-transaction; no DDL during dump",
+      "scope": "schema and data of orders only; triggers/routines/events excluded"
+    },
+    "manifest_sha256": "84601eb87aa9604cca9d077543c2d6f2ba567e5472bc71619b829b96fc5d88f2",
+    "verified_at_utc": "2026-11-09T13:51:39.835989+00:00",
+    "repository_check": "PASS",
+    "snapshot_readback_sha256": "PASS",
+    "finished_at_utc": "2026-11-09T13:51:39.835998+00:00",
+    "synthetic_rows_in_dump": 103
+  },
+  {
+    "schema_version": 1,
+    "run_id": "p2-20261109T135429Z-99fc676302c1",
+    "status": "PASS",
+    "started_at_utc": "2026-11-09T13:54:31.108043+00:00",
+    "snapshot_id": "7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f",
+    "dump_metadata": {
+      "schema_version": 1,
+      "run_id": "p2-20261109T135429Z-99fc676302c1",
+      "database": "lab_config",
+      "tables": [
+        "orders"
+      ],
+      "engine": "InnoDB",
+      "dump_started_at_utc": "2026-11-09T13:54:29Z",
+      "dump_finished_at_utc": "2026-11-09T13:54:29Z",
+      "consistency": "mysqldump single-transaction; no DDL during dump",
+      "scope": "schema and data of orders only; triggers/routines/events excluded"
+    },
+    "manifest_sha256": "a184b6760440264c26f8db4e328aacd16b08f9e4502226a55a0303fe1c5863a3",
+    "verified_at_utc": "2026-11-09T13:54:35.033612+00:00",
+    "repository_check": "PASS",
+    "snapshot_readback_sha256": "PASS",
+    "finished_at_utc": "2026-11-09T13:54:35.033621+00:00",
+    "synthetic_rows_in_dump": 104
+  }
+]

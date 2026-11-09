@@ -1,0 +1,2 @@
+SOURCE/backup/*.sh text eol=lf
+SOURCE/backup/Dockerfile text eol=lf

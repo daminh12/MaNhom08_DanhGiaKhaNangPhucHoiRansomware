@@ -1,0 +1,18 @@
+[
+  {
+    "run_id": "p2-20261109T135211Z-11035d6fff01",
+    "status": "FAILED",
+    "phase": "dump_or_copy",
+    "snapshot_id": null
+  },
+  {
+    "schema_version": 1,
+    "run_id": "p2-negative-d67ebc86fa6a",
+    "status": "FAILED",
+    "started_at_utc": "2026-11-09T13:55:29.250687+00:00",
+    "snapshot_id": null,
+    "error_type": "ValueError",
+    "error": "Dump is missing its header or completion footer",
+    "finished_at_utc": "2026-11-09T13:55:29.251025+00:00"
+  }
+]

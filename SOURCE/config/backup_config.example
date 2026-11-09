@@ -1,0 +1,16 @@
+# Documentation only; execution uses compose.backup.yaml and backup.ps1/backup.sh.
+DATABASE=lab_config
+TABLE=orders
+ENGINE=InnoDB
+BACKUP_USER=group08_backup
+BACKUP_DB_SECRET=secrets/db_backup_password.txt
+RESTIC_SECRET=secrets/restic_password.txt
+HOST_BACKUP_ROOT=backups
+HOST_REPOSITORY=backups/restic
+HOST_RUNS=backups/runs
+CONTAINER_REPOSITORY=/data/restic
+CONTAINER_RUNS=/data/runs
+RESTIC_VERSION=0.18.1
+# No DDL during single-transaction dump. No copy of live /var/lib/mysql.
+# Windows daily task is optional, local time, interactive user + Docker running.
+# This repository is on the same host; no independent/offsite copy implemented.

@@ -19,7 +19,7 @@
 | Secret cục bộ | `secrets/db_root_password.txt`, `secrets/db_app_password.txt` |
 | Secret ứng dụng trong container | `/run/secrets/db_app_password` |
 | Dữ liệu seed | 100 đơn hàng tổng hợp, chỉ nạp lúc MySQL khởi tạo volume rỗng |
-| Đường dẫn backup / Restic repository | **Chưa thiết lập — Phase 2** |
+| Đường dẫn backup / Restic repository | Phase 2: `backups/restic` trên host, `/data/restic` trong service backup; xem `SOURCE/backup/README.md` |
 | Script gây sự cố | **Chưa triển khai — Phase 4** |
 
 `/var/lib/mysql` là dữ liệu đang hoạt động, không phải thư mục backup. Docker volume tồn tại sau restart/down không chứng minh có bản sao lưu hoặc khả năng restore.
@@ -45,7 +45,7 @@ Bảng `orders` có `id`, `customer_alias`, `product_name`, `quantity`, `unit_pr
 | `sudo mysql ...` trên host | `docker compose exec db mysql -u group08_app -p -D lab_config` cho truy vấn SELECT; nhập secret cục bộ tại prompt |
 | `<TABLE_NAME>` | `orders` cho thao tác xác minh nghiệp vụ; chưa có kịch bản phá/xóa bảng |
 | `<APP_USER>@<APP_HOST>` | Tài khoản MySQL `group08_app`@`%`, giới hạn bằng quyền DB và mạng container; `%` không đồng nghĩa có port host/public |
-| `<BACKUP_DIR>`, file dump, SHA-256, lệnh restore | Chưa có trong Phase 1; không điền đường dẫn minh họa thành cấu hình đã chạy |
+| `<BACKUP_DIR>`, file dump, SHA-256, lệnh restore | Phase 2: `backups/runs/<run_id>/payload/database.sql` và `manifest.json`; restore DB sạch chưa có, xem hướng dẫn backup |
 | SSH/ufw/khóa account để cô lập | Chưa triển khai quy trình cô lập; không áp dụng các lệnh host này nguyên trạng cho Docker Desktop |
 
 Trong MySQL CLI, truy vấn chỉ đọc để đối chiếu:

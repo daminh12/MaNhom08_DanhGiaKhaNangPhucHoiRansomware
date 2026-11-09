@@ -1,5 +1,8 @@
 # Kiểm thử Phase 1
 
+Phase 2 có suite riêng: `test_backup.py` chạy trong service backup. Xem cuối
+tài liệu; dùng pattern cụ thể vì image web và backup có nguồn/dependency khác nhau.
+
 Chạy tại repository root sau khi lab healthy. Hướng dẫn PowerShell: [SETUP/installation/install_guide.md](../../SETUP/installation/install_guide.md).
 
 ## Unit test ứng dụng
@@ -89,3 +92,28 @@ thêm dữ liệu. Nếu đổi port, thêm `--base-url http://127.0.0.1:8081`.
 Đây là lựa chọn bổ sung; các lệnh PowerShell ở trên không yêu cầu Python host.
 
 Ghi đúng commit, môi trường, lệnh, số test, mã thoát và output. Đọc log bằng `docker compose logs --tail 80 web db`; kiểm tra và che bí mật trước khi lưu. Mỗi lỗi phải ghi FAIL hoặc NOT TESTED với lý do, không tự tạo kết quả. Kết quả chạy trên Linux/cloud và kết quả Windows 10 là hai mục riêng.
+
+## Kiểm thử Phase 2
+
+Sau Setup, chạy suite backup stdlib trong image công cụ:
+
+```powershell
+docker compose -f compose.yaml -f compose.backup.yaml run --rm --no-deps --entrypoint python backup -m unittest discover -s /tests -p test_backup.py -v
+```
+
+Điều kiện đạt: 14 test PASS, gồm từ chối symlink/root symlink, manifest không phải
+object, traversal/duplicate, file rỗng/thiếu/thừa, dump cắt cụt; lỗi Restic/check/
+readback không tạo trạng thái PASS. Đây là module mới có scope cố định, không
+sửa hoặc thay kết luận audit về verifier prototype trên nhánh starter cũ.
+
+Nếu host có Python, integration test bổ sung sau ít nhất một backup PASS:
+
+```powershell
+python SOURCE/tests/integration_backup.py
+```
+
+Script kiểm chứng snapshot thật, init/re-run bị từ chối, tạo riêng một fixture
+dump cắt cụt và kiểm tra không có snapshot mới từ đầu vào lỗi, secret thiếu
+phải fail. Không sửa backup đã tin cậy hoặc dữ liệu DB. Chạy khi không có lượt
+backup khác đồng thời để so sánh danh sách snapshot. Lệnh PowerShell điều phối
+và lịch Task Scheduler vẫn cần nhóm kiểm thử trực tiếp trên Windows 10.
