@@ -1,0 +1,71 @@
+name: group08-lab
+
+services:
+  db:
+    image: mysql:8.4.7
+    environment:
+      MYSQL_DATABASE: lab_config
+      MYSQL_USER: group08_app
+      MYSQL_PASSWORD_FILE: /run/secrets/db_app_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      TZ: UTC
+    command: ["--default-time-zone=+00:00", "--local-infile=0"]
+    secrets:
+      - db_root_password
+      - db_app_password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./SOURCE/database:/docker-entrypoint-initdb.d:ro
+    networks: [lab]
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$(cat /run/secrets/db_app_password)\" mysql -h 127.0.0.1 -u group08_app -D lab_config -Nse 'SELECT COUNT(*) FROM orders' >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 40s
+    restart: unless-stopped
+
+  web:
+    build: ./SOURCE/app
+    environment:
+      DB_HOST: db
+      DB_NAME: lab_config
+      DB_USER: group08_app
+      DB_PASSWORD_FILE: /run/secrets/db_app_password
+      TZ: UTC
+      PYTHONDONTWRITEBYTECODE: "1"
+    secrets: [db_app_password]
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8080}:8000"
+    volumes:
+      - ./SOURCE/tests:/tests:ro
+    networks: [lab, frontend]
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+
+networks:
+  lab:
+    internal: true
+  frontend:
+
+volumes:
+  db_data:
+
+secrets:
+  db_root_password:
+    file: ./secrets/db_root_password.txt
+  db_app_password:
+    file: ./secrets/db_app_password.txt
