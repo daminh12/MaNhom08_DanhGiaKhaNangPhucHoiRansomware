@@ -1,0 +1,3 @@
+GRANT USAGE ON *.* TO `group08_backup`@`%`
+GRANT SELECT ON `lab_config`.`orders` TO `group08_backup`@`%`
+104

@@ -1,0 +1,13 @@
+{
+  "captured_at_utc": "2026-11-09T13:58:50.026075+00:00",
+  "base_commit": "f6653eeb7db55ff73889d2f8c0ccb4b2d5834603",
+  "branch": "codex/group08-phase2-backup-20261109",
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "host_python": "3.12.14",
+  "docker": "29.9.2",
+  "compose": "2.40.3",
+  "restic_source_digest": "restic/restic@sha256:39d9072fb5651c80d75c7a811612eb60b4c06b32ffe87c2e9f3c7222e1797e76",
+  "backup_image_id": "sha256:7955aebc85cbd32851760b3e8ce9607c4508d52f22c96cb4aec18b1a243eef5e",
+  "windows_10": "NOT TESTED",
+  "task_scheduler": "NOT TESTED"
+}

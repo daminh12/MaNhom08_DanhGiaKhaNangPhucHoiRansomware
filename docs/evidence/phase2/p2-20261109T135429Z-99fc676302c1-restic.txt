@@ -1,0 +1,30 @@
+[2026-11-09T13:54:31.762198+00:00] $ restic backup --json --host group08-lab --tag group08-orders --tag p2-20261109T135429Z-99fc676302c1 /data/runs/p2-20261109T135429Z-99fc676302c1/payload /data/runs/p2-20261109T135429Z-99fc676302c1/manifest.json
+{"message_type":"status","percent_done":1,"total_files":3,"files_done":3,"total_bytes":9571,"bytes_done":9571}
+{"message_type":"summary","files_new":3,"files_changed":0,"files_unmodified":0,"dirs_new":4,"dirs_changed":0,"dirs_unmodified":0,"data_blobs":3,"tree_blobs":5,"data_added":11853,"data_added_packed":4304,"total_files_processed":3,"total_bytes_processed":9571,"total_duration":0.64114281,"backup_start":"2026-11-09T13:54:31.116795365Z","backup_end":"2026-11-09T13:54:31.757938185Z","snapshot_id":"7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f"}
+
+exit_code=0
+[2026-11-09T13:54:32.432602+00:00] $ restic snapshots --json 7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f
+[{"time":"2026-11-09T13:54:31.116795365Z","tree":"25c489f24e314f1307f2f09770a6661c55b9f943302a956e0b5b5036e8a14f2a","paths":["/data/runs/p2-20261109T135429Z-99fc676302c1/manifest.json","/data/runs/p2-20261109T135429Z-99fc676302c1/payload"],"hostname":"group08-lab","tags":["group08-orders","p2-20261109T135429Z-99fc676302c1"],"program_version":"restic 0.18.1","summary":{"backup_start":"2026-11-09T13:54:31.116795365Z","backup_end":"2026-11-09T13:54:31.757938185Z","files_new":3,"files_changed":0,"files_unmodified":0,"dirs_new":4,"dirs_changed":0,"dirs_unmodified":0,"data_blobs":3,"tree_blobs":5,"data_added":11853,"data_added_packed":4304,"total_files_processed":3,"total_bytes_processed":9571},"id":"7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f","short_id":"7589d7b3"}]
+
+exit_code=0
+[2026-11-09T13:54:33.098982+00:00] $ restic check --read-data
+using temporary cache in /tmp/restic-cache/restic-check-cache-1919181617
+create exclusive lock for repository
+load indexes
+check all packs
+check snapshots, trees and blobs
+[0:00] 100.00%  2 / 2 snapshots
+read all data
+[0:00] 100.00%  4 / 4 packs
+no errors were found
+
+exit_code=0
+[2026-11-09T13:54:33.741786+00:00] $ restic dump 7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f /data/runs/p2-20261109T135429Z-99fc676302c1/payload/database.sql
+
+exit_code=0
+[2026-11-09T13:54:34.384623+00:00] $ restic dump 7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f /data/runs/p2-20261109T135429Z-99fc676302c1/payload/metadata.json
+
+exit_code=0
+[2026-11-09T13:54:35.033099+00:00] $ restic dump 7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f /data/runs/p2-20261109T135429Z-99fc676302c1/manifest.json
+
+exit_code=0

@@ -76,3 +76,18 @@ Xem [hướng dẫn Windows 10](SETUP/installation/install_guide.md),
 [kết quả Phase 1](docs/PHASE1_RESULTS.md).
 Các lựa chọn VM/BorgBackup/MinIO ở phần công nghệ phía trên là phạm vi nghiên cứu
 ban đầu. Phase 1 chưa triển khai backup, restore, mô phỏng sự cố hoặc đo RTO/RPO.
+
+## 9. Backup Phase 2 — MySQL + Restic
+
+Trên nhánh có Phase 2, sau khi lab Phase 1 hoạt động, chạy tại repository root:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\backup\backup.ps1 -Action Setup
+powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\backup\backup.ps1 -Action Backup
+powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\backup\backup.ps1 -Action Snapshots
+```
+
+Setup giữ nguyên mật khẩu đã có, cấp tài khoản backup SELECT-only và khởi tạo
+kho Restic mới nếu chưa có. Mỗi lần backup tạo run riêng với dump, manifest,
+snapshot ID và kết quả kiểm chứng. Xem [hướng dẫn backup](SOURCE/backup/README.md)
+và [kết quả Phase 2](docs/PHASE2_RESULTS.md). Restore DB sạch thuộc Phase 3.

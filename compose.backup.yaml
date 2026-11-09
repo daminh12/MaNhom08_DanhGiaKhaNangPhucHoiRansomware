@@ -1,0 +1,25 @@
+# Explicit overlay: docker compose -f compose.yaml -f compose.backup.yaml ...
+services:
+  backup:
+    build: ./SOURCE/backup
+    profiles: [backup]
+    network_mode: none
+    user: "${BACKUP_UID:-1000}:${BACKUP_GID:-1000}"
+    cap_drop: [ALL]
+    read_only: true
+    tmpfs: [/tmp]
+    environment:
+      RESTIC_REPOSITORY: /data/restic
+      RESTIC_PASSWORD_FILE: /run/secrets/restic_password
+      RESTIC_CACHE_DIR: /tmp/restic-cache
+      LAB_BACKUP_ROOT: /data
+      PYTHONDONTWRITEBYTECODE: "1"
+    secrets: [restic_password]
+    volumes:
+      - ./backups:/data
+      - ./SOURCE/tests:/tests:ro
+    security_opt: ["no-new-privileges:true"]
+
+secrets:
+  restic_password:
+    file: ./secrets/restic_password.txt

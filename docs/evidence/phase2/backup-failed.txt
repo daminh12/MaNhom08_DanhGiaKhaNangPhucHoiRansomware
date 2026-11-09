@@ -1,0 +1,10 @@
+ group08-lab-db-1 copy SOURCE/backup/db_dump.sh to group08-lab-db-1:/tmp/group08_phase2_db.sh Copying
+ group08-lab-db-1 copy SOURCE/backup/db_dump.sh to group08-lab-db-1:/tmp/group08_phase2_db.sh Copied
+ group08-lab-db-1 copy secrets/db_backup_password.txt to group08-lab-db-1:/tmp/group08-p2-20261109T135211Z-11035d6fff01.secret Copying
+ group08-lab-db-1 copy secrets/db_backup_password.txt to group08-lab-db-1:/tmp/group08-p2-20261109T135211Z-11035d6fff01.secret Copied
+Completed consistent dump: p2-20261109T135211Z-11035d6fff01
+ group08-lab-db-1 copy group08-lab-db-1:/tmp/group08-p2-20261109T135211Z-11035d6fff01/database.sql to backups/runs/p2-20261109T135211Z-11035d6fff01/payload/database.sql Copying
+ group08-lab-db-1 copy group08-lab-db-1:/tmp/group08-p2-20261109T135211Z-11035d6fff01/database.sql to backups/runs/p2-20261109T135211Z-11035d6fff01/payload/database.sql Copied
+ group08-lab-db-1 copy group08-lab-db-1:/tmp/group08-p2-20261109T135211Z-11035d6fff01/metadata.json to backups/runs/p2-20261109T135211Z-11035d6fff01/payload/metadata.json Copying
+ group08-lab-db-1 copy group08-lab-db-1:/tmp/group08-p2-20261109T135211Z-11035d6fff01/metadata.json to backups/runs/p2-20261109T135211Z-11035d6fff01/payload/metadata.json Copied
+Error response from daemon: symlink /etc/alternatives/which /home/dockerd/.local/share/docker/vfs/dir/e17a8394d297066d0c730ff13b32de57bb3339e3ac8fd8640c6ce6248c1bc4fe/usr/bin/which: no space left on device
