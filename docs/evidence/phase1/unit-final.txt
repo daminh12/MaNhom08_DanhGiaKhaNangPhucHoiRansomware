@@ -1,0 +1,22 @@
+test_commit_failure_does_not_claim_creation (test_app.OrdersAppTests.test_commit_failure_does_not_claim_creation) ... [2026-11-09 02:03:02,095] WARNING in app: Database operation unavailable
+ok
+test_create_uses_parameters_and_commits_before_success (test_app.OrdersAppTests.test_create_uses_parameters_and_commits_before_success) ... ok
+test_cross_origin_and_cross_site_writes_are_rejected (test_app.OrdersAppTests.test_cross_origin_and_cross_site_writes_are_rejected) ... ok
+test_form_submission_is_not_accepted_as_json (test_app.OrdersAppTests.test_form_submission_is_not_accepted_as_json) ... ok
+test_health_db_failure_is_503_without_error_details (test_app.OrdersAppTests.test_health_db_failure_is_503_without_error_details) ... ok
+test_health_reads_actual_orders_table (test_app.OrdersAppTests.test_health_reads_actual_orders_table) ... ok
+test_home_is_accessible_without_db_and_uses_local_assets (test_app.OrdersAppTests.test_home_is_accessible_without_db_and_uses_local_assets) ... ok
+test_insert_failure_closes_connection_without_commit (test_app.OrdersAppTests.test_insert_failure_closes_connection_without_commit) ... [2026-11-09 02:03:02,123] WARNING in app: Database operation unavailable
+ok
+test_invalid_order_fields_never_connect_to_database (test_app.OrdersAppTests.test_invalid_order_fields_never_connect_to_database) ... ok
+test_json_shape_and_malformed_json_are_400 (test_app.OrdersAppTests.test_json_shape_and_malformed_json_are_400) ... ok
+test_large_payload_is_413_json (test_app.OrdersAppTests.test_large_payload_is_413_json) ... ok
+test_list_failure_hides_database_details (test_app.OrdersAppTests.test_list_failure_hides_database_details) ... [2026-11-09 02:03:02,139] WARNING in app: Database operation unavailable
+ok
+test_order_list_has_total_and_utc_timestamp (test_app.OrdersAppTests.test_order_list_has_total_and_utc_timestamp) ... ok
+test_untrusted_host_is_rejected (test_app.OrdersAppTests.test_untrusted_host_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.082s
+
+OK

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nhóm 08 · Lab đơn hàng</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/">08<span>RECOVERY LAB</span></a><span class="phase">PHASE 01 / ĐƠN HÀNG GIẢ</span></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">AN TOÀN THÔNG TIN · NHÓM 08</p><h1>Một lab nhỏ.<br>Một nền tảng để phục hồi.</h1><p class="description">Theo dõi và thêm đơn hàng tổng hợp để chuẩn bị kiểm thử sao lưu, phục hồi dữ liệu.</p></div><div class="lab-tag"><span class="tag-dot"></span> MÔI TRƯỜNG THỰC HÀNH</div></section>
+    <div class="notice">Chỉ sử dụng dữ liệu giả. Không nhập tên, địa chỉ hay thông tin khách hàng thật.</div>
+    <section class="stats" aria-label="Tình trạng lab"><article><p>Tổng số đơn hàng</p><strong id="total">—</strong><span>Được đọc trực tiếp từ database</span></article><article><p>Kết nối dữ liệu</p><strong id="health">Đang kiểm tra…</strong><span id="updated">Chưa cập nhật</span></article><article><p>Dữ liệu khởi tạo</p><strong>100 <small>đơn giả</small></strong><span>Chỉ tạo khi volume DB còn mới</span></article></section>
+    <div class="workspace"><section class="orders-panel"><div class="section-heading"><div><p class="eyebrow">DỮ LIỆU LAB</p><h2>Đơn hàng gần đây</h2></div><button id="refresh" type="button" class="secondary">Làm mới</button></div><p class="table-caption">Hiển thị tối đa 100 đơn mới nhất. Thời gian hiển thị theo UTC.</p><p id="load-error" class="message error" role="alert" hidden></p><div class="table-wrap"><table><thead><tr><th>Mã đơn</th><th>Khách giả</th><th>Sản phẩm</th><th>SL</th><th>Thành tiền</th><th>Thời gian UTC</th></tr></thead><tbody id="orders"><tr><td colspan="6">Đang tải dữ liệu…</td></tr></tbody></table></div></section>
+    <aside class="create-panel"><p class="eyebrow">THÊM DỮ LIỆU</p><h2>Tạo đơn hàng giả</h2><p class="form-description">Bản ghi mới được lưu vào MySQL để kiểm tra hoạt động đọc và ghi của lab.</p><form id="order-form"><label for="alias">Mã khách giả</label><input id="alias" name="customer_alias" value="LAB-DEMO" pattern="LAB-[A-Z0-9-]{1,32}" maxlength="36" required autocomplete="off"><span class="hint">Ví dụ: LAB-001, LAB-DEMO</span><label for="product">Sản phẩm</label><select id="product" name="product_name">{% for product in products %}<option value="{{ product }}">{{ product }}</option>{% endfor %}</select><div class="form-row"><div><label for="quantity">Số lượng</label><input id="quantity" name="quantity" type="number" value="1" min="1" max="100" step="1" required></div><div><label for="price">Đơn giá (VND)</label><input id="price" name="unit_price_vnd" type="number" value="25000" min="1" max="100000000" step="1" required></div></div><button id="submit" type="submit" class="primary">Thêm đơn hàng <span aria-hidden="true">↗</span></button><p id="form-message" class="message" role="status" aria-live="polite" hidden></p></form></aside></div>
+    <footer><span>Đa Minh &amp; Minh Quân · Nhóm 08</span><span>Lab đơn hàng · Chưa đo RTO / RPO</span></footer>
+  </main>
+</body>
+</html>

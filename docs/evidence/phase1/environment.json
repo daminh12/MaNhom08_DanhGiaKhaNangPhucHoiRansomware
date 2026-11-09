@@ -1,0 +1,26 @@
+{
+  "captured_at_utc": "2026-11-09T02:03:01.133409+00:00",
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "host_python": "3.12.14",
+  "base_commit": "03767a33aec895aec3428610b3ccef2170e60c6d",
+  "branch": "codex/group08-phase1-orders-20261108",
+  "docker": "29.9.2",
+  "compose": "2.40.3",
+  "container_python": "Python 3.12.12",
+  "mysql:8.4.7": {
+    "id": "sha256:0de4015d5b1f0fa462e43b48c29f8f66eacdd16d11e07aedf3b13533adadd504",
+    "repo_digests": [
+      "mysql@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903"
+    ]
+  },
+  "python:3.12.12-slim-bookworm": {
+    "id": "sha256:9cb180cb36bd45dc786105b834d3cb5f3b1d69a6a63c79ca10fc64f108aa649a",
+    "repo_digests": [
+      "python@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c"
+    ]
+  },
+  "group08-lab-web": {
+    "id": "sha256:6e477f26698d1007075c2785ac59d345938c73c756c7f018dd02b4452144439b",
+    "repo_digests": []
+  }
+}
