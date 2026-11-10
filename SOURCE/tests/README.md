@@ -130,3 +130,14 @@ Kiểm thử thật là các action trong `SOURCE/recovery/README.md`; các acti
 thể dừng dịch vụ lab và tạo đơn giả. Chỉ chạy khi chủ động diễn tập, có đủ tài
 nguyên và không có người khác ghi dữ liệu. `docs/PHASE3_RESULTS.md` và
 `docs/PHASE4_RESULTS.md` tách unit/mock, test thật Linux, Windows NOT TESTED.
+
+## Phase 5
+
+```powershell
+py -3 -B -m unittest discover -s SOURCE/tests -p test_metrics.py -v
+```
+
+Đọc corpus đã pin, test math/CSV/hash trong thư mục tạm; không dừng service.
+Một test cần SQL artifact private và sẽ SKIP nếu clone mới không có artifact.
+Exporter và integrity workflow: `SOURCE/metrics/README.md`. Không đưa fixture/mock
+vào CSV thực nghiệm hoặc dùng zero thay giá trị N/A/NOT TESTED.

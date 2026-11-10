@@ -1,0 +1,17 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "docker": "29.9.2",
+  "compose": "2.40.3",
+  "health_after": {
+    "status_code": 200,
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "windows_10": "NOT TESTED",
+  "targets": "NOT TESTED; user confirmed no targets",
+  "new_performance_trials": 0,
+  "source_volume_deleted": false,
+  "snapshot_deleted": false
+}

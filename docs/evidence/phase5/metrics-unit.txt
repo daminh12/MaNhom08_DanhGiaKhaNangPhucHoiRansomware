@@ -1,0 +1,26 @@
+test_ack_file_and_journal_disagreement_rejected (test_metrics.MetricsTests.test_ack_file_and_journal_disagreement_rejected) ... ok
+test_actual_extract_detects_modified_sql_in_temporary_copy (test_metrics.MetricsTests.test_actual_extract_detects_modified_sql_in_temporary_copy) ... ok
+test_backwards_clock_rejected (test_metrics.MetricsTests.test_backwards_clock_rejected) ... ok
+test_csv_formula_neutralization (test_metrics.MetricsTests.test_csv_formula_neutralization) ... ok
+test_export_is_reproducible_and_refuses_overwrite (test_metrics.MetricsTests.test_export_is_reproducible_and_refuses_overwrite) ... ok
+test_failed_outage_is_censored_not_zero (test_metrics.MetricsTests.test_failed_outage_is_censored_not_zero) ... ok
+test_failed_phase3_attempt_kept_without_incident_metric (test_metrics.MetricsTests.test_failed_phase3_attempt_kept_without_incident_metric) ... ok
+test_false_status_is_not_hidden (test_metrics.MetricsTests.test_false_status_is_not_hidden) ... ok
+test_fresh_membership_must_match_recorded_observation (test_metrics.MetricsTests.test_fresh_membership_must_match_recorded_observation) ... ok
+test_fresh_verification_must_return_source_and_bind_to_trial (test_metrics.MetricsTests.test_fresh_verification_must_return_source_and_bind_to_trial) ... ok
+test_import_verification_order_required (test_metrics.MetricsTests.test_import_verification_order_required) ... ok
+test_integrity_only_test_has_no_rto_or_rpo (test_metrics.MetricsTests.test_integrity_only_test_has_no_rto_or_rpo) ... ok
+test_json_duplicate_and_nonfinite_numbers_fail (test_metrics.MetricsTests.test_json_duplicate_and_nonfinite_numbers_fail) ... ok
+test_mixed_run_identity_rejected (test_metrics.MetricsTests.test_mixed_run_identity_rejected) ... ok
+test_pin_detects_different_git_bytes_without_editing_repository (test_metrics.MetricsTests.test_pin_detects_different_git_bytes_without_editing_repository) ... ok
+test_real_events_recompute_rto_and_bounded_lag (test_metrics.MetricsTests.test_real_events_recompute_rto_and_bounded_lag) ... ok
+test_source_fingerprint_is_not_an_unchecked_label (test_metrics.MetricsTests.test_source_fingerprint_is_not_an_unchecked_label) ... ok
+test_stability_gate_required (test_metrics.MetricsTests.test_stability_gate_required) ... ok
+test_summary_cannot_override_raw_time (test_metrics.MetricsTests.test_summary_cannot_override_raw_time) ... ok
+test_truncated_timeline_is_not_pass (test_metrics.MetricsTests.test_truncated_timeline_is_not_pass) ... ok
+test_unknown_or_repeated_ack_identity_rejected (test_metrics.MetricsTests.test_unknown_or_repeated_ack_identity_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.292s
+
+OK
