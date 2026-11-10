@@ -63,6 +63,15 @@ dùng run/volume mới cho lần PASS; giữ nguyên kết quả FAILED và volu
 | SQL import lỗi/gián đoạn thực | Full workflow bị ngắt và không resume | NOT TESTED thực; nonzero gate có unit mock |
 | Windows/PowerShell | Nhóm chạy trên Windows thật | NOT TESTED |
 
+Sau integration, review bổ sung guard tên volume/network/container (kể cả không
+có Compose labels) và binding localhost của source URL. Unit mới **17/17 PASS**:
+`post-review-unit.txt`. Thử trên Docker thật một volume rỗng có đúng tên target
+nhưng không có label: bị từ chối trước stop source/import, source vẫn healthy/108;
+volume guard được giữ lại (`post-review-guard.json`). Không tái chạy main trial.
+Commit `dde61a2` chứa source đúng các fingerprint của main integration;
+`post-review-source-sha256.json` mô tả riêng hai file hardening sau đó. Không sửa
+timing/fingerprint lịch sử để giả một lượt chạy mới.
+
 ## Tài nguyên và hạn chế
 
 Dọn duy nhất image build cũ không còn container sử dụng (7abd293d39c0), không xóa

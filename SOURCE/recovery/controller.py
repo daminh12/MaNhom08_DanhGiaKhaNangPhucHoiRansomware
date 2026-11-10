@@ -166,6 +166,9 @@ class Lab:
                 raise ValueError('Expected running Group08 source services only')
         mounts=[m for m in db['Mounts'] if m['Destination']=='/var/lib/mysql']
         if len(mounts)!=1 or mounts[0].get('Name')!=SOURCE_VOLUME:raise ValueError('Unexpected source data volume')
+        bindings=web['NetworkSettings']['Ports'].get('8000/tcp',[])
+        if not any(b['HostIp']=='127.0.0.1' and b['HostPort']==str(self.source_port()) for b in bindings):
+            raise ValueError('Source URL must be owned by the expected localhost lab web')
         code,health=self.http()
         if code!=200:raise ValueError('Source health precondition failed')
         self.event('SOURCE_VALIDATED',db_id=db['Id'],web_id=web['Id'],health=health,volume=SOURCE_VOLUME)
@@ -180,7 +183,14 @@ class Lab:
             raise ValueError('Unsafe target project')
         containers=self.call(['docker','ps','-aq','--filter','label=com.docker.compose.project='+self.project],'guard existing target containers').strip()
         volumes=self.call(['docker','volume','ls','-q','--filter','label=com.docker.compose.project='+self.project],'guard existing target volumes').strip()
-        if containers or volumes:raise ValueError('Target already exists; partial targets cannot be reused')
+        # Names must also be checked: manually created volumes may have no labels.
+        volume_names=self.call(['docker','volume','ls','--format','{{.Name}}'],'guard unlabelled target volume').splitlines()
+        network_names=self.call(['docker','network','ls','--format','{{.Name}}'],'guard pre-existing target networks').splitlines()
+        container_names=self.call(['docker','ps','-a','--format','{{.Names}}'],'guard unlabelled target containers').splitlines()
+        names_collide=(self.project+'_restore_data' in volume_names or
+                       any(self.project+'_'+n in network_names for n in ['lab','frontend']) or
+                       any(self.project+'-'+n+'-1' in container_names for n in ['db','web']))
+        if containers or volumes or names_collide:raise ValueError('Target already exists; partial targets cannot be reused')
         self.event('TARGET_PREFLIGHT_PASSED',project=self.project)
 
     def backup(self):

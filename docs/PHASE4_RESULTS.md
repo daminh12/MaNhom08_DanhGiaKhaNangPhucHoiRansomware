@@ -85,3 +85,9 @@ bởi host admin. Chưa có video/ảnh, CSV phân tích, Windows hoặc Runbook
 Phase 5 cần chốt mục tiêu trước các lượt tiếp theo, chuẩn hóa CSV, ghi uncertainty,
 tách backup age/recovery point lag/lost count, lặp trong cùng điều kiện. Phase 6:
 MQ thực hiện độc lập, cập nhật Runbook v1.1 từ lỗi thật. Không merge tự động.
+
+Docker logs được lưu dạng `source-db.txt`, `source-web.txt`, `target-db.txt`,
+`target-web.txt` vì `*.log` bị Git bỏ qua. Source thực thi integration nằm ở commit
+`dde61a2`, đúng fingerprint trong main events. Guard hardening sau integration
+có 17 unit test và một phép thử guard Docker riêng (evidence Phase 3); không đổi
+kết quả hoặc tuyên bố main trial đã được lặp với source mới.

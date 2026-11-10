@@ -98,6 +98,23 @@ class RecoveryTests(unittest.TestCase):
         lab.call=lambda *a,**k:'existing-container'
         with self.assertRaises(ValueError):lab.preflight_target()
 
+    def test_unlabelled_named_volume_is_also_rejected(self):
+        lab=object.__new__(controller.Lab);lab.project='group08-restore-p3-test'
+        def call(cmd,*a,**kw):
+            return lab.project+'_restore_data' if cmd[:3]==['docker','volume','ls'] and '--format' in cmd else ''
+        lab.call=call
+        with self.assertRaises(ValueError):lab.preflight_target()
+
+    def test_source_url_cannot_point_to_a_different_binding(self):
+        lab=object.__new__(controller.Lab);lab.source_port=lambda:8080
+        def inspect(name):
+            service='db' if name.endswith('db-1') else 'web'
+            return {'Config':{'Labels':{'com.docker.compose.project':'group08-lab','com.docker.compose.service':service}},
+                    'State':{'Running':True},'Mounts':[{'Destination':'/var/lib/mysql','Name':'group08-lab_db_data'}],
+                    'NetworkSettings':{'Ports':{'8000/tcp':[{'HostIp':'0.0.0.0','HostPort':'9999'}]}}}
+        lab.inspect=inspect
+        with self.assertRaises(ValueError):lab.validate_source()
+
     def test_process_nonzero_is_not_accepted(self):
         import subprocess
         lab=object.__new__(controller.Lab);lab.env={};lab.event=lambda *a,**k:None
