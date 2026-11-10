@@ -91,3 +91,14 @@ Setup giữ nguyên mật khẩu đã có, cấp tài khoản backup SELECT-only
 kho Restic mới nếu chưa có. Mỗi lần backup tạo run riêng với dump, manifest,
 snapshot ID và kết quả kiểm chứng. Xem [hướng dẫn backup](SOURCE/backup/README.md)
 và [kết quả Phase 2](docs/PHASE2_RESULTS.md). Restore DB sạch thuộc Phase 3.
+
+## 10. Phục hồi sạch và diễn tập Phase 3/4
+
+Workflow trong [SOURCE/recovery/README.md](SOURCE/recovery/README.md) dùng Restic,
+baseline nghiệp vụ độc lập trong metadata, MySQL target mới và ghi sự kiện observer.
+Cần thêm Python 3.10+ trên host; có PowerShell launcher cho Windows 10 (chưa chạy
+trực tiếp trên Windows). Phase 1/2 vẫn chạy theo hướng dẫn Docker hiện có.
+
+[Kết quả Phase 3](docs/PHASE3_RESULTS.md), [Phase 4](docs/PHASE4_RESULTS.md) và
+[bổ sung Runbook](THESIS/runbook/PHASE3_PHASE4_DOCKER.md) ghi bằng chứng Linux thật,
+bao gồm cả run FAILED, giới hạn cloud và các hạng mục NOT TESTED.

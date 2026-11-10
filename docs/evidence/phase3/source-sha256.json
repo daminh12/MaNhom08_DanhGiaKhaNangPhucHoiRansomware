@@ -1,0 +1,13 @@
+{
+  "compose.restore.yaml": "4b6ddf71c7805512277512d669c820094caa785424275a6e167eda8fc38cddd7",
+  "compose.recovery-tools.yaml": "6b5a6b724517211de0377583cdf75b9df8946a3d2c60a54e9ed47cfd6249b277",
+  "SOURCE/recovery/common.py": "9e0205899d846166650e5e6f7b74478b45a37605920d661811de116fc0197649",
+  "SOURCE/recovery/archive.py": "b70e1e6e9133a47960147d47b70f99ff95448e0e4ec13cdc85dc25876fdac85e",
+  "SOURCE/recovery/controller.py": "c69d753265d41bd53aa6c4ae40afbe524ecbf44d1b352c697ebc5d0714bcf0c2",
+  "SOURCE/recovery/run_lab.ps1": "1fa588bed4bb12b3e00ecbeea1afe917f6004072b7844c8a390963ba0a2c72cf",
+  "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad",
+  "SOURCE/backup/db_dump.sh": "11a58c1410d259f9889383a4215938e98f0078f74ebd07c82598daf03c4700cf",
+  "SOURCE/app/app.py": "935f788f76d2f758b6c481dd1dfb63d8a85aa87629a01c89ca57452ef7763f3e",
+  "SOURCE/app/requirements.txt": "8ce3553786fccfdc82d176058eb8a8442e878236a96c265d5f32e510f91e8756",
+  "SOURCE/tests/test_recovery.py": "9dffa732ca644d67365270d86fee842fa2946c14d3dc66a0d23d056c2100c964"
+}

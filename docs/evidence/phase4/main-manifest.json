@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "hash_algorithm": "SHA-256",
+  "files": [
+    {
+      "path": "database.sql",
+      "size_bytes": 8876,
+      "sha256": "7b4e7de39896a78b7b8094786a5e7d193eefd3bebe6aa6c7abb515115a56e6fe"
+    },
+    {
+      "path": "metadata.json",
+      "size_bytes": 1592,
+      "sha256": "b1914f23a300c36b79cfe6063b0a1511ed4c75f98c338089c41284ab5e2d251e"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+db-1  | 2026-11-10T13:49:36.916403103Z 2026-11-10 13:49:36+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.7-1.el9 started.
+db-1  | 2026-11-10T13:49:37.082198599Z 2026-11-10 13:49:37+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+db-1  | 2026-11-10T13:49:37.087667044Z 2026-11-10 13:49:37+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.7-1.el9 started.
+db-1  | 2026-11-10T13:49:37.264286094Z '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+db-1  | 2026-11-10T13:49:37.468574731Z 2026-11-10T13:49:37.280689Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+db-1  | 2026-11-10T13:49:37.468703144Z 2026-11-10T13:49:37.466489Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.4.7) starting as process 1
+db-1  | 2026-11-10T13:49:37.472274696Z 2026-11-10T13:49:37.471964Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+db-1  | 2026-11-10T13:49:37.602136134Z 2026-11-10T13:49:37.601973Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+db-1  | 2026-11-10T13:49:37.784425569Z 2026-11-10T13:49:37.784281Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+db-1  | 2026-11-10T13:49:37.784640001Z 2026-11-10T13:49:37.784495Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+db-1  | 2026-11-10T13:49:37.787551951Z 2026-11-10T13:49:37.786485Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+db-1  | 2026-11-10T13:49:37.811967879Z 2026-11-10T13:49:37.811814Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+db-1  | 2026-11-10T13:49:37.812137113Z 2026-11-10T13:49:37.812070Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.4.7'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+db-1  | 2026-11-10T13:56:07.819093291Z 2026-11-10T13:56:07.818634Z 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.4.7).
+db-1  | 2026-11-10T13:56:09.465475298Z 2026-11-10T13:56:09.465260Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.4.7)  MySQL Community Server - GPL.
+db-1  | 2026-11-10T13:56:09.465505333Z 2026-11-10T13:56:09.465311Z 0 [System] [MY-015016] [Server] MySQL Server - end.

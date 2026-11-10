@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "run_id": "p4-web-final-20261110",
+  "scenario": "web-outage",
+  "status": "PASS",
+  "started_at_utc": "2026-11-10T13:54:02.318326+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p4-web-final-20261110",
+  "release_source_containers": false,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 104,
+    "status": "ok"
+  },
+  "observed_rto_seconds": 4.918264275,
+  "data_unchanged": "PASS",
+  "rpo": "NOT APPLICABLE; no snapshot recovery",
+  "finished_at_utc": "2026-11-10T13:54:07.668171+00:00"
+}

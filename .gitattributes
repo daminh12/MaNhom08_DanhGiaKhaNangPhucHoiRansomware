@@ -1,2 +1,4 @@
 SOURCE/backup/*.sh text eol=lf
 SOURCE/backup/Dockerfile text eol=lf
+# Preserve verbatim timestamp-prefixed blank lines in captured Docker DB logs.
+docs/evidence/phase4/*-db.txt whitespace=-blank-at-eol
