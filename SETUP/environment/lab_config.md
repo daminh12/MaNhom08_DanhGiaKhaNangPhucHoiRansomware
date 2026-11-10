@@ -34,7 +34,7 @@ Bảng `orders` có `id`, `customer_alias`, `product_name`, `quantity`, `unit_pr
 
 ## Đối chiếu với bản nháp Runbook của Minh Quân
 
-`THESIS/runbook/Runbook_v1.0.docx` trên main hiện ghi nội dung “RUNBOOK v1.2”, database `lab_config` và nhiều placeholder. Tài liệu dùng giả định VM, SSH, systemd, nginx và ufw; chưa phải runbook đã chạy trên lab Docker này. Giữ nguyên tài liệu nhóm đang viết; các điều chỉnh runbook phục hồi được review ở phase tương ứng.
+DOCX hiện là Runbook v1.0 nháp Docker/Windows 10, thay bản VM cũ; mục phục hồi còn placeholder và nhập lại DB nguồn. Quy trình sạch và diễn tập mới nằm ở `THESIS/runbook/PHASE3_PHASE4_DOCKER.md` và `SOURCE/recovery/README.md`, chờ Minh Quân đồng bộ DOCX sau review. Không thực thi mục 9.2 cũ để thay thế restore vào volume độc lập.
 
 | Hạng mục Runbook | Đối chiếu lab Phase 1 |
 |---|---|

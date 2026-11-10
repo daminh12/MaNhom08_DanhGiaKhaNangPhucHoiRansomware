@@ -117,3 +117,16 @@ dump cắt cụt và kiểm tra không có snapshot mới từ đầu vào lỗi
 phải fail. Không sửa backup đã tin cậy hoặc dữ liệu DB. Chạy khi không có lượt
 backup khác đồng thời để so sánh danh sách snapshot. Lệnh PowerShell điều phối
 và lịch Task Scheduler vẫn cần nhóm kiểm thử trực tiếp trên Windows 10.
+
+## Phase 3/4
+
+Unit stdlib (không kết nối DB/Docker thật):
+
+```powershell
+py -3 -B -m unittest discover -s SOURCE/tests -p test_recovery.py -v
+```
+
+Kiểm thử thật là các action trong `SOURCE/recovery/README.md`; các action này có
+thể dừng dịch vụ lab và tạo đơn giả. Chỉ chạy khi chủ động diễn tập, có đủ tài
+nguyên và không có người khác ghi dữ liệu. `docs/PHASE3_RESULTS.md` và
+`docs/PHASE4_RESULTS.md` tách unit/mock, test thật Linux, Windows NOT TESTED.

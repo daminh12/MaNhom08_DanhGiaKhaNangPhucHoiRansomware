@@ -1,0 +1,20 @@
+test_acknowledged_loss_and_bounds_not_created_at (test_recovery.RecoveryTests.test_acknowledged_loss_and_bounds_not_created_at) ... ok
+test_api_timestamp_is_canonical_but_not_commit_time (test_recovery.RecoveryTests.test_api_timestamp_is_canonical_but_not_commit_time) ... ok
+test_archive_fails_before_import_with_wrong_manifest (test_recovery.RecoveryTests.test_archive_fails_before_import_with_wrong_manifest) ... ok
+test_exact_integer_ids_and_row_order (test_recovery.RecoveryTests.test_exact_integer_ids_and_row_order) ... ok
+test_existing_or_partial_run_is_never_reused (test_recovery.RecoveryTests.test_existing_or_partial_run_is_never_reused) ... ok
+test_existing_target_is_rejected_before_creation (test_recovery.RecoveryTests.test_existing_target_is_rejected_before_creation) ... ok
+test_full_dataset_including_older_than_api_limit (test_recovery.RecoveryTests.test_full_dataset_including_older_than_api_limit) ... ok
+test_full_id_and_run_guards (test_recovery.RecoveryTests.test_full_id_and_run_guards) ... ok
+test_lost_ack_is_not_silently_retried (test_recovery.RecoveryTests.test_lost_ack_is_not_silently_retried) ... ok
+test_mysql_roundtrip_redundant_charset_is_normalized (test_recovery.RecoveryTests.test_mysql_roundtrip_redundant_charset_is_normalized) ... ok
+test_nonprefix_and_duplicates_do_not_get_a_recovery_point (test_recovery.RecoveryTests.test_nonprefix_and_duplicates_do_not_get_a_recovery_point) ... ok
+test_process_nonzero_is_not_accepted (test_recovery.RecoveryTests.test_process_nonzero_is_not_accepted) ... ok
+test_schema_or_same_count_content_change_is_rejected (test_recovery.RecoveryTests.test_schema_or_same_count_content_change_is_rejected) ... ok
+test_schema_volatile_counter_is_not_a_difference (test_recovery.RecoveryTests.test_schema_volatile_counter_is_not_a_difference) ... ok
+test_write_probe_does_not_rebaseline_existing_rows (test_recovery.RecoveryTests.test_write_probe_does_not_rebaseline_existing_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.011s
+
+OK

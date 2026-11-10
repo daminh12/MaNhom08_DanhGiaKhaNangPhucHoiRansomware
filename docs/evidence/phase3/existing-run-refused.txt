@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/SOURCE/recovery/controller.py", line 491, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/SOURCE/recovery/controller.py", line 447, in main
+    lab=Lab(args)
+        ^^^^^^^^^
+  File "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/SOURCE/recovery/controller.py", line 71, in __init__
+    self.work.mkdir()  # refusal is intentional, including interrupted runs
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/recovery/p3-clean-v2-20261110'

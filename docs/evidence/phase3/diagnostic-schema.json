@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "canonicalization": "orders-jsonl-v1",
+  "row_count": 104,
+  "rows_sha256": "73e0d38e293597fd17bab8191e1d92b450c906e8b636c084fb5d5535ec7eb742",
+  "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+  "schema_sha256": "0ca93dced5844e6d9e76a3aa99cc6410b7a1ae59f03414964ab80924a8ee1627"
+}

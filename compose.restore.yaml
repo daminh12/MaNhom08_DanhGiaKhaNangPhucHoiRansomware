@@ -1,0 +1,46 @@
+# Standalone file. Always use an explicit, fresh -p group08-restore-<run>.
+services:
+  db:
+    image: mysql:8.4.7
+    environment:
+      MYSQL_DATABASE: lab_config
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      TZ: UTC
+    command: ["--default-time-zone=+00:00", "--local-infile=0"]
+    secrets: [db_root_password]
+    volumes: [restore_data:/var/lib/mysql]
+    networks: [lab]
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$(cat /run/secrets/db_root_password)\" mysql -u root -h 127.0.0.1 -Nse 'SELECT 1' >/dev/null"]
+      interval: 3s
+      timeout: 5s
+      retries: 60
+      start_period: 30s
+  web:
+    image: group08-lab-web:latest
+    environment:
+      DB_HOST: db
+      DB_NAME: lab_config
+      DB_USER: group08_app
+      DB_PASSWORD_FILE: /run/secrets/db_app_password
+      TZ: UTC
+      PYTHONDONTWRITEBYTECODE: "1"
+    secrets: [db_app_password]
+    ports: ["127.0.0.1:${RESTORE_WEB_PORT:-8081}:8000"]
+    networks: [lab, frontend]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    depends_on:
+      db: {condition: service_healthy}
+networks:
+  lab: {internal: true}
+  frontend:
+volumes:
+  restore_data:
+secrets:
+  db_root_password:
+    file: ${RESTORE_SECRET_DIR:?set by recovery controller}/root.txt
+  db_app_password:
+    file: ${RESTORE_SECRET_DIR:?set by recovery controller}/app.txt

@@ -1,0 +1,9 @@
+# Reuse the Phase 2 image without rebuilding in the small cloud VFS filesystem.
+# These mounts contain code/work files only, no source DB volume or DB secret.
+services:
+  backup:
+    volumes:
+      - ./SOURCE/recovery:/recovery-code:ro
+      - ./work/recovery:/recovery-work
+    environment:
+      PYTHONPATH: /tool

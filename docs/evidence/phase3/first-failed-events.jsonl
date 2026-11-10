@@ -1,0 +1,96 @@
+{"utc": "2026-11-10T13:45:18.551996+00:00", "monotonic_ns": 39929162618341, "event": "TRIAL_PREPARED", "run_id": "p3-clean-20261110", "commit": "37addd764dfd18a48fd2726c9f042c2b19ab6d96", "python": "3.12.14"}
+{"utc": "2026-11-10T13:45:18.553454+00:00", "monotonic_ns": 39929164074681, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:45:18.570027+00:00", "monotonic_ns": 39929180655800, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.570657+00:00", "monotonic_ns": 39929181276884, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:45:18.587567+00:00", "monotonic_ns": 39929198195826, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.603678+00:00", "monotonic_ns": 39929214305236, "event": "SOURCE_VALIDATED", "run_id": "p3-clean-20261110", "db_id": "078e8ebec324503c62b5b9fbf1fa6fd0e6014cac7dfe9d8434d1e737fbc3a564", "web_id": "c79ed5f46b5201d177465c99ce9b5b89afc2a41490eeba1938143210de50962c", "health": {"database": "ok", "orders_count": 104, "status": "ok"}, "volume": "group08-lab_db_data"}
+{"utc": "2026-11-10T13:45:18.604400+00:00", "monotonic_ns": 39929215021543, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "require preinstalled mysql:8.4.7"}
+{"utc": "2026-11-10T13:45:18.621804+00:00", "monotonic_ns": 39929232432125, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "require preinstalled mysql:8.4.7", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.622509+00:00", "monotonic_ns": 39929233129263, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "require preinstalled group08-lab-web"}
+{"utc": "2026-11-10T13:45:18.638215+00:00", "monotonic_ns": 39929248842918, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "require preinstalled group08-lab-web", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.638799+00:00", "monotonic_ns": 39929249419184, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "require preinstalled group08-lab-backup"}
+{"utc": "2026-11-10T13:45:18.654507+00:00", "monotonic_ns": 39929265137095, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "require preinstalled group08-lab-backup", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.655179+00:00", "monotonic_ns": 39929265799011, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect storage driver"}
+{"utc": "2026-11-10T13:45:18.707224+00:00", "monotonic_ns": 39929317857821, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect storage driver", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.707919+00:00", "monotonic_ns": 39929318539055, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect DB image size"}
+{"utc": "2026-11-10T13:45:18.722085+00:00", "monotonic_ns": 39929332713725, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect DB image size", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.722616+00:00", "monotonic_ns": 39929333235170, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect web image size"}
+{"utc": "2026-11-10T13:45:18.736207+00:00", "monotonic_ns": 39929346834423, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect web image size", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.736788+00:00", "monotonic_ns": 39929347680937, "event": "RESOURCE_CHECK", "run_id": "p3-clean-20261110", "driver": "vfs", "host_free_bytes": 761319424, "estimated_required_bytes": 2136002336, "estimated_stopped_container_release_bytes": 1867566880}
+{"utc": "2026-11-10T13:45:18.737719+00:00", "monotonic_ns": 39929348338586, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "guard existing target containers"}
+{"utc": "2026-11-10T13:45:18.751237+00:00", "monotonic_ns": 39929361862957, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "guard existing target containers", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.752033+00:00", "monotonic_ns": 39929362653005, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "guard existing target volumes"}
+{"utc": "2026-11-10T13:45:18.765730+00:00", "monotonic_ns": 39929376356086, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "guard existing target volumes", "exit_code": 0}
+{"utc": "2026-11-10T13:45:18.766234+00:00", "monotonic_ns": 39929376853384, "event": "TARGET_PREFLIGHT_PASSED", "run_id": "p3-clean-20261110", "project": "group08-restore-p3-clean-20261110"}
+{"utc": "2026-11-10T13:45:18.766524+00:00", "monotonic_ns": 39929377142809, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "source stop"}
+{"utc": "2026-11-10T13:45:20.715203+00:00", "monotonic_ns": 39931325837626, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "source stop", "exit_code": 0}
+{"utc": "2026-11-10T13:45:20.715790+00:00", "monotonic_ns": 39931326412094, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "source stop"}
+{"utc": "2026-11-10T13:45:21.888644+00:00", "monotonic_ns": 39932499279698, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "source stop", "exit_code": 0}
+{"utc": "2026-11-10T13:45:21.889665+00:00", "monotonic_ns": 39932500285960, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "source logs"}
+{"utc": "2026-11-10T13:45:21.974886+00:00", "monotonic_ns": 39932585520036, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "source logs", "exit_code": 0}
+{"utc": "2026-11-10T13:45:21.975676+00:00", "monotonic_ns": 39932586296083, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "source logs"}
+{"utc": "2026-11-10T13:45:22.132006+00:00", "monotonic_ns": 39932742640659, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "source logs", "exit_code": 0}
+{"utc": "2026-11-10T13:45:22.136716+00:00", "monotonic_ns": 39932747340026, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:45:22.154228+00:00", "monotonic_ns": 39932764860797, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:45:22.155029+00:00", "monotonic_ns": 39932765648883, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:45:22.171461+00:00", "monotonic_ns": 39932782092149, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:45:22.172214+00:00", "monotonic_ns": 39932782833413, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "release stopped source containers; preserve volumes"}
+{"utc": "2026-11-10T13:45:22.807280+00:00", "monotonic_ns": 39933417914165, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "release stopped source containers; preserve volumes", "exit_code": 0}
+{"utc": "2026-11-10T13:45:22.808306+00:00", "monotonic_ns": 39933418930433, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "confirm source volume retained"}
+{"utc": "2026-11-10T13:45:22.836245+00:00", "monotonic_ns": 39933446879186, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "confirm source volume retained", "exit_code": 0}
+{"utc": "2026-11-10T13:45:22.837011+00:00", "monotonic_ns": 39933447631487, "event": "SOURCE_CONTAINERS_RELEASED", "run_id": "p3-clean-20261110", "volume_preserved": "group08-lab_db_data"}
+{"utc": "2026-11-10T13:45:22.837544+00:00", "monotonic_ns": 39933448164629, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "extract and verify selected Restic snapshot"}
+{"utc": "2026-11-10T13:45:28.415228+00:00", "monotonic_ns": 39939025864469, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "extract and verify selected Restic snapshot", "exit_code": 0}
+{"utc": "2026-11-10T13:45:28.416358+00:00", "monotonic_ns": 39939026981078, "event": "ARTIFACT_VERIFIED", "run_id": "p3-clean-20261110", "snapshot_id": "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c"}
+{"utc": "2026-11-10T13:45:28.417135+00:00", "monotonic_ns": 39939027756254, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "guard existing target containers"}
+{"utc": "2026-11-10T13:45:28.433633+00:00", "monotonic_ns": 39939044263070, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "guard existing target containers", "exit_code": 0}
+{"utc": "2026-11-10T13:45:28.434162+00:00", "monotonic_ns": 39939044783343, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "guard existing target volumes"}
+{"utc": "2026-11-10T13:45:28.449104+00:00", "monotonic_ns": 39939059733238, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "guard existing target volumes", "exit_code": 0}
+{"utc": "2026-11-10T13:45:28.449795+00:00", "monotonic_ns": 39939060416535, "event": "TARGET_PREFLIGHT_PASSED", "run_id": "p3-clean-20261110", "project": "group08-restore-p3-clean-20261110"}
+{"utc": "2026-11-10T13:45:28.450301+00:00", "monotonic_ns": 39939060920914, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect storage driver"}
+{"utc": "2026-11-10T13:45:28.498060+00:00", "monotonic_ns": 39939108768817, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect storage driver", "exit_code": 0}
+{"utc": "2026-11-10T13:45:28.498906+00:00", "monotonic_ns": 39939109530668, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect DB image size"}
+{"utc": "2026-11-10T13:45:28.516063+00:00", "monotonic_ns": 39939126692794, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect DB image size", "exit_code": 0}
+{"utc": "2026-11-10T13:45:28.516663+00:00", "monotonic_ns": 39939127282862, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect web image size"}
+{"utc": "2026-11-10T13:45:28.532995+00:00", "monotonic_ns": 39939143623788, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect web image size", "exit_code": 0}
+{"utc": "2026-11-10T13:45:28.533603+00:00", "monotonic_ns": 39939144224842, "event": "RESOURCE_CHECK", "run_id": "p3-clean-20261110", "driver": "vfs", "host_free_bytes": 2716336128, "estimated_required_bytes": 2136002336, "estimated_stopped_container_release_bytes": 0}
+{"utc": "2026-11-10T13:45:28.534264+00:00", "monotonic_ns": 39939144884354, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "target up"}
+{"utc": "2026-11-10T13:45:47.210070+00:00", "monotonic_ns": 39957820704705, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "target up", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.211067+00:00", "monotonic_ns": 39957821687714, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:45:47.228610+00:00", "monotonic_ns": 39957839242676, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.229571+00:00", "monotonic_ns": 39957840191934, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect target volume"}
+{"utc": "2026-11-10T13:45:47.247092+00:00", "monotonic_ns": 39957857727607, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect target volume", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.247923+00:00", "monotonic_ns": 39957858542934, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "read DB metadata"}
+{"utc": "2026-11-10T13:45:47.365091+00:00", "monotonic_ns": 39957975724903, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "read DB metadata", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.365928+00:00", "monotonic_ns": 39957976549122, "event": "TARGET_READY", "run_id": "p3-clean-20261110", "volume": "group08-restore-p3-clean-20261110_restore_data", "seed_tables": 0}
+{"utc": "2026-11-10T13:45:47.366465+00:00", "monotonic_ns": 39957977084618, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "target cp"}
+{"utc": "2026-11-10T13:45:47.428327+00:00", "monotonic_ns": 39958038961689, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "target cp", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.429119+00:00", "monotonic_ns": 39958039740190, "event": "IMPORT_STARTED", "run_id": "p3-clean-20261110", "target_state": "DIRTY until all checks succeed"}
+{"utc": "2026-11-10T13:45:47.429561+00:00", "monotonic_ns": 39958040181263, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "SQL import; every nonzero exit is failure"}
+{"utc": "2026-11-10T13:45:47.560344+00:00", "monotonic_ns": 39958170981675, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "SQL import; every nonzero exit is failure", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.561074+00:00", "monotonic_ns": 39958171697952, "event": "IMPORT_FINISHED", "run_id": "p3-clean-20261110"}
+{"utc": "2026-11-10T13:45:47.561777+00:00", "monotonic_ns": 39958172397975, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "provision target app role"}
+{"utc": "2026-11-10T13:45:47.681073+00:00", "monotonic_ns": 39958291709697, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "provision target app role", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.681808+00:00", "monotonic_ns": 39958292428558, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "verify target app grants"}
+{"utc": "2026-11-10T13:45:47.786438+00:00", "monotonic_ns": 39958397073812, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "verify target app grants", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.787343+00:00", "monotonic_ns": 39958397962709, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "capture every orders row"}
+{"utc": "2026-11-10T13:45:47.899289+00:00", "monotonic_ns": 39958509924568, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "capture every orders row", "exit_code": 0}
+{"utc": "2026-11-10T13:45:47.900235+00:00", "monotonic_ns": 39958510855648, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "capture orders schema"}
+{"utc": "2026-11-10T13:45:48.008998+00:00", "monotonic_ns": 39958619688881, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "capture orders schema", "exit_code": 0}
+{"utc": "2026-11-10T13:45:48.012158+00:00", "monotonic_ns": 39958622778858, "event": "TRIAL_ENDED", "run_id": "p3-clean-20261110", "status": "FAILED", "error_type": "ValueError", "error": "Restored schema or full dataset differs from source baseline"}
+{"utc": "2026-11-10T13:45:48.012676+00:00", "monotonic_ns": 39958623296487, "event": "POST_TRIAL_RETURN_SOURCE_STARTED", "run_id": "p3-clean-20261110"}
+{"utc": "2026-11-10T13:45:48.013022+00:00", "monotonic_ns": 39958623640824, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "target ps"}
+{"utc": "2026-11-10T13:45:48.081555+00:00", "monotonic_ns": 39958692189535, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "target ps", "exit_code": 0}
+{"utc": "2026-11-10T13:45:48.082581+00:00", "monotonic_ns": 39958693201367, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:45:48.100831+00:00", "monotonic_ns": 39958711459277, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:45:48.101761+00:00", "monotonic_ns": 39958712381264, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "target logs"}
+{"utc": "2026-11-10T13:45:48.168940+00:00", "monotonic_ns": 39958779574120, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "target logs", "exit_code": 0}
+{"utc": "2026-11-10T13:45:48.169962+00:00", "monotonic_ns": 39958780581766, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "target ps"}
+{"utc": "2026-11-10T13:45:48.232292+00:00", "monotonic_ns": 39958842927042, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "target ps", "exit_code": 0}
+{"utc": "2026-11-10T13:45:48.233470+00:00", "monotonic_ns": 39958844092404, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "target stop"}
+{"utc": "2026-11-10T13:45:49.907416+00:00", "monotonic_ns": 39960518050537, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "target stop", "exit_code": 0}
+{"utc": "2026-11-10T13:45:49.907921+00:00", "monotonic_ns": 39960518540223, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "release stopped target containers; preserve target volume"}
+{"utc": "2026-11-10T13:45:50.458189+00:00", "monotonic_ns": 39961068822632, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "release stopped target containers; preserve target volume", "exit_code": 0}
+{"utc": "2026-11-10T13:45:50.458982+00:00", "monotonic_ns": 39961069602465, "event": "COMMAND_STARTED", "run_id": "p3-clean-20261110", "label": "source up"}
+{"utc": "2026-11-10T13:46:09.643322+00:00", "monotonic_ns": 39980253956531, "event": "COMMAND_FINISHED", "run_id": "p3-clean-20261110", "label": "source up", "exit_code": 0}
+{"utc": "2026-11-10T13:46:09.649653+00:00", "monotonic_ns": 39980260279268, "event": "POST_TRIAL_RETURN_SOURCE_FINISHED", "run_id": "p3-clean-20261110", "health": {"database": "ok", "orders_count": 104, "status": "ok"}}

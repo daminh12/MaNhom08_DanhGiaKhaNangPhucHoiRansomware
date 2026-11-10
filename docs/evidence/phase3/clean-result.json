@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "run_id": "p3-clean-v2-20261110",
+  "scenario": "restore",
+  "status": "PASS",
+  "started_at_utc": "2026-11-10T13:48:49.945369+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p3-clean-v2-20261110",
+  "release_source_containers": true,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 104,
+    "status": "ok"
+  },
+  "backup": {
+    "schema_version": 1,
+    "run_id": "p2-20261110T134432Z-1c95ac703322",
+    "status": "PASS",
+    "started_at_utc": "2026-11-10T13:44:38.619575+00:00",
+    "snapshot_id": "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c",
+    "dump_metadata": {
+      "schema_version": 1,
+      "run_id": "p2-20261110T134432Z-1c95ac703322",
+      "database": "lab_config",
+      "tables": [
+        "orders"
+      ],
+      "engine": "InnoDB",
+      "dump_started_at_utc": "2026-11-10T13:44:34Z",
+      "dump_finished_at_utc": "2026-11-10T13:44:34Z",
+      "consistency": "mysqldump single-transaction; no DDL during dump",
+      "scope": "schema and data of orders only; triggers/routines/events excluded",
+      "business_baseline": {
+        "schema_version": 1,
+        "canonicalization": "orders-jsonl-v1",
+        "row_count": 104,
+        "rows_sha256": "73e0d38e293597fd17bab8191e1d92b450c906e8b636c084fb5d5535ec7eb742",
+        "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+        "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+      },
+      "baseline_sql_sha256": "1f4758ba9c5463b4276206d9c3376cd9937c6865ab792fdb3231d7bed8e9175a",
+      "baseline_capture": "web stopped; no admin writers/DDL; full before/after comparison"
+    },
+    "manifest_sha256": "f27cdaccf18416bd7533af3decbad4015076af3ce563994978013f6d0aeec225",
+    "verified_at_utc": "2026-11-10T13:44:42.577663+00:00",
+    "repository_check": "PASS",
+    "snapshot_readback_sha256": "PASS",
+    "finished_at_utc": "2026-11-10T13:44:42.577670+00:00"
+  },
+  "target_volume": "group08-restore-p3-clean-v2-20261110_restore_data",
+  "restored_snapshot_rows": 104,
+  "write_probe": [
+    105,
+    "LAB-P3-PROBE-2-20261110",
+    "Pen",
+    1,
+    25000,
+    "2026-11-10T13:49:19.381086Z"
+  ],
+  "integrity": "PASS",
+  "schema": "PASS",
+  "grants": "PASS",
+  "api_read_write": "PASS",
+  "persistence": "PASS",
+  "source_after_return": {
+    "database": "ok",
+    "orders_count": 104,
+    "status": "ok"
+  },
+  "return_source_status": "PASS",
+  "finished_at_utc": "2026-11-10T13:49:48.101215+00:00"
+}

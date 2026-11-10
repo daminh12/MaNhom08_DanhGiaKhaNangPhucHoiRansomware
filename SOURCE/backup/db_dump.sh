@@ -43,7 +43,7 @@ elif [ "$action" = dump ]; then
     started=$(date -u +%Y-%m-%dT%H:%M:%SZ)
     mysqldump --defaults-extra-file="$stage/client.cnf" \
         --single-transaction --quick --skip-lock-tables --no-tablespaces \
-        --set-gtid-purged=OFF --skip-triggers --default-character-set=utf8mb4 \
+        --set-gtid-purged=OFF --skip-triggers --skip-add-drop-table --default-character-set=utf8mb4 \
         --result-file="$stage/database.sql.part" lab_config orders
     [ -s "$stage/database.sql.part" ] || { echo 'Empty dump' >&2; exit 2; }
     finished=$(date -u +%Y-%m-%dT%H:%M:%SZ)
