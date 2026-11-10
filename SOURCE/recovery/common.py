@@ -97,6 +97,23 @@ def canonical_api(row):
 
 
 def acknowledged_comparison(acknowledgements, rows, fault_ns):
+    if type(fault_ns) is not int or fault_ns < 0 or not isinstance(acknowledgements,list):
+        raise ValueError('Expected a monotonic integer fault timestamp and ACK list')
+    # This profile is sequential, with every business ACK drained before fault.
+    # Invalid clocks/identities must not produce plausible or negative metrics.
+    ids=set();aliases=set();last_ack=-1
+    rows_hash(rows)
+    for ack in acknowledgements:
+        if not isinstance(ack,dict):raise ValueError('Invalid ACK record')
+        request=ack.get('request_id');alias=ack.get('alias')
+        sent=ack.get('sent_ns');received=ack.get('ack_ns')
+        if not isinstance(request,str) or not request or request in ids or not isinstance(alias,str) or alias in aliases:
+            raise ValueError('Business request IDs and aliases must be unique')
+        if type(sent) is not int or type(received) is not int or not 0<=sent<=received<=fault_ns or sent<last_ack:
+            raise ValueError('ACK timestamps violate the sequential pre-fault profile')
+        row=ack.get('row');rows_hash([row])
+        if row[1]!=alias:raise ValueError('ACK alias differs from its confirmed row')
+        ids.add(request);aliases.add(alias);last_ack=received
     recovered, missing, duplicates = [], [], []
     for ack in acknowledgements:
         matches = [r for r in rows if r[1] == ack['alias']]

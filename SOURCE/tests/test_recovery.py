@@ -83,9 +83,24 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(result['recovered_commit_age_bounds']['lower_seconds'],890/1e9)
 
     def test_nonprefix_and_duplicates_do_not_get_a_recovery_point(self):
-        a=[{'request_id':str(i),'alias':r[1],'row':r,'sent_ns':1,'ack_ns':2} for i,r in enumerate(self.rows)]
+        a=[{'request_id':str(i),'alias':r[1],'row':r,'sent_ns':i*3+1,'ack_ns':i*3+2} for i,r in enumerate(self.rows)]
         self.assertIsNone(acknowledged_comparison(a,self.rows[1:],10)['recovered_commit_age_bounds'])
-        self.assertTrue(acknowledged_comparison(a,self.rows+[self.rows[0]],10)['duplicates'])
+        duplicate=[3,*self.rows[0][1:]]
+        self.assertTrue(acknowledged_comparison(a,self.rows+[duplicate],10)['duplicates'])
+
+    def test_bad_ack_clocks_cannot_produce_metrics(self):
+        ack={'request_id':'r1','alias':'LAB-A','row':self.rows[0],'sent_ns':1,'ack_ns':2}
+        for updates in [{'ack_ns':11},{'sent_ns':3},{'sent_ns':-1},{'ack_ns':True},{'ack_ns':float('nan')}]:
+            with self.subTest(updates=updates),self.assertRaises(ValueError):
+                acknowledged_comparison([ack|updates],self.rows,10)
+
+    def test_repeated_business_identity_is_rejected(self):
+        ack={'request_id':'r1','alias':'LAB-A','row':self.rows[0],'sent_ns':1,'ack_ns':2}
+        with self.assertRaises(ValueError):acknowledged_comparison([ack,ack|{'sent_ns':3,'ack_ns':4}],self.rows,10)
+
+    def test_overlapping_ack_profile_is_not_silently_sequential(self):
+        a=[{'request_id':str(i),'alias':r[1],'row':r,'sent_ns':1,'ack_ns':2} for i,r in enumerate(self.rows)]
+        with self.assertRaises(ValueError):acknowledged_comparison(a,self.rows,10)
 
     def test_existing_or_partial_run_is_never_reused(self):
         with tempfile.TemporaryDirectory() as tmp,patch.object(controller,'WORK',Path(tmp)):

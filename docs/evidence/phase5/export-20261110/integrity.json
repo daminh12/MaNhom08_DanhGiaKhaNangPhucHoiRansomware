@@ -1,0 +1,61 @@
+{
+  "main": {
+    "status": "PASS",
+    "manifest_sha256": "eb7311dea5acca507f14b5d821c7d7599e3899833bf8d487aa07d53e4e9cd65b",
+    "files": [
+      {
+        "path": "database.sql",
+        "size_bytes": 8876,
+        "sha256": "7b4e7de39896a78b7b8094786a5e7d193eefd3bebe6aa6c7abb515115a56e6fe",
+        "actual_sha256": "7b4e7de39896a78b7b8094786a5e7d193eefd3bebe6aa6c7abb515115a56e6fe"
+      },
+      {
+        "path": "metadata.json",
+        "size_bytes": 1592,
+        "sha256": "b1914f23a300c36b79cfe6063b0a1511ed4c75f98c338089c41284ab5e2d251e",
+        "actual_sha256": "b1914f23a300c36b79cfe6063b0a1511ed4c75f98c338089c41284ab5e2d251e"
+      }
+    ]
+  },
+  "web-control": {
+    "status": "NOT APPLICABLE"
+  },
+  "corrupt": {
+    "status": "PASS",
+    "manifest_sha256": "f27cdaccf18416bd7533af3decbad4015076af3ce563994978013f6d0aeec225",
+    "files": [
+      {
+        "path": "database.sql",
+        "size_bytes": 8834,
+        "sha256": "1f4758ba9c5463b4276206d9c3376cd9937c6865ab792fdb3231d7bed8e9175a",
+        "actual_sha256": "1f4758ba9c5463b4276206d9c3376cd9937c6865ab792fdb3231d7bed8e9175a"
+      },
+      {
+        "path": "metadata.json",
+        "size_bytes": 1592,
+        "sha256": "764687bdb28b71fc43b5b780780de89445815b68a74959487bc0a4a010f1057d",
+        "actual_sha256": "764687bdb28b71fc43b5b780780de89445815b68a74959487bc0a4a010f1057d"
+      }
+    ],
+    "candidate_rejection": "PASS",
+    "candidate_integrity": "FAIL (expected)"
+  },
+  "failed-restore": {
+    "status": "PASS",
+    "manifest_sha256": "f27cdaccf18416bd7533af3decbad4015076af3ce563994978013f6d0aeec225",
+    "files": [
+      {
+        "path": "database.sql",
+        "size_bytes": 8834,
+        "sha256": "1f4758ba9c5463b4276206d9c3376cd9937c6865ab792fdb3231d7bed8e9175a",
+        "actual_sha256": "1f4758ba9c5463b4276206d9c3376cd9937c6865ab792fdb3231d7bed8e9175a"
+      },
+      {
+        "path": "metadata.json",
+        "size_bytes": 1592,
+        "sha256": "764687bdb28b71fc43b5b780780de89445815b68a74959487bc0a4a010f1057d",
+        "actual_sha256": "764687bdb28b71fc43b5b780780de89445815b68a74959487bc0a4a010f1057d"
+      }
+    ]
+  }
+}

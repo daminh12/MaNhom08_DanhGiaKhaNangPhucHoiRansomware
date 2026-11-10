@@ -102,3 +102,12 @@ trực tiếp trên Windows). Phase 1/2 vẫn chạy theo hướng dẫn Docker 
 [Kết quả Phase 3](docs/PHASE3_RESULTS.md), [Phase 4](docs/PHASE4_RESULTS.md) và
 [bổ sung Runbook](THESIS/runbook/PHASE3_PHASE4_DOCKER.md) ghi bằng chứng Linux thật,
 bao gồm cả run FAILED, giới hạn cloud và các hạng mục NOT TESTED.
+
+## 11. Review Phase 0–4 và số đo Phase 5
+
+[Code review](docs/reviews/PHASE0_4_REVIEW_2026-11-10.md) ghi finding còn mở và
+phạm vi GO. [Phase 5](docs/PHASE5_RESULTS.md) tính lại số đo từ raw events đã pin,
+kiểm toàn vẹn và xuất [CSV](docs/evidence/phase5/export-20261110/metrics.csv).
+[Hướng dẫn exporter](SOURCE/metrics/README.md) chạy offline bằng Python/Git, không
+gây outage; fresh retained-DB verification là một action riêng có tác động lab.
+Người dùng chưa chọn RTO/RPO target; không tự kết luận đạt SLA hoặc Windows PASS.
