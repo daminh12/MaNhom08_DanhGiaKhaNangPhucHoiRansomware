@@ -1,0 +1,39 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "SOURCE/recovery/controller.py",
+        "web-outage",
+        "--run-id",
+        "p4-p6-web-20261115",
+        "--return-source"
+      ],
+      "started_at_utc": "2026-11-15T02:56:27.748111+00:00",
+      "log": "web-rehearsal-console.txt",
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-15T02:56:35.587137+00:00"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "SOURCE/tests/runtime_phase1.py"
+      ],
+      "started_at_utc": "2026-11-15T02:56:35.587247+00:00",
+      "log": "v1.0-db-control.txt",
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-15T02:56:51.302769+00:00"
+    }
+  ],
+  "final_health": {
+    "http_status": 200,
+    "body": {
+      "database": "ok",
+      "orders_count": 108,
+      "status": "ok"
+    }
+  },
+  "not_new_main_restore_trial": true
+}

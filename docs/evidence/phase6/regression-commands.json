@@ -1,0 +1,60 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "SOURCE/tests",
+      "-p",
+      "test_backup.py",
+      "-v"
+    ],
+    "observed_at_utc": "2026-11-15T02:48:23.552175+00:00",
+    "exit_code": 0,
+    "log": "backup-regression.txt",
+    "kind": "unit/mock; no business writes"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "SOURCE/tests",
+      "-p",
+      "test_metrics.py",
+      "-v"
+    ],
+    "observed_at_utc": "2026-11-15T02:48:23.685593+00:00",
+    "exit_code": 0,
+    "log": "metrics-regression.txt",
+    "kind": "unit/mock; no business writes"
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "exec",
+      "-T",
+      "web",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/tests",
+      "-p",
+      "test_app.py",
+      "-v"
+    ],
+    "observed_at_utc": "2026-11-15T02:48:24.143660+00:00",
+    "exit_code": 0,
+    "log": "app-regression.txt",
+    "kind": "unit/mock; no business writes"
+  }
+]

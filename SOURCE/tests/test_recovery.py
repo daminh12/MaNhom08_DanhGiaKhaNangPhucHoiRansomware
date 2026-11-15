@@ -76,6 +76,104 @@ class RecoveryTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):lab.create_order('LAB-A',8080,'r1')
         self.assertEqual(events,['REQUEST_SENT','REQUEST_UNCERTAIN'])
 
+    def test_malformed_created_response_is_uncertain_without_retry(self):
+        for body in [{}, {'order':None}, {'order':{'id':1}}, {'order':{'created_at_utc':1}}]:
+            with self.subTest(body=body):
+                lab=object.__new__(controller.Lab);events=[];calls=[]
+                lab.event=lambda name,**data: events.append(name) or {'monotonic_ns':1}
+                def http(*args,**kwargs):
+                    calls.append(1)
+                    return 201,body
+                lab.http=http
+                with self.assertRaises(RuntimeError):lab.create_order('LAB-A',8080,'r1')
+                self.assertEqual(calls,[1])
+                self.assertEqual(events,['REQUEST_SENT','REQUEST_UNCERTAIN'])
+
+    def test_created_response_must_obey_exact_integer_contract(self):
+        lab=object.__new__(controller.Lab);events=[]
+        lab.event=lambda name,**data: events.append(name) or {'monotonic_ns':1}
+        # bool compares equal to 1 in Python, but is not a valid order ID.
+        lab.http=lambda *a,**k:(201,{'order':{'id':True,'customer_alias':'LAB-A',
+            'product_name':'Pen','quantity':1,'unit_price_vnd':25000,
+            'created_at_utc':'2026-01-01T00:00:00Z'}})
+        with self.assertRaises(RuntimeError):lab.create_order('LAB-A',8080,'r1')
+        self.assertEqual(events,['REQUEST_SENT','REQUEST_UNCERTAIN'])
+
+    def test_valid_created_response_still_produces_business_ack(self):
+        lab=object.__new__(controller.Lab);events=[]
+        lab.event=lambda name,**data: events.append(name) or {'monotonic_ns':len(events)}
+        lab.http=lambda *a,**k:(201,{'order':{'id':1,'customer_alias':'LAB-A',
+            'product_name':'Pen','quantity':1,'unit_price_vnd':25000,
+            'created_at_utc':'2026-01-01T00:00:00Z'}})
+        result=lab.create_order('LAB-A',8080,'r1')
+        self.assertEqual(events,['REQUEST_SENT','REQUEST_ACKNOWLEDGED'])
+        self.assertEqual((result['sent_ns'],result['ack_ns']),(1,2))
+        self.assertEqual(result['row'],self.rows[0])
+
+    def test_missing_or_invalid_local_secret_refused_without_disclosing_values(self):
+        with tempfile.TemporaryDirectory() as tmp,patch.object(controller,'ROOT',Path(tmp)):
+            root=Path(tmp);(root/'secrets').mkdir();(root/'backups/restic').mkdir(parents=True)
+            for name in ['db_root_password.txt','db_app_password.txt','db_backup_password.txt','restic_password.txt']:
+                (root/'secrets'/name).write_text('a'*64)
+            (root/'backups/restic/config').write_text('{}')
+            lab=object.__new__(controller.Lab)
+            self.assertIn('PASS',lab.local_inputs()['credential_files'])
+            path=root/'secrets/restic_password.txt';path.write_text('PRIVATE-INVALID')
+            with self.assertRaises(ValueError) as error:lab.local_inputs()
+            self.assertNotIn('PRIVATE-INVALID',str(error.exception))
+            path.unlink()
+            with self.assertRaises(ValueError):lab.local_inputs()
+            self.assertEqual(lab.local_inputs(backup=False,archive=False)['repository_config'],'NOT TESTED')
+            path.write_text('a'*64)
+            (root/'secrets/db_backup_password.txt').unlink()
+            # Restoring an existing snapshot does not need the dump account.
+            self.assertIn('PASS',lab.local_inputs(backup=False)['credential_files'])
+            with self.assertRaises(ValueError):lab.local_inputs()
+
+    def test_low_space_fails_without_service_lifecycle_commands(self):
+        lab=object.__new__(controller.Lab);lab.result={};commands=[];events=[]
+        lab.event=lambda name,**data:events.append((name,data))
+        def call(command,*args,**kwargs):
+            commands.append(command)
+            return 'vfs' if command[1]=='info' else str(512*1024**2)
+        lab.call=call
+        with patch.object(controller.shutil,'disk_usage',return_value=types.SimpleNamespace(free=128*1024**2)):
+            with self.assertRaises(RuntimeError):lab.resource_check(allow_release_credit=True)
+        self.assertEqual(events[0][0],'RESOURCE_CHECK')
+        self.assertEqual(lab.result['resources']['host_free_bytes'],128*1024**2)
+        self.assertTrue(all(command[1] in ['info','image'] for command in commands))
+
+    def test_preflight_web_scope_does_not_permit_clean_restore(self):
+        lab=object.__new__(controller.Lab);lab.result={};lab.a=types.SimpleNamespace(preflight_scope='web-control',release_source_containers=False)
+        lab.local_inputs=lambda **kwargs:{'repository_config':'NOT TESTED'}
+        lab.capture=lambda:(self.schema,self.rows)
+        def api_row(row):
+            return dict(zip(['id','customer_alias','product_name','quantity','unit_price_vnd','created_at_utc'],row))
+        lab.http=lambda *args:(200,{'total':2,'orders':[api_row(r) for r in reversed(self.rows)]})
+        lab.sql=lambda *args,**kwargs:'GRANT SELECT, INSERT ON `lab_config`.`orders` TO `group08_app`@`%`'
+        lab.source=lambda *args,**kwargs:'Filesystem 1024-blocks Used Available Capacity Mounted on\nlab 999999 1 524288 1% /\nlab 999999 1 524288 1% /\n'
+        events=[];lab.event=lambda name,**kwargs:events.append(name)
+        with patch.object(controller.shutil,'disk_usage',return_value=types.SimpleNamespace(free=512*1024**2)):
+            lab.preflight()
+        self.assertEqual(lab.result['preflight']['status'],'PASS')
+        self.assertIn('NOT TESTED',lab.result['preflight']['clean_recovery_resources'])
+        self.assertEqual(events,['PREFLIGHT_PASSED'])
+        # Host capacity alone cannot grant permission when the Docker VM is full.
+        lab.a.preflight_scope='clean-recovery'
+        lab.resource_check=lambda **kwargs:{'estimated_required_bytes':1024*1024**2,
+                                            'estimated_stopped_container_release_bytes':2*1024*1024**2}
+        with self.assertRaises(RuntimeError):lab.preflight()
+        self.assertEqual(lab.result['preflight']['status'],'FAILED')
+
+    def test_preflight_refuses_unknown_docker_capacity(self):
+        lab=object.__new__(controller.Lab);lab.result={};lab.a=types.SimpleNamespace(preflight_scope='web-control')
+        lab.local_inputs=lambda **kwargs:{};lab.capture=lambda:(self.schema,[])
+        lab.http=lambda *args:(200,{'total':0,'orders':[]})
+        lab.sql=lambda *args,**kwargs:'GRANT SELECT, INSERT ON `lab_config`.`orders` TO `group08_app`@`%`'
+        lab.source=lambda *args,**kwargs:'Filesystem Available\n'
+        with self.assertRaises(ValueError):lab.preflight()
+        self.assertEqual(lab.result['preflight']['status'],'FAILED')
+
     def test_acknowledged_loss_and_bounds_not_created_at(self):
         a=[{'request_id':str(i),'alias':row[1],'row':row,'sent_ns':i*100,'ack_ns':i*100+10} for i,row in enumerate(self.rows,1)]
         result=acknowledged_comparison(a,self.rows[:1],1000)

@@ -21,7 +21,7 @@ import urllib.error
 import urllib.request
 
 from common import (acknowledged_comparison, baseline_for, canonical_api, compare,
-                    full_snapshot, run_id, sha, utc)
+                    full_snapshot, rows_hash, run_id, sha, utc)
 
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / 'work/recovery'
@@ -173,10 +173,70 @@ class Lab:
         if code!=200:raise ValueError('Source health precondition failed')
         self.event('SOURCE_VALIDATED',db_id=db['Id'],web_id=web['Id'],health=health,volume=SOURCE_VOLUME)
         self.result['source_before']=health
+        if self.a.action in ['backup','restore','drill','reject-corrupt']:
+            self.result['local_inputs']=self.local_inputs(backup=self.a.action in ['backup','drill'])
         for image in ['mysql:8.4.7','group08-lab-web','group08-lab-backup']:
             self.call(['docker','image','inspect',image],'require preinstalled '+image)
         if self.a.action in ['restore','drill']:
             self.resource_check(allow_release_credit=self.a.release_source_containers)
+
+    def local_inputs(self, backup=True, archive=True):
+        names=['db_root_password.txt','db_app_password.txt']
+        if backup:names+=['db_backup_password.txt']
+        if archive:names+=['restic_password.txt']
+        for name in names:
+            path=ROOT/'secrets'/name
+            reject_symlinks(path)
+            if not path.is_file() or not re.fullmatch('[a-f0-9]{64}',path.read_text(encoding='utf-8')):
+                raise ValueError('Missing/invalid local credential file: '+name+'; never regenerate existing secrets')
+        if archive:
+            path=ROOT/'backups/restic/config'
+            reject_symlinks(path)
+            if not path.is_file():raise ValueError('Existing Restic repository required; complete Phase 2 Setup first')
+        return {'credential_files':'PASS (presence/format only; values not recorded)',
+                'repository_config':'PRESENT; not a Restic integrity check' if archive else 'NOT TESTED'}
+
+    def preflight(self):
+        # Read-only lab checks. This action never stops services or creates a target.
+        scope=self.a.preflight_scope
+        checks={'scope':scope,'service_mutations':False,'status':'FAILED'}
+        self.result['preflight']=checks
+        checks['local_inputs']=self.local_inputs(backup=scope=='clean-recovery',archive=scope=='clean-recovery')
+        schema,rows=self.capture()
+        checks['source_baseline']=baseline_for(schema,rows)
+        code,body=self.http('/api/orders')
+        if code!=200 or body['total']!=len(rows) or [canonical_api(r) for r in body['orders']]!=list(reversed(rows))[:100]:
+            raise ValueError('Source API disagrees with the full read-only DB capture')
+        checks['api_read']='PASS; API window checked against full DB, not used as full baseline'
+        grants=self.sql("SHOW GRANTS FOR 'group08_app'@'%';",label='preflight source app privileges')
+        expected='GRANT SELECT, INSERT ON `lab_config`.`orders` TO `group08_app`@`%`'
+        if [g for g in grants.splitlines() if not g.startswith('GRANT USAGE ON ')]!=[expected]:
+            raise ValueError('Unexpected source application privileges')
+        checks['app_grants']='PASS'
+        raw=self.source('exec','-T','db','df','-Pk','/var/lib/mysql','/tmp',label='read Docker volume and staging filesystem capacity')
+        disks=[]
+        for line in raw.splitlines()[1:]:
+            fields=line.split()
+            if len(fields)!=6 or not fields[3].isdecimal():raise ValueError('Cannot verify Docker filesystem free space')
+            disks.append({'filesystem':fields[0],'available_bytes':int(fields[3])*1024,'mount':fields[-1]})
+        if len(disks)!=2:raise ValueError('Missing Docker filesystem capacity observations')
+        checks['docker_filesystems']=disks
+        if scope=='clean-recovery':
+            resources=self.resource_check(allow_release_credit=self.a.release_source_containers)
+            # Release credit is only a host estimate: it cannot establish free
+            # space on a separate Docker VM/volume filesystem before release.
+            if any(d['available_bytes']<resources['estimated_required_bytes'] for d in disks):
+                raise RuntimeError('Insufficient Docker filesystem space for clean recovery; retain all data volumes/snapshots')
+            checks['clean_recovery_resources']='PASS (estimate only; rechecked by restore)'
+        else:
+            # Explicit policy reserve for logs/control, without allocating a new DB.
+            reserve=64*1024**2
+            if min([shutil.disk_usage(ROOT).free]+[d['available_bytes'] for d in disks])<reserve:
+                raise RuntimeError('Insufficient 64 MiB evidence reserve even for web-only control')
+            checks['clean_recovery_resources']='NOT TESTED; this gate permits web-only control only'
+            checks['control_reserve_bytes']=reserve
+        checks['status']='PASS'
+        self.event('PREFLIGHT_PASSED',scope=scope,service_mutations=False)
 
     def preflight_target(self):
         if self.project==SOURCE_PROJECT or not self.project.startswith('group08-restore-p'):
@@ -300,9 +360,12 @@ class Lab:
         needed=2*(db_size+web_size)+256*1024**2 if driver=='vfs' else 512*1024**2
         free=shutil.disk_usage(ROOT).free
         credit=2*(db_size+web_size) if driver=='vfs' and allow_release_credit else 0
-        self.event('RESOURCE_CHECK',driver=driver,host_free_bytes=free,estimated_required_bytes=needed,
-                   estimated_stopped_container_release_bytes=credit)
+        resources=dict(driver=driver,host_free_bytes=free,estimated_required_bytes=needed,
+                       estimated_stopped_container_release_bytes=credit)
+        self.result['resources']=resources
+        self.event('RESOURCE_CHECK',**resources)
         if free+credit<needed:raise RuntimeError('Insufficient host space for clean recovery; do not remove data volumes/snapshots')
+        return resources
 
     def create_target(self):
         self.preflight_target()
@@ -338,8 +401,14 @@ class Lab:
         if code!=201:
             self.event('REQUEST_UNCERTAIN',request_id=request_id,http_status=code)
             raise RuntimeError('Write not confirmed; no automatic retry')
-        row=canonical_api(body['order'])
-        if row[1:5]!=[alias,'Pen',1,25000]:raise ValueError('API write response mismatch')
+        try:
+            row=canonical_api(body['order'])
+            # A 201 alone does not establish a usable business acknowledgement.
+            rows_hash([row])
+            if row[1:5]!=[alias,'Pen',1,25000]:raise ValueError('API write response mismatch')
+        except (ValueError,KeyError,TypeError,AttributeError) as e:
+            self.event('REQUEST_UNCERTAIN',request_id=request_id,http_status=code,error=type(e).__name__)
+            raise RuntimeError('Uncertain write response; inspect journal/DB before any manual retry') from e
         ack=self.event('REQUEST_ACKNOWLEDGED',request_id=request_id,row=row)
         return {'request_id':request_id,'alias':alias,'row':row,'sent_ns':sent['monotonic_ns'],'ack_ns':ack['monotonic_ns']}
 
@@ -442,14 +511,16 @@ class Lab:
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('action',choices=['backup','restore','drill','web-outage','reject-corrupt'])
+    p.add_argument('action',choices=['preflight','backup','restore','drill','web-outage','reject-corrupt'])
     p.add_argument('--run-id',required=True)
     p.add_argument('--backup-id');p.add_argument('--snapshot-id');p.add_argument('--manifest-sha256')
     p.add_argument('--port',type=int,default=8081)
     p.add_argument('--post-orders',type=int,default=3)
     p.add_argument('--release-source-containers',action='store_true')
     p.add_argument('--return-source',action='store_true')
+    p.add_argument('--preflight-scope',choices=['clean-recovery','web-control'],default='clean-recovery')
     args=p.parse_args()
+    if sys.version_info<(3,10):p.error('Host Python 3.10+ is required')
     if not 1024<=args.port<=65535 or not 1<=args.post_orders<=20:p.error('Invalid lab port/order bound')
     run_id(args.run_id)
     daemon=subprocess.check_output(['docker','info','--format','{{.ID}}'],text=True).strip()
@@ -460,7 +531,8 @@ def main():
             lab.event('TRIAL_PREPARED',commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),python=sys.version.split()[0],
                       working_source_sha256={f:sha(ROOT/f) for f in code_files})
             lab.validate_source()
-            if args.action=='backup':lab.backup()
+            if args.action=='preflight':lab.preflight()
+            elif args.action=='backup':lab.backup()
             elif args.action=='web-outage':lab.web_outage()
             elif args.action=='reject-corrupt':lab.reject_corrupt(lab.receipt())
             elif args.action=='restore':
@@ -484,7 +556,8 @@ def main():
             lab.result['status']='PASS'
             lab.event('TRIAL_ENDED',status='PASS')
         except BaseException as e:
-            lab.result.update(status='ABORTED' if isinstance(e,KeyboardInterrupt) else 'FAILED',error_type=type(e).__name__,error=str(e),target_state='do not reuse for import')
+            lab.result.update(status='ABORTED' if isinstance(e,KeyboardInterrupt) else 'FAILED',error_type=type(e).__name__,error=str(e),
+                              target_state='do not reuse for import' if lab.target_created else 'NOT CREATED; run ID remains reserved')
             lab.event('TRIAL_ENDED',status=lab.result['status'],error_type=type(e).__name__,error=str(e))
         finally:
             if args.return_source and lab.source_touched:
@@ -493,6 +566,7 @@ def main():
                     lab.result['return_source_status']='FAILED';lab.result['return_source_error']=str(e)
                     lab.event('POST_TRIAL_RETURN_SOURCE_FAILED',error=str(e))
             lab.result['finished_at_utc']=utc()
+            lab.result.update(source_touched=lab.source_touched,target_created=lab.target_created)
             write_json(lab.work/'result.json',lab.result)
         print(json.dumps(lab.result,ensure_ascii=False,indent=2))
         return 0 if lab.result['status']=='PASS' and lab.result.get('return_source_status')!='FAILED' else 1

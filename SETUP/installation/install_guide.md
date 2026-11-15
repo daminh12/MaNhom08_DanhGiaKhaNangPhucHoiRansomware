@@ -105,6 +105,6 @@ docker compose logs --tail 80 web
 | DB chưa healthy | Log `db`; lần khởi tạo đầu có thể lâu hơn; sau khi kiểm tra nguyên nhân có thể tăng thời gian chờ |
 | Web trả 503 | Trạng thái DB, bảng `orders`, quyền ứng dụng và secret đang dùng |
 | Số dòng không còn 100 | Đối chiếu lần thêm trên UI/smoke test; seed chỉ áp dụng lần đầu |
-| Lệnh trong Runbook Word không chạy | Bản nháp dùng VM/Linux host; dùng bảng đối chiếu Compose thay vì thực thi nguyên lệnh |
+| Lệnh trong Runbook Word không chạy | DOCX v1.0 còn placeholder/restore nguồn; dùng `THESIS/runbook/Runbook_v1.1.md` và bảng đối chiếu Compose |
 
 Ghi lệnh, thời điểm, mã thoát và lỗi thực tế vào hồ sơ kiểm thử. Windows 10 cần được nhóm xác minh trực tiếp; kết quả Linux/cloud không thay thế bằng chứng trên máy trình diễn.

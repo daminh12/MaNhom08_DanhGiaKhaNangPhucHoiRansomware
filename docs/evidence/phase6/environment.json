@@ -1,0 +1,21 @@
+{
+  "observed_at_utc": "2026-11-15T02:58:29.628390+00:00",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "branch": "codex/group08-phase6-runbook-20261115",
+  "execution_commit": "3a71b307f386da6c5025327bf6be8cab8d007690",
+  "docker_server": "29.9.2",
+  "docker_compose": "2.40.3",
+  "docker_storage_driver": "vfs",
+  "host_disk_free_bytes": 138502144,
+  "app_installed_versions": {
+    "Flask": "3.1.2",
+    "PyMySQL": "1.1.2",
+    "Werkzeug": "3.1.9",
+    "gunicorn": "23.0.0"
+  },
+  "windows_10_execution": "NOT TESTED",
+  "independent_human_execution": "NOT TESTED",
+  "new_clean_restore": "NOT TESTED; resource gate failed before service mutation",
+  "new_restic_check_readback": "NOT TESTED; no extra tool container allocated"
+}

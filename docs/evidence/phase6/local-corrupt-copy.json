@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "observed_at_utc": "2026-11-15T02:57:32.987622+00:00",
+  "scope": "real local SQL-copy rejection using an already extracted pinned artifact; no new Restic readback",
+  "snapshot_id": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78",
+  "manifest_sha256": "eb7311dea5acca507f14b5d821c7d7599e3899833bf8d487aa07d53e4e9cd65b",
+  "original_artifact_check": "PASS",
+  "original_sql_sha256": "7b4e7de39896a78b7b8094786a5e7d193eefd3bebe6aa6c7abb515115a56e6fe",
+  "candidate_sql_sha256": "33720e6bede10b08ceaa80a9cd524bcc0321897853ff000a044a08079d9af6c4",
+  "candidate_integrity": "FAIL (expected)",
+  "rejection": "SHA-256 integrity mismatch",
+  "original_unchanged": true,
+  "import_attempted": false,
+  "service_mutations": false,
+  "new_restic_readback": "NOT TESTED",
+  "rto": "NOT APPLICABLE",
+  "rpo": "NOT APPLICABLE"
+}

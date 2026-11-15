@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "run_id": "p4-p6-web-20261115",
+  "scenario": "web-outage",
+  "status": "PASS",
+  "started_at_utc": "2026-11-15T02:56:27.896872+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p4-p6-web-20261115",
+  "release_source_containers": false,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "observed_rto_seconds": 5.050724009,
+  "data_unchanged": "PASS",
+  "rpo": "NOT APPLICABLE; no snapshot recovery",
+  "source_after_return": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "return_source_status": "PASS",
+  "finished_at_utc": "2026-11-15T02:56:35.536128+00:00",
+  "source_touched": true,
+  "target_created": false
+}

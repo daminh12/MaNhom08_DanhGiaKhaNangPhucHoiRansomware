@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-11-15T02:44:14.073759+00:00",
+  "finished_at_utc": "2026-11-15T02:44:15.586651+00:00",
+  "execution_platform": "linux",
+  "windows_10": "NOT TESTED",
+  "operator": "Codex automated lab checks; not an independent Minh Quan execution",
+  "runbook_sha256": "cf49a6353831d89eb8b38f9b90cf4cbf34ee409cf2708f04a9a7b342b7bf8a0d",
+  "source_runbook": "THESIS/runbook/Runbook_v1.0.docx",
+  "health": {
+    "http_status": 200,
+    "body": {
+      "database": "ok",
+      "orders_count": 108,
+      "status": "ok"
+    }
+  },
+  "commands": [
+    {
+      "label": "review base commit",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.073759+00:00",
+      "exit_code": 0,
+      "stdout": "068e1f4f70f75a9246889ce320a2c28b258bb92e\n",
+      "stderr": ""
+    },
+    {
+      "label": "branch and changes before edits",
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.076369+00:00",
+      "exit_code": 0,
+      "stdout": "## codex/group08-phase6-runbook-20261115\n",
+      "stderr": ""
+    },
+    {
+      "label": "v1.0 preparation: current Compose validates",
+      "command": [
+        "docker",
+        "compose",
+        "config",
+        "--quiet"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.178109+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "v1.0 paragraph 81/97: service status",
+      "command": [
+        "docker",
+        "compose",
+        "ps",
+        "-a"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.280390+00:00",
+      "exit_code": 0,
+      "stdout": "NAME                IMAGE             COMMAND                  SERVICE   CREATED      STATUS                   PORTS\ngroup08-lab-db-1    mysql:8.4.7       \"docker-entrypoint.s…\"   db        4 days ago   Up 8 minutes (healthy)   3306/tcp, 33060/tcp\ngroup08-lab-web-1   group08-lab-web   \"gunicorn --bind 0.0…\"   web       4 days ago   Up 8 minutes (healthy)   127.0.0.1:8080->8000/tcp\n",
+      "stderr": ""
+    },
+    {
+      "label": "v1.0 paragraph 101/102: log inspection (bounded)",
+      "command": [
+        "docker",
+        "compose",
+        "logs",
+        "--no-color",
+        "--timestamps",
+        "--tail",
+        "30",
+        "db",
+        "web"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.359237+00:00",
+      "exit_code": 0,
+      "stdout": "web-1  | 2026-11-15T02:41:36.862901405Z 127.0.0.1 - - [15/Nov/2026:02:41:36 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:41:42.120665317Z 127.0.0.1 - - [15/Nov/2026:02:41:42 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:41:47.379882333Z 127.0.0.1 - - [15/Nov/2026:02:41:47 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:41:52.675656024Z 127.0.0.1 - - [15/Nov/2026:02:41:52 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:41:57.959703032Z 127.0.0.1 - - [15/Nov/2026:02:41:57 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:03.227967570Z 127.0.0.1 - - [15/Nov/2026:02:42:03 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:08.482658277Z 127.0.0.1 - - [15/Nov/2026:02:42:08 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:13.751143814Z 127.0.0.1 - - [15/Nov/2026:02:42:13 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:19.035315467Z 127.0.0.1 - - [15/Nov/2026:02:42:19 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:24.322254734Z 127.0.0.1 - - [15/Nov/2026:02:42:24 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:29.593398100Z 127.0.0.1 - - [15/Nov/2026:02:42:29 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:34.875504379Z 127.0.0.1 - - [15/Nov/2026:02:42:34 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:40.135162278Z 127.0.0.1 - - [15/Nov/2026:02:42:40 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:45.412189504Z 127.0.0.1 - - [15/Nov/2026:02:42:45 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:50.669096142Z 127.0.0.1 - - [15/Nov/2026:02:42:50 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:42:55.938722964Z 127.0.0.1 - - [15/Nov/2026:02:42:55 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:01.187744801Z 127.0.0.1 - - [15/Nov/2026:02:43:01 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:06.470988703Z 127.0.0.1 - - [15/Nov/2026:02:43:06 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:11.723159384Z 127.0.0.1 - - [15/Nov/2026:02:43:11 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:17.001908203Z 127.0.0.1 - - [15/Nov/2026:02:43:16 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:22.269702698Z 127.0.0.1 - - [15/Nov/2026:02:43:22 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:27.537434140Z 127.0.0.1 - - [15/Nov/2026:02:43:27 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:32.798640479Z 127.0.0.1 - - [15/Nov/2026:02:43:32 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:38.079615140Z 127.0.0.1 - - [15/Nov/2026:02:43:38 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:43.344817784Z 127.0.0.1 - - [15/Nov/2026:02:43:43 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:48.621227044Z 127.0.0.1 - - [15/Nov/2026:02:43:48 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:53.891210883Z 127.0.0.1 - - [15/Nov/2026:02:43:53 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:43:59.154936897Z 127.0.0.1 - - [15/Nov/2026:02:43:59 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:44:04.414871930Z 127.0.0.1 - - [15/Nov/2026:02:44:04 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\nweb-1  | 2026-11-15T02:44:09.687749961Z 127.0.0.1 - - [15/Nov/2026:02:44:09 +0000] \"GET /health HTTP/1.1\" 200 51 \"-\" \"Python-urllib/3.12\"\ndb-1   | 2026-11-14T07:16:07.062860261Z 2026-11-14 07:16:07+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.7-1.el9 started.\ndb-1   | 2026-11-14T07:16:07.281402152Z 2026-11-14 07:16:07+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'\ndb-1   | 2026-11-14T07:16:07.290688352Z 2026-11-14 07:16:07+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.7-1.el9 started.\ndb-1   | 2026-11-14T07:16:07.583263026Z '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'\ndb-1   | 2026-11-14T07:16:07.839732796Z 2026-11-14T07:16:07.592948Z 0 [System] [MY-015015] [Server] MySQL Server - start.\ndb-1   | 2026-11-14T07:16:07.839748239Z 2026-11-14T07:16:07.836480Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.4.7) starting as process 1\ndb-1   | 2026-11-14T07:16:07.872833086Z 2026-11-14T07:16:07.872725Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.\ndb-1   | 2026-11-14T07:16:08.185410111Z 2026-11-14T07:16:08.185289Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.\ndb-1   | 2026-11-14T07:16:08.273034728Z 2026-11-14T07:16:08.272757Z 0 [System] [MY-010229] [Server] Starting XA crash recovery...\ndb-1   | 2026-11-14T07:16:08.277035613Z 2026-11-14T07:16:08.276927Z 0 [System] [MY-010232] [Server] XA crash recovery finished.\ndb-1   | 2026-11-14T07:16:08.343667358Z 2026-11-14T07:16:08.343535Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.\ndb-1   | 2026-11-14T07:16:08.343682190Z 2026-11-14T07:16:08.343569Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.\ndb-1   | 2026-11-14T07:16:08.345586340Z 2026-11-14T07:16:08.345507Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.\ndb-1   | 2026-11-14T07:16:08.366253593Z 2026-11-14T07:16:08.366141Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock\ndb-1   | 2026-11-14T07:16:08.366365345Z 2026-11-14T07:16:08.366273Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.4.7'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.\ndb-1   | 2026-11-15T02:36:09.318051856Z 2026-11-15 02:36:09+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.7-1.el9 started.\ndb-1   | 2026-11-15T02:36:09.523208696Z 2026-11-15 02:36:09+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'\ndb-1   | 2026-11-15T02:36:09.528953042Z 2026-11-15 02:36:09+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.7-1.el9 started.\ndb-1   | 2026-11-15T02:36:09.752113938Z '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'\ndb-1   | 2026-11-15T02:36:09.942388992Z 2026-11-15T02:36:09.760848Z 0 [System] [MY-015015] [Server] MySQL Server - start.\ndb-1   | 2026-11-15T02:36:09.942411175Z 2026-11-15T02:36:09.940132Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.4.7) starting as process 1\ndb-1   | 2026-11-15T02:36:09.950268551Z 2026-11-15T02:36:09.946863Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.\ndb-1   | 2026-11-15T02:36:10.311733097Z 2026-11-15T02:36:10.311590Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.\ndb-1   | 2026-11-15T02:36:10.406873669Z 2026-11-15T02:36:10.402714Z 0 [System] [MY-010229] [Server] Starting XA crash recovery...\ndb-1   | 2026-11-15T02:36:10.407126634Z 2026-11-15T02:36:10.407044Z 0 [System] [MY-010232] [Server] XA crash recovery finished.\ndb-1   | 2026-11-15T02:36:10.472495242Z 2026-11-15T02:36:10.472324Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.\ndb-1   | 2026-11-15T02:36:10.472514521Z 2026-11-15T02:36:10.472361Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.\ndb-1   | 2026-11-15T02:36:10.474272619Z 2026-11-15T02:36:10.474181Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.\ndb-1   | 2026-11-15T02:36:10.492384224Z 2026-11-15T02:36:10.492238Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock\ndb-1   | 2026-11-15T02:36:10.492603825Z 2026-11-15T02:36:10.492522Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.4.7'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.\n",
+      "stderr": ""
+    },
+    {
+      "label": "v1.0 paragraph 84/104/129: read-only count/schema/grants; adapted to Linux secret-file stdin",
+      "command": [
+        "docker",
+        "compose",
+        "exec",
+        "-T",
+        "db",
+        "sh",
+        "-c",
+        "export MYSQL_PWD=\"$(cat /run/secrets/db_root_password)\"; exec mysql -u root --batch --raw --skip-column-names"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.505593+00:00",
+      "exit_code": 0,
+      "stdout": "NULL\t8.4.7\norders\n108\nGRANT USAGE ON *.* TO `group08_app`@`%`\nGRANT SELECT, INSERT ON `lab_config`.`orders` TO `group08_app`@`%`\n",
+      "stderr": ""
+    },
+    {
+      "label": "Docker filesystem free space",
+      "command": [
+        "docker",
+        "compose",
+        "exec",
+        "-T",
+        "db",
+        "df",
+        "-Pk",
+        "/var/lib/mysql",
+        "/tmp"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:14.627434+00:00",
+      "exit_code": 0,
+      "stdout": "Filesystem     1024-blocks    Used Available Capacity Mounted on\noverlay            8220124 7648644    135668      99% /var/lib/mysql\noverlay            8220124 7648644    135668      99% /\n",
+      "stderr": ""
+    },
+    {
+      "label": "Docker images, containers, retained volumes",
+      "command": [
+        "docker",
+        "system",
+        "df",
+        "-v"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:15.562886+00:00",
+      "exit_code": 0,
+      "stdout": "Images space usage:\n\nREPOSITORY           TAG                     IMAGE ID       CREATED         SIZE      SHARED SIZE   UNIQUE SIZE   CONTAINERS\ngroup08-lab-backup   latest                  7955aebc85cb   5 days ago      155MB     124.3MB       30.88MB       0\ngroup08-lab-web      latest                  6e477f26698d   6 days ago      148MB     124.3MB       24.04MB       1\npython               3.12.12-slim-bookworm   9cb180cb36bd   8 months ago    124MB     124.3MB       0B            0\nmysql                8.4.7                   0de4015d5b1f   10 months ago   785MB     0B            785.5MB       1\n\nContainers space usage:\n\nCONTAINER ID   IMAGE             COMMAND                  LOCAL VOLUMES   SIZE      CREATED      STATUS                   NAMES\n9a45fdd044b0   group08-lab-web   \"gunicorn --bind 0.0…\"   0               0B        4 days ago   Up 8 minutes (healthy)   group08-lab-web-1\n46a3770fe3c4   mysql:8.4.7       \"docker-entrypoint.s…\"   1               6B        4 days ago   Up 8 minutes (healthy)   group08-lab-db-1\n\nLocal Volumes space usage:\n\nVOLUME NAME                                         LINKS     SIZE\ngroup08-restore-p3-preflight-probe_restore_data     0         0B\ngroup08-restore-p4-main-20261110_restore_data       0         205MB\ngroup08-lab_db_data                                 1         218.4MB\ngroup08-restore-p3-clean-20261110_restore_data      0         205MB\ngroup08-restore-p3-clean-v2-20261110_restore_data   0         205MB\n\nBuild cache usage: 0B\n\nCACHE ID   CACHE TYPE   SIZE      CREATED   LAST USED   USAGE     SHARED\n",
+      "stderr": ""
+    },
+    {
+      "label": "host free space",
+      "command": [
+        "df",
+        "-Pk",
+        "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware"
+      ],
+      "started_from": "repository root",
+      "observed_at_utc": "2026-11-15T02:44:15.565406+00:00",
+      "exit_code": 0,
+      "stdout": "Filesystem     1024-blocks    Used Available Capacity Mounted on\noverlay            8220124 7648644    135668      99% /workspace\n",
+      "stderr": ""
+    }
+  ],
+  "not_executed": [
+    {
+      "paragraphs": "75/85/106-108",
+      "reason": "SET GLOBAL general_log is a state change; binary-log destructive-event search is outside benign DB-stop scenario."
+    },
+    {
+      "paragraphs": "87-90",
+      "reason": "Placeholder BACKUP_DIR and legacy dump template; use selected Restic receipt and consistent baseline workflow."
+    },
+    {
+      "paragraphs": "140-159",
+      "reason": "Legacy in-place source import/temp DB workflow conflicts with independent clean restore; not executed."
+    },
+    {
+      "paragraphs": "133-139",
+      "reason": "DB stop/start is only a persistence control, not Restic recovery. New outage deferred until resource gate."
+    }
+  ],
+  "native_windows_commands_executed": false
+}

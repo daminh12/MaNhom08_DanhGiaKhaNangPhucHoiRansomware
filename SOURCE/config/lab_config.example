@@ -22,8 +22,9 @@ DB_APP_PASSWORD_FILE=secrets/db_app_password.txt
 DB_ROOT_PASSWORD_FILE=secrets/db_root_password.txt
 INITIAL_SYNTHETIC_ORDERS=100
 TIMEZONE=UTC
-# Phase 2 chưa triển khai: không gán đường dẫn giả làm nơi lưu backup thực tế.
-BACKUP_PATH=NOT_CONFIGURED_PHASE_2
-RESTIC_REPOSITORY=NOT_CONFIGURED_PHASE_2
-# Phase 4 chưa triển khai: không có script phá hoại trong Phase 1.
-INCIDENT_SCRIPT=NOT_IMPLEMENTED_PHASE_4
+# Phase 2-6: vẫn chỉ là tài liệu; không dùng file này làm cấu hình thực thi.
+BACKUP_PATH=backups/runs
+RESTIC_REPOSITORY=backups/restic
+# Phase 4 chỉ dừng service trong lab, không có script phá dữ liệu.
+INCIDENT_SCRIPT=SOURCE/recovery/controller.py
+RUNBOOK=THESIS/runbook/Runbook_v1.1.md

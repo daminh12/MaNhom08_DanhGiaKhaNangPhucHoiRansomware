@@ -26,3 +26,9 @@ trực tiếp trên Windows. Không sao chép mã nguồn Restic vào dự án.
 Hướng dẫn chính thức đã đối chiếu theo tag v0.18.1:
 https://github.com/restic/restic/blob/v0.18.1/doc/040_backup.rst và
 https://github.com/restic/restic/blob/v0.18.1/doc/045_working_with_repos.rst.
+
+Phase 3–6 bổ sung observer/controller cần **Python 3.10+ trên host** và Git;
+PowerShell chỉ là launcher. Phát biểu không cần Python host ở phần Phase 2 phía
+trên chỉ áp dụng workflow Phase 1/2. Runbook hiện tại:
+[v1.1](../THESIS/runbook/Runbook_v1.1.md). Chưa có transcript Windows thật;
+Flask 3.1.2 chưa được nâng bản vá, xem review Phase 6 trước demo cuối.
