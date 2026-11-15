@@ -1,0 +1,17 @@
+{"utc": "2026-11-10T13:52:11.674148+00:00", "monotonic_ns": 40342284770544, "event": "TRIAL_PREPARED", "run_id": "p4-corrupt-20261110", "commit": "37addd764dfd18a48fd2726c9f042c2b19ab6d96", "python": "3.12.14"}
+{"utc": "2026-11-10T13:52:11.675142+00:00", "monotonic_ns": 40342285763248, "event": "COMMAND_STARTED", "run_id": "p4-corrupt-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:52:11.691175+00:00", "monotonic_ns": 40342301803412, "event": "COMMAND_FINISHED", "run_id": "p4-corrupt-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:52:11.691931+00:00", "monotonic_ns": 40342302550977, "event": "COMMAND_STARTED", "run_id": "p4-corrupt-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:52:11.709773+00:00", "monotonic_ns": 40342320404219, "event": "COMMAND_FINISHED", "run_id": "p4-corrupt-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:52:11.723712+00:00", "monotonic_ns": 40342334337563, "event": "SOURCE_VALIDATED", "run_id": "p4-corrupt-20261110", "db_id": "f8fa6c9aad7728baf147f89517a16594aba542a8552f28036ead8428ba9d3768", "web_id": "aee6b9f910ec56dd5ffac4dd9e2a2bb9f63cc890e75ea5f846ec939a21ea3074", "health": {"database": "ok", "orders_count": 104, "status": "ok"}, "volume": "group08-lab_db_data"}
+{"utc": "2026-11-10T13:52:11.724637+00:00", "monotonic_ns": 40342335257918, "event": "COMMAND_STARTED", "run_id": "p4-corrupt-20261110", "label": "require preinstalled mysql:8.4.7"}
+{"utc": "2026-11-10T13:52:11.740825+00:00", "monotonic_ns": 40342351466160, "event": "COMMAND_FINISHED", "run_id": "p4-corrupt-20261110", "label": "require preinstalled mysql:8.4.7", "exit_code": 0}
+{"utc": "2026-11-10T13:52:11.741360+00:00", "monotonic_ns": 40342351980474, "event": "COMMAND_STARTED", "run_id": "p4-corrupt-20261110", "label": "require preinstalled group08-lab-web"}
+{"utc": "2026-11-10T13:52:11.755573+00:00", "monotonic_ns": 40342366200610, "event": "COMMAND_FINISHED", "run_id": "p4-corrupt-20261110", "label": "require preinstalled group08-lab-web", "exit_code": 0}
+{"utc": "2026-11-10T13:52:11.756156+00:00", "monotonic_ns": 40342366775705, "event": "COMMAND_STARTED", "run_id": "p4-corrupt-20261110", "label": "require preinstalled group08-lab-backup"}
+{"utc": "2026-11-10T13:52:11.770752+00:00", "monotonic_ns": 40342381379819, "event": "COMMAND_FINISHED", "run_id": "p4-corrupt-20261110", "label": "require preinstalled group08-lab-backup", "exit_code": 0}
+{"utc": "2026-11-10T13:52:11.771594+00:00", "monotonic_ns": 40342382213523, "event": "COMMAND_STARTED", "run_id": "p4-corrupt-20261110", "label": "extract and verify selected Restic snapshot"}
+{"utc": "2026-11-10T13:52:16.504867+00:00", "monotonic_ns": 40347115502670, "event": "COMMAND_FINISHED", "run_id": "p4-corrupt-20261110", "label": "extract and verify selected Restic snapshot", "exit_code": 0}
+{"utc": "2026-11-10T13:52:16.505719+00:00", "monotonic_ns": 40347116341341, "event": "ARTIFACT_VERIFIED", "run_id": "p4-corrupt-20261110", "snapshot_id": "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c"}
+{"utc": "2026-11-10T13:52:16.509067+00:00", "monotonic_ns": 40347119689409, "event": "CORRUPT_INPUT_REJECTED", "run_id": "p4-corrupt-20261110", "error": "SHA-256 integrity mismatch", "import_attempted": false}
+{"utc": "2026-11-10T13:52:16.509430+00:00", "monotonic_ns": 40347120050482, "event": "TRIAL_ENDED", "run_id": "p4-corrupt-20261110", "status": "PASS"}

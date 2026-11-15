@@ -1,0 +1,58 @@
+[
+  {
+    "request_id": "pre-backup-checkpoint",
+    "alias": "LAB-P4-PRE-D3A1F9D819",
+    "row": [
+      105,
+      "LAB-P4-PRE-D3A1F9D819",
+      "Pen",
+      1,
+      25000,
+      "2026-11-10T13:55:57.215488Z"
+    ],
+    "sent_ns": 40567818305198,
+    "ack_ns": 40567832332798
+  },
+  {
+    "request_id": "post-backup-0",
+    "alias": "LAB-P4-POST-D3A1F9D819-0",
+    "row": [
+      106,
+      "LAB-P4-POST-D3A1F9D819-0",
+      "Pen",
+      1,
+      25000,
+      "2026-11-10T13:56:07.665680Z"
+    ],
+    "sent_ns": 40578259605266,
+    "ack_ns": 40578280924544
+  },
+  {
+    "request_id": "post-backup-1",
+    "alias": "LAB-P4-POST-D3A1F9D819-1",
+    "row": [
+      107,
+      "LAB-P4-POST-D3A1F9D819-1",
+      "Pen",
+      1,
+      25000,
+      "2026-11-10T13:56:07.677272Z"
+    ],
+    "sent_ns": 40578281880877,
+    "ack_ns": 40578291016569
+  },
+  {
+    "request_id": "post-backup-2",
+    "alias": "LAB-P4-POST-D3A1F9D819-2",
+    "row": [
+      108,
+      "LAB-P4-POST-D3A1F9D819-2",
+      "Pen",
+      1,
+      25000,
+      "2026-11-10T13:56:07.686748Z"
+    ],
+    "sent_ns": 40578291790794,
+    "ack_ns": 40578299808123
+  }
+]

@@ -1,0 +1,19 @@
+test_empty_file_rejected (test_backup.BackupTests.test_empty_file_rejected) ... ok
+test_invalid_hash_or_size_rejected (test_backup.BackupTests.test_invalid_hash_or_size_rejected) ... ok
+test_manifest_matches_then_detects_same_size_modification (test_backup.BackupTests.test_manifest_matches_then_detects_same_size_modification) ... ok
+test_manifest_top_level_and_paths_rejected (test_backup.BackupTests.test_manifest_top_level_and_paths_rejected) ... ok
+test_metadata_timestamp_or_scope_mismatch (test_backup.BackupTests.test_metadata_timestamp_or_scope_mismatch) ... ok
+test_missing_and_extra_files_rejected (test_backup.BackupTests.test_missing_and_extra_files_rejected) ... ok
+test_readback_mismatch_prevents_success (test_backup.BackupTests.test_readback_mismatch_prevents_success) ... ok
+test_repository_check_failure_keeps_snapshot_untrusted (test_backup.BackupTests.test_repository_check_failure_keeps_snapshot_untrusted) ... ok
+test_restic_nonzero_exit_not_accepted (test_backup.BackupTests.test_restic_nonzero_exit_not_accepted) ... ok
+test_root_and_child_symlinks_rejected (test_backup.BackupTests.test_root_and_child_symlinks_rejected) ... ok
+test_run_id_cannot_escape_root (test_backup.BackupTests.test_run_id_cannot_escape_root) ... ok
+test_snapshot_success_and_repeated_run_rejected (test_backup.BackupTests.test_snapshot_success_and_repeated_run_rejected) ... ok
+test_snapshot_wrong_tag_rejected (test_backup.BackupTests.test_snapshot_wrong_tag_rejected) ... ok
+test_truncated_dump_never_calls_restic (test_backup.BackupTests.test_truncated_dump_never_calls_restic) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.013s
+
+OK

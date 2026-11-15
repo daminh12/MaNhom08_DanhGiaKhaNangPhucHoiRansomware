@@ -1,0 +1,51 @@
+$ docker compose ps -q db
+46a3770fe3c4214e5080e5a61dedaccbff4376b74ea02c664cdf0c0cc459afd9
+$ docker compose ps -q web
+9a45fdd044b05215b8b4f371ed2a0f490c696a6ef220ab1df2a1ff087cd6b42f
+$ docker compose restart
+ Container group08-lab-db-1  Restarting
+ Container group08-lab-web-1  Restarting
+ Container group08-lab-db-1  Started
+ Container group08-lab-web-1  Started
+$ docker compose up -d --no-build --wait --wait-timeout 180
+ Container group08-lab-db-1  Running
+ Container group08-lab-web-1  Running
+ Container group08-lab-db-1  Waiting
+ Container group08-lab-db-1  Healthy
+ Container group08-lab-web-1  Waiting
+ Container group08-lab-db-1  Waiting
+ Container group08-lab-web-1  Healthy
+ Container group08-lab-db-1  Healthy
+PASS: topology, non-root/read-only web, and exact API data persisted across restart
+$ docker compose stop db
+ Container group08-lab-db-1  Stopping
+ Container group08-lab-db-1  Stopped
+PASS: health and orders API return 503 while DB is stopped
+$ docker compose up -d --no-build --wait --wait-timeout 180 db
+ Container group08-lab-db-1  Starting
+ Container group08-lab-db-1  Started
+ Container group08-lab-db-1  Waiting
+ Container group08-lab-db-1  Healthy
+$ docker compose up -d --no-build --wait --wait-timeout 180
+ Container group08-lab-db-1  Running
+ Container group08-lab-web-1  Running
+ Container group08-lab-db-1  Waiting
+ Container group08-lab-db-1  Healthy
+ Container group08-lab-web-1  Waiting
+ Container group08-lab-db-1  Waiting
+ Container group08-lab-web-1  Healthy
+ Container group08-lab-db-1  Healthy
+{
+  "result": "PASS",
+  "orders_before": 108,
+  "orders_after": 108,
+  "checks": [
+    "localhost web binding",
+    "DB no host port",
+    "DB internal network only",
+    "web non-root/read-only",
+    "restart persistence",
+    "DB-down health/API 503",
+    "DB-up health 200"
+  ]
+}

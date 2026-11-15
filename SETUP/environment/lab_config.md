@@ -1,4 +1,4 @@
-# Cấu hình lab Phase 1
+# Cấu hình lab Docker hiện tại
 
 Đối tượng: Windows 10, Docker Desktop chạy Linux containers; dữ liệu đơn hàng tổng hợp. Cấu hình thực thi nằm ở `compose.yaml` và các file được script khởi tạo cục bộ. `SOURCE/config/lab_config.example` chỉ là bản mô tả không chứa bí mật, không được ứng dụng nạp trực tiếp.
 
@@ -20,7 +20,7 @@
 | Secret ứng dụng trong container | `/run/secrets/db_app_password` |
 | Dữ liệu seed | 100 đơn hàng tổng hợp, chỉ nạp lúc MySQL khởi tạo volume rỗng |
 | Đường dẫn backup / Restic repository | Phase 2: `backups/restic` trên host, `/data/restic` trong service backup; xem `SOURCE/backup/README.md` |
-| Script gây sự cố | **Chưa triển khai — Phase 4** |
+| Diễn tập lành tính Phase 4 | `SOURCE/recovery/controller.py drill` dừng service DB; `web-outage` đối chứng; không phá/xóa bảng |
 
 `/var/lib/mysql` là dữ liệu đang hoạt động, không phải thư mục backup. Docker volume tồn tại sau restart/down không chứng minh có bản sao lưu hoặc khả năng restore.
 
@@ -28,13 +28,17 @@ Backend DB được tách bằng mạng `lab` nội bộ. Web dùng thêm bridge
 
 ## Schema nghiệp vụ
 
-Bảng `orders` có `id`, `customer_alias`, `product_name`, `quantity`, `unit_price_vnd`, `created_at_utc`. Alias chỉ dùng dạng giả `LAB-...`; không nhập thông tin cá nhân. Timestamp do MySQL tạo và dùng UTC. `created_at_utc` chưa phải bằng chứng độc lập về thời điểm commit cho phép đo RPO; yêu cầu đo lường được bổ sung ở phase sau.
+Bảng `orders` có `id`, `customer_alias`, `product_name`, `quantity`, `unit_price_vnd`, `created_at_utc`. Alias chỉ dùng dạng giả `LAB-...`; không nhập thông tin cá nhân. Timestamp do MySQL tạo và dùng UTC. `created_at_utc` chưa phải bằng chứng độc lập về thời điểm commit cho phép đo RPO; Phase 4/5 dùng observer send/ACK để báo khoảng tuổi commit cuối được phục hồi.
 
 Ứng dụng không có quyền DROP/ALTER/DELETE. Trong Phase 1 không có “table đã bị phá”: `orders` là bảng nghiệp vụ để kiểm tra đọc/ghi trên lab.
 
 ## Đối chiếu với bản nháp Runbook của Minh Quân
 
-`THESIS/runbook/Runbook_v1.0.docx` trên main hiện ghi nội dung “RUNBOOK v1.2”, database `lab_config` và nhiều placeholder. Tài liệu dùng giả định VM, SSH, systemd, nginx và ufw; chưa phải runbook đã chạy trên lab Docker này. Giữ nguyên tài liệu nhóm đang viết; các điều chỉnh runbook phục hồi được review ở phase tương ứng.
+DOCX v1.0 nháp Docker/Windows 10 được giữ nguyên. Bản hiện tại để review/chạy tiếp
+là [Runbook v1.1](../../THESIS/runbook/Runbook_v1.1.md), kết hợp
+`SOURCE/recovery/README.md`; kết quả chạy theo từng phạm vi ở `docs/PHASE6_RESULTS.md`.
+Không thực thi mục 9.2 cũ để thay thế restore vào volume độc lập. Windows vẫn cần
+transcript thật; chưa có xác nhận chạy độc lập từ Minh Quân.
 
 | Hạng mục Runbook | Đối chiếu lab Phase 1 |
 |---|---|
@@ -43,9 +47,9 @@ Bảng `orders` có `id`, `customer_alias`, `product_name`, `quantity`, `unit_pr
 | `/var/log/mysql/error.log`, `journalctl` | `docker compose logs db` |
 | nginx và log nginx | Gunicorn/Flask; dùng `docker compose logs web` |
 | `sudo mysql ...` trên host | `docker compose exec db mysql -u group08_app -p -D lab_config` cho truy vấn SELECT; nhập secret cục bộ tại prompt |
-| `<TABLE_NAME>` | `orders` cho thao tác xác minh nghiệp vụ; chưa có kịch bản phá/xóa bảng |
+| `<TABLE_NAME>` | `orders` cho thao tác xác minh nghiệp vụ; không có kịch bản phá/xóa bảng |
 | `<APP_USER>@<APP_HOST>` | Tài khoản MySQL `group08_app`@`%`, giới hạn bằng quyền DB và mạng container; `%` không đồng nghĩa có port host/public |
-| `<BACKUP_DIR>`, file dump, SHA-256, lệnh restore | Phase 2: `backups/runs/<run_id>/payload/database.sql` và `manifest.json`; restore DB sạch chưa có, xem hướng dẫn backup |
+| `<BACKUP_DIR>`, file dump, SHA-256, lệnh restore | `backups/runs/<run_id>/payload/database.sql` và `manifest.json`; Phase 3 dùng full snapshot/digest và `compose.restore.yaml`, xem Runbook v1.1 |
 | SSH/ufw/khóa account để cô lập | Chưa triển khai quy trình cô lập; không áp dụng các lệnh host này nguyên trạng cho Docker Desktop |
 
 Trong MySQL CLI, truy vấn chỉ đọc để đối chiếu:

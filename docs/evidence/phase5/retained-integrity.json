@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "trial_run_id": "p4-main-20261110",
+  "not_new_rto_trial": true,
+  "business_queries_read_only": true,
+  "started_at_utc": "2026-11-10T15:36:57.850437+00:00",
+  "input_result_sha256": "b9d503d81fbe6dc035acbdacec5a9b1c3e48e957fb7dd47cd02248a1d1452087",
+  "evidence_ref": "258ebc8b7bddb7b5fd4ce9562a37889bf1c2a36a",
+  "snapshot_id": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78",
+  "target_volume": "group08-restore-p4-main-20261110_restore_data",
+  "request_observations": [
+    {
+      "request_id": "pre-backup-checkpoint",
+      "matching_rows": [
+        [
+          105,
+          "LAB-P4-PRE-D3A1F9D819",
+          "Pen",
+          1,
+          25000,
+          "2026-11-10T13:55:57.215488Z"
+        ]
+      ]
+    },
+    {
+      "request_id": "post-backup-0",
+      "matching_rows": []
+    },
+    {
+      "request_id": "post-backup-1",
+      "matching_rows": []
+    },
+    {
+      "request_id": "post-backup-2",
+      "matching_rows": []
+    }
+  ],
+  "source_before": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "restic_verified_at_utc": "2026-11-10T15:37:11.369041+00:00",
+  "snapshot_ids": [
+    "5044d86ed493778891581971975300df590c94f17245707f566bab14bc852581",
+    "7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f",
+    "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c",
+    "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78"
+  ],
+  "restic_check": "PASS",
+  "base_rows_sha256": "cbf7c9f6f7aa838001c90904f3449b63a47d0a85afa3d2207fbb0d10f34960a7",
+  "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3",
+  "base_row_count": 105,
+  "total_rows": 106,
+  "probe_row": [
+    106,
+    "LAB-P3-PROBE-D3A1F9D819",
+    "Pen",
+    1,
+    25000,
+    "2026-11-10T13:56:56.397680Z"
+  ],
+  "grants": "PASS",
+  "verified_at_utc": "2026-11-10T15:37:38.383087+00:00",
+  "return_source_status": "PASS",
+  "source_after": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "source_unchanged": true,
+  "finished_at_utc": "2026-11-10T15:38:01.284580+00:00"
+}

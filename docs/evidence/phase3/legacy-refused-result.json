@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "run_id": "p4-legacy-rejected-20261110",
+  "scenario": "reject-corrupt",
+  "status": "FAILED",
+  "started_at_utc": "2026-11-10T13:55:16.209482+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p4-legacy-rejected-20261110",
+  "release_source_containers": false,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 104,
+    "status": "ok"
+  },
+  "error_type": "RuntimeError",
+  "error": "extract and verify selected Restic snapshot failed (exit 1): Traceback (most recent call last):\n  File \"/recovery-code/archive.py\", line 51, in <module>\n    print(json.dumps(extract(a.backup_id,a.snapshot_id,a.manifest_sha256,a.restore_id)))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/recovery-code/archive.py\", line 39, in extract\n    raise ValueError('Snapshot lacks an independently captured business baseline; full acceptance refused')\nValueError: Snapshot lacks an independently captured business baseline; full acceptance refused\n\n",
+  "target_state": "do not reuse for import",
+  "finished_at_utc": "2026-11-10T13:55:21.915770+00:00"
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "run_id": "p4-main-20261110",
+  "scenario": "drill",
+  "status": "PASS",
+  "started_at_utc": "2026-11-10T13:55:56.995588+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p4-main-20261110",
+  "release_source_containers": true,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 104,
+    "status": "ok"
+  },
+  "backup": {
+    "schema_version": 1,
+    "run_id": "p2-20261110T135557Z-b85d7691e0d9",
+    "status": "PASS",
+    "started_at_utc": "2026-11-10T13:56:03.527492+00:00",
+    "snapshot_id": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78",
+    "dump_metadata": {
+      "schema_version": 1,
+      "run_id": "p2-20261110T135557Z-b85d7691e0d9",
+      "database": "lab_config",
+      "tables": [
+        "orders"
+      ],
+      "engine": "InnoDB",
+      "dump_started_at_utc": "2026-11-10T13:55:59Z",
+      "dump_finished_at_utc": "2026-11-10T13:55:59Z",
+      "consistency": "mysqldump single-transaction; no DDL during dump",
+      "scope": "schema and data of orders only; triggers/routines/events excluded",
+      "business_baseline": {
+        "schema_version": 1,
+        "canonicalization": "orders-jsonl-v1",
+        "row_count": 105,
+        "rows_sha256": "cbf7c9f6f7aa838001c90904f3449b63a47d0a85afa3d2207fbb0d10f34960a7",
+        "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+        "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+      },
+      "baseline_sql_sha256": "7b4e7de39896a78b7b8094786a5e7d193eefd3bebe6aa6c7abb515115a56e6fe",
+      "baseline_capture": "web stopped; no admin writers/DDL; full before/after comparison"
+    },
+    "manifest_sha256": "eb7311dea5acca507f14b5d821c7d7599e3899833bf8d487aa07d53e4e9cd65b",
+    "verified_at_utc": "2026-11-10T13:56:07.506273+00:00",
+    "repository_check": "PASS",
+    "snapshot_readback_sha256": "PASS",
+    "finished_at_utc": "2026-11-10T13:56:07.506279+00:00",
+    "business_baseline": {
+      "schema_version": 1,
+      "canonicalization": "orders-jsonl-v1",
+      "row_count": 105,
+      "rows_sha256": "cbf7c9f6f7aa838001c90904f3449b63a47d0a85afa3d2207fbb0d10f34960a7",
+      "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+      "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+    }
+  },
+  "target_volume": "group08-restore-p4-main-20261110_restore_data",
+  "restored_snapshot_rows": 105,
+  "write_probe": [
+    106,
+    "LAB-P3-PROBE-D3A1F9D819",
+    "Pen",
+    1,
+    25000,
+    "2026-11-10T13:56:56.397680Z"
+  ],
+  "observed_rto_seconds": 54.198351197,
+  "integrity": "PASS",
+  "schema": "PASS",
+  "grants": "PASS",
+  "api_read_write": "PASS",
+  "persistence": "PASS",
+  "request_comparison": {
+    "recovered_requests": [
+      "pre-backup-checkpoint"
+    ],
+    "unrecovered_acknowledged": [
+      "post-backup-0",
+      "post-backup-1",
+      "post-backup-2"
+    ],
+    "duplicates": [],
+    "recovered_prefix": true,
+    "recovered_commit_age_bounds": {
+      "lower_seconds": 10.518407983,
+      "upper_seconds": 10.532435583,
+      "meaning": "bounds on age of last recovered commit from client send/ack; not exact RPO"
+    }
+  },
+  "source_after_return": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "return_source_status": "PASS",
+  "finished_at_utc": "2026-11-10T13:57:24.733972+00:00"
+}

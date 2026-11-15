@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "SOURCE/recovery/controller.py",
+      "preflight",
+      "--run-id",
+      "p3-p6-postreview-20261115",
+      "--release-source-containers"
+    ],
+    "observed_at_utc": "2026-11-15T03:03:46.995641+00:00",
+    "exit_code": 1,
+    "result": "post-review-release-result.json"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "SOURCE/recovery/controller.py",
+      "preflight",
+      "--run-id",
+      "p4-p6-postreview-20261115",
+      "--preflight-scope",
+      "web-control"
+    ],
+    "observed_at_utc": "2026-11-15T03:03:48.000488+00:00",
+    "exit_code": 0,
+    "result": "post-review-web-result.json"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "SOURCE/tests",
+      "-p",
+      "test_metrics.py",
+      "-v"
+    ],
+    "observed_at_utc": "2026-11-15T03:03:49.226940+00:00",
+    "exit_code": 0,
+    "kind": "unit/fixture/mock"
+  }
+]

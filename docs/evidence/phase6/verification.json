@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "observed_at_utc": "2026-11-15T03:11:02.855797+00:00",
+  "control_execution_commit": "3a71b307f386da6c5025327bf6be8cab8d007690",
+  "post_review_execution_commit": "de7b2ad3f4158f89f478bc6ccd729913532dff51",
+  "source_hashes_match_post_review_git": true,
+  "historical_phase1_5_evidence_files_unchanged": 76,
+  "v1_0_docx_unchanged": true,
+  "unit_counts": {
+    "recovery-final-unit.txt": 27,
+    "metrics-final-unit.txt": 21,
+    "backup-regression.txt": 14,
+    "app-regression.txt": 14
+  },
+  "unit_total": 76,
+  "unit_skips": 0,
+  "web_control_raw_monotonic_seconds": "5.050724009",
+  "no_new_clean_restore_claimed": true,
+  "all_resource_rejections_before_service_mutation": true,
+  "full_source_before_after_unchanged": true,
+  "source_rows": 108,
+  "retained_volume_count": 5,
+  "unchanged_encrypted_snapshot_file_count": 4,
+  "historical_export_sha_and_git_pins": "PASS",
+  "historical_export_processor_commit": "3a71b307f386da6c5025327bf6be8cab8d007690",
+  "historical_export_is_new_trial": false,
+  "python_ast_file_count": 15,
+  "local_markdown_links": "PASS",
+  "credential_value_scan_matches": 0,
+  "native_windows": "NOT TESTED",
+  "independent_human_rehearsal": "NOT TESTED"
+}

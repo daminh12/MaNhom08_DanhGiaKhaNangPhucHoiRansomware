@@ -47,7 +47,7 @@ Xây dựng môi trường mô phỏng an toàn nhằm đánh giá khả năng p
 - Không sử dụng mã độc thực tế.
 - Không có cơ chế tự lây lan hoặc né tránh.
 - Chương trình mô phỏng chỉ được phép thao tác trong thư mục lab cố định.
-- Bản sao lưu được bảo vệ bằng phân quyền độc lập.
+- Backup dùng tài khoản và secret riêng; kho hiện vẫn cùng host, chưa có bản sao độc lập để chịu mất host.
 
 ## 7. Kết quả
 
@@ -91,3 +91,35 @@ Setup giữ nguyên mật khẩu đã có, cấp tài khoản backup SELECT-only
 kho Restic mới nếu chưa có. Mỗi lần backup tạo run riêng với dump, manifest,
 snapshot ID và kết quả kiểm chứng. Xem [hướng dẫn backup](SOURCE/backup/README.md)
 và [kết quả Phase 2](docs/PHASE2_RESULTS.md). Restore DB sạch thuộc Phase 3.
+
+## 10. Phục hồi sạch và diễn tập Phase 3/4
+
+Workflow trong [SOURCE/recovery/README.md](SOURCE/recovery/README.md) dùng Restic,
+baseline nghiệp vụ độc lập trong metadata, MySQL target mới và ghi sự kiện observer.
+Cần thêm Python 3.10+ trên host; có PowerShell launcher cho Windows 10 (chưa chạy
+trực tiếp trên Windows). Phase 1/2 vẫn chạy theo hướng dẫn Docker hiện có.
+
+[Kết quả Phase 3](docs/PHASE3_RESULTS.md), [Phase 4](docs/PHASE4_RESULTS.md) và
+[bổ sung Runbook](THESIS/runbook/PHASE3_PHASE4_DOCKER.md) ghi bằng chứng Linux thật,
+bao gồm cả run FAILED, giới hạn cloud và các hạng mục NOT TESTED.
+
+## 11. Review Phase 0–4 và số đo Phase 5
+
+[Code review](docs/reviews/PHASE0_4_REVIEW_2026-11-10.md) ghi finding còn mở và
+phạm vi GO. [Phase 5](docs/PHASE5_RESULTS.md) tính lại số đo từ raw events đã pin,
+kiểm toàn vẹn và xuất [CSV](docs/evidence/phase5/export-20261110/metrics.csv).
+[Hướng dẫn exporter](SOURCE/metrics/README.md) chạy offline bằng Python/Git, không
+gây outage; fresh retained-DB verification là một action riêng có tác động lab.
+Người dùng chưa chọn RTO/RPO target; không tự kết luận đạt SLA hoặc Windows PASS.
+
+## 12. Runbook Phase 6
+
+[Review Phase 0–5](docs/reviews/PHASE0_5_REVIEW_2026-11-15.md) và
+[kết quả Phase 6](docs/PHASE6_RESULTS.md) ghi cả bước chạy được, lỗi và NOT TESTED.
+[Runbook v1.1](THESIS/runbook/Runbook_v1.1.md) thay các bước placeholder/import
+nguồn của v1.0; DOCX gốc được giữ nguyên. Controller có `preflight` chỉ đọc lab,
+kiểm source/API/quyền/secret và dung lượng host/Docker trước cửa sổ thử.
+
+Các đối chứng Linux và 76 unit test đã PASS; lượt clean restore mới bị chặn bởi
+disk gần đầy. Windows 10 và lượt độc lập của Minh Quân chưa có bằng chứng, nên
+chưa nghiệm thu toàn bộ Phase 6. Không xóa volume/snapshot để vượt resource gate.

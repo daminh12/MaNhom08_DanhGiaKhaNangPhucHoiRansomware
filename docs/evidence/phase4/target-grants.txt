@@ -1,0 +1,2 @@
+GRANT USAGE ON *.* TO `group08_app`@`%`
+GRANT SELECT, INSERT ON `lab_config`.`orders` TO `group08_app`@`%`

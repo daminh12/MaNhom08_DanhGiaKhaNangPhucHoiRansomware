@@ -1,0 +1,16 @@
+{
+  "checked_at_utc": "2026-11-10T14:05:41.839291+00:00",
+  "test": "exact target volume name exists WITHOUT Compose labels",
+  "result": "PASS",
+  "refusal": "Target already exists; partial targets cannot be reused",
+  "source_stopped": false,
+  "import_attempted": false,
+  "source_health": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "guard_volume_retained": "group08-restore-p3-preflight-probe_restore_data",
+  "integration_source_commit": "dde61a2",
+  "note": "Additional guards only; main trial not rerun and raw timings/fingerprints not changed."
+}

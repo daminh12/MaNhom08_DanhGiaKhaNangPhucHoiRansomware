@@ -1,0 +1,57 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "docker": "29.9.2",
+  "compose": "2.40.3",
+  "storage_driver": "vfs",
+  "windows_10": "NOT TESTED",
+  "final_source_health": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "volumes_retained": [
+    {
+      "name": "group08-lab_db_data",
+      "created_at": "2026-11-08T13:51:39Z",
+      "labels": {
+        "com.docker.compose.config-hash": "82310a6e696b76af017286c84178d3c2f427da0f2a334668c611cae4da98bf3f",
+        "com.docker.compose.project": "group08-lab",
+        "com.docker.compose.version": "2.40.3",
+        "com.docker.compose.volume": "db_data"
+      }
+    },
+    {
+      "name": "group08-restore-p3-clean-20261110_restore_data",
+      "created_at": "2026-11-10T13:45:28Z",
+      "labels": {
+        "com.docker.compose.config-hash": "ea0d72ca1b6b3e6cd1a2611ac1f0b2b9b8c6195d747ff352de6d7bacd0b78662",
+        "com.docker.compose.project": "group08-restore-p3-clean-20261110",
+        "com.docker.compose.version": "2.40.3",
+        "com.docker.compose.volume": "restore_data"
+      }
+    },
+    {
+      "name": "group08-restore-p3-clean-v2-20261110_restore_data",
+      "created_at": "2026-11-10T13:48:57Z",
+      "labels": {
+        "com.docker.compose.config-hash": "ca846c63776980811bd31087c1e3c894f604f440de27ef5fa53ef468d6f3ecb5",
+        "com.docker.compose.project": "group08-restore-p3-clean-v2-20261110",
+        "com.docker.compose.version": "2.40.3",
+        "com.docker.compose.volume": "restore_data"
+      }
+    },
+    {
+      "name": "group08-restore-p4-main-20261110_restore_data",
+      "created_at": "2026-11-10T13:56:20Z",
+      "labels": {
+        "com.docker.compose.config-hash": "50f9e8e3f2932228002fa922eadceb94f5735bacb5043af1a8621253d23df5cc",
+        "com.docker.compose.project": "group08-restore-p4-main-20261110",
+        "com.docker.compose.version": "2.40.3",
+        "com.docker.compose.volume": "restore_data"
+      }
+    }
+  ],
+  "source_container_release": "explicit cloud low-space profile, no data volume removal",
+  "host_free_bytes_after_runs": 144850944
+}

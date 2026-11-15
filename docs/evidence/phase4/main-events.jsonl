@@ -1,0 +1,185 @@
+{"utc": "2026-11-10T13:55:56.998400+00:00", "monotonic_ns": 40567609022280, "event": "TRIAL_PREPARED", "run_id": "p4-main-20261110", "commit": "37addd764dfd18a48fd2726c9f042c2b19ab6d96", "python": "3.12.14", "working_source_sha256": {"SOURCE/recovery/controller.py": "c69d753265d41bd53aa6c4ae40afbe524ecbf44d1b352c697ebc5d0714bcf0c2", "SOURCE/recovery/archive.py": "b70e1e6e9133a47960147d47b70f99ff95448e0e4ec13cdc85dc25876fdac85e", "SOURCE/recovery/common.py": "9e0205899d846166650e5e6f7b74478b45a37605920d661811de116fc0197649", "compose.restore.yaml": "4b6ddf71c7805512277512d669c820094caa785424275a6e167eda8fc38cddd7", "compose.recovery-tools.yaml": "6b5a6b724517211de0377583cdf75b9df8946a3d2c60a54e9ed47cfd6249b277", "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad", "SOURCE/backup/db_dump.sh": "11a58c1410d259f9889383a4215938e98f0078f74ebd07c82598daf03c4700cf"}}
+{"utc": "2026-11-10T13:55:56.999575+00:00", "monotonic_ns": 40567610195695, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:55:57.015799+00:00", "monotonic_ns": 40567626428452, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.016544+00:00", "monotonic_ns": 40567627164349, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:55:57.035560+00:00", "monotonic_ns": 40567646192688, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.054782+00:00", "monotonic_ns": 40567665408983, "event": "SOURCE_VALIDATED", "run_id": "p4-main-20261110", "db_id": "f8fa6c9aad7728baf147f89517a16594aba542a8552f28036ead8428ba9d3768", "web_id": "aee6b9f910ec56dd5ffac4dd9e2a2bb9f63cc890e75ea5f846ec939a21ea3074", "health": {"database": "ok", "orders_count": 104, "status": "ok"}, "volume": "group08-lab_db_data"}
+{"utc": "2026-11-10T13:55:57.055470+00:00", "monotonic_ns": 40567666091940, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "require preinstalled mysql:8.4.7"}
+{"utc": "2026-11-10T13:55:57.072251+00:00", "monotonic_ns": 40567682880313, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "require preinstalled mysql:8.4.7", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.072928+00:00", "monotonic_ns": 40567683548888, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "require preinstalled group08-lab-web"}
+{"utc": "2026-11-10T13:55:57.090065+00:00", "monotonic_ns": 40567700699616, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "require preinstalled group08-lab-web", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.090778+00:00", "monotonic_ns": 40567701398758, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "require preinstalled group08-lab-backup"}
+{"utc": "2026-11-10T13:55:57.109694+00:00", "monotonic_ns": 40567720331937, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "require preinstalled group08-lab-backup", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.110410+00:00", "monotonic_ns": 40567721030398, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect storage driver"}
+{"utc": "2026-11-10T13:55:57.163227+00:00", "monotonic_ns": 40567773863019, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect storage driver", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.163947+00:00", "monotonic_ns": 40567774566627, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect DB image size"}
+{"utc": "2026-11-10T13:55:57.183413+00:00", "monotonic_ns": 40567794047950, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect DB image size", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.184457+00:00", "monotonic_ns": 40567795083438, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect web image size"}
+{"utc": "2026-11-10T13:55:57.206478+00:00", "monotonic_ns": 40567817110932, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect web image size", "exit_code": 0}
+{"utc": "2026-11-10T13:55:57.207252+00:00", "monotonic_ns": 40567817874530, "event": "RESOURCE_CHECK", "run_id": "p4-main-20261110", "driver": "vfs", "host_free_bytes": 350638080, "estimated_required_bytes": 2136002336, "estimated_stopped_container_release_bytes": 1867566880}
+{"utc": "2026-11-10T13:55:57.207686+00:00", "monotonic_ns": 40567818305198, "event": "REQUEST_SENT", "run_id": "p4-main-20261110", "request_id": "pre-backup-checkpoint", "alias": "LAB-P4-PRE-D3A1F9D819", "payload": {"customer_alias": "LAB-P4-PRE-D3A1F9D819", "product_name": "Pen", "quantity": 1, "unit_price_vnd": 25000}}
+{"utc": "2026-11-10T13:55:57.221709+00:00", "monotonic_ns": 40567832332798, "event": "REQUEST_ACKNOWLEDGED", "run_id": "p4-main-20261110", "request_id": "pre-backup-checkpoint", "row": [105, "LAB-P4-PRE-D3A1F9D819", "Pen", 1, 25000, "2026-11-10T13:55:57.215488Z"]}
+{"utc": "2026-11-10T13:55:57.224144+00:00", "monotonic_ns": 40567834766755, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source stop"}
+{"utc": "2026-11-10T13:55:58.443801+00:00", "monotonic_ns": 40569054434396, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source stop", "exit_code": 0}
+{"utc": "2026-11-10T13:55:58.444271+00:00", "monotonic_ns": 40569054890141, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "confirm drained source transactions"}
+{"utc": "2026-11-10T13:55:58.554979+00:00", "monotonic_ns": 40569165612820, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "confirm drained source transactions", "exit_code": 0}
+{"utc": "2026-11-10T13:55:58.555684+00:00", "monotonic_ns": 40569166304000, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope"}
+{"utc": "2026-11-10T13:55:58.665355+00:00", "monotonic_ns": 40569276026779, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope", "exit_code": 0}
+{"utc": "2026-11-10T13:55:58.666029+00:00", "monotonic_ns": 40569276647863, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture every orders row"}
+{"utc": "2026-11-10T13:55:58.780506+00:00", "monotonic_ns": 40569391145661, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture every orders row", "exit_code": 0}
+{"utc": "2026-11-10T13:55:58.781643+00:00", "monotonic_ns": 40569392267348, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture orders schema"}
+{"utc": "2026-11-10T13:55:58.895314+00:00", "monotonic_ns": 40569505948567, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture orders schema", "exit_code": 0}
+{"utc": "2026-11-10T13:55:58.899077+00:00", "monotonic_ns": 40569509696985, "event": "CAPTURE_STARTED", "run_id": "p4-main-20261110", "row_count": 105}
+{"utc": "2026-11-10T13:55:58.899525+00:00", "monotonic_ns": 40569510145730, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source cp"}
+{"utc": "2026-11-10T13:55:58.973291+00:00", "monotonic_ns": 40569583924438, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source cp", "exit_code": 0}
+{"utc": "2026-11-10T13:55:58.974112+00:00", "monotonic_ns": 40569584746475, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source cp"}
+{"utc": "2026-11-10T13:55:59.046651+00:00", "monotonic_ns": 40569657284847, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source cp", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.047314+00:00", "monotonic_ns": 40569657935626, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "consistent Phase 2 mysqldump"}
+{"utc": "2026-11-10T13:55:59.214197+00:00", "monotonic_ns": 40569824834505, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "consistent Phase 2 mysqldump", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.214811+00:00", "monotonic_ns": 40569825430962, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source cp"}
+{"utc": "2026-11-10T13:55:59.278173+00:00", "monotonic_ns": 40569888810367, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source cp", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.279007+00:00", "monotonic_ns": 40569889627256, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source cp"}
+{"utc": "2026-11-10T13:55:59.336794+00:00", "monotonic_ns": 40569947428099, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source cp", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.337428+00:00", "monotonic_ns": 40569948047792, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope"}
+{"utc": "2026-11-10T13:55:59.446772+00:00", "monotonic_ns": 40570057406879, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.447513+00:00", "monotonic_ns": 40570058132771, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture every orders row"}
+{"utc": "2026-11-10T13:55:59.555961+00:00", "monotonic_ns": 40570166596572, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture every orders row", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.556720+00:00", "monotonic_ns": 40570167340271, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture orders schema"}
+{"utc": "2026-11-10T13:55:59.664963+00:00", "monotonic_ns": 40570275597701, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture orders schema", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.666986+00:00", "monotonic_ns": 40570277607074, "event": "CAPTURE_FINISHED", "run_id": "p4-main-20261110", "row_count": 105, "baseline": {"schema_version": 1, "canonicalization": "orders-jsonl-v1", "row_count": 105, "rows_sha256": "cbf7c9f6f7aa838001c90904f3449b63a47d0a85afa3d2207fbb0d10f34960a7", "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"}}
+{"utc": "2026-11-10T13:55:59.667326+00:00", "monotonic_ns": 40570277944391, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "dump cleanup"}
+{"utc": "2026-11-10T13:55:59.765357+00:00", "monotonic_ns": 40570375990992, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "dump cleanup", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.766073+00:00", "monotonic_ns": 40570376693459, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "remove run script"}
+{"utc": "2026-11-10T13:55:59.858219+00:00", "monotonic_ns": 40570468854478, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "remove run script", "exit_code": 0}
+{"utc": "2026-11-10T13:55:59.858940+00:00", "monotonic_ns": 40570469559578, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "resume source web"}
+{"utc": "2026-11-10T13:56:00.591547+00:00", "monotonic_ns": 40571202181997, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "resume source web", "exit_code": 0}
+{"utc": "2026-11-10T13:56:00.592151+00:00", "monotonic_ns": 40571202772105, "event": "BACKUP_CLEANUP", "run_id": "p4-main-20261110", "status": "PASS", "errors": []}
+{"utc": "2026-11-10T13:56:01.611358+00:00", "monotonic_ns": 40572221990048, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "Phase 2 Restic snapshot/check/readback"}
+{"utc": "2026-11-10T13:56:07.647487+00:00", "monotonic_ns": 40578258121954, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "Phase 2 Restic snapshot/check/readback", "exit_code": 0}
+{"utc": "2026-11-10T13:56:07.648532+00:00", "monotonic_ns": 40578259152775, "event": "SNAPSHOT_VERIFIED", "run_id": "p4-main-20261110", "backup_id": "p2-20261110T135557Z-b85d7691e0d9", "snapshot_id": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78", "manifest_sha256": "eb7311dea5acca507f14b5d821c7d7599e3899833bf8d487aa07d53e4e9cd65b"}
+{"utc": "2026-11-10T13:56:07.648985+00:00", "monotonic_ns": 40578259605266, "event": "REQUEST_SENT", "run_id": "p4-main-20261110", "request_id": "post-backup-0", "alias": "LAB-P4-POST-D3A1F9D819-0", "payload": {"customer_alias": "LAB-P4-POST-D3A1F9D819-0", "product_name": "Pen", "quantity": 1, "unit_price_vnd": 25000}}
+{"utc": "2026-11-10T13:56:07.670300+00:00", "monotonic_ns": 40578280924544, "event": "REQUEST_ACKNOWLEDGED", "run_id": "p4-main-20261110", "request_id": "post-backup-0", "row": [106, "LAB-P4-POST-D3A1F9D819-0", "Pen", 1, 25000, "2026-11-10T13:56:07.665680Z"]}
+{"utc": "2026-11-10T13:56:07.671260+00:00", "monotonic_ns": 40578281880877, "event": "REQUEST_SENT", "run_id": "p4-main-20261110", "request_id": "post-backup-1", "alias": "LAB-P4-POST-D3A1F9D819-1", "payload": {"customer_alias": "LAB-P4-POST-D3A1F9D819-1", "product_name": "Pen", "quantity": 1, "unit_price_vnd": 25000}}
+{"utc": "2026-11-10T13:56:07.680394+00:00", "monotonic_ns": 40578291016569, "event": "REQUEST_ACKNOWLEDGED", "run_id": "p4-main-20261110", "request_id": "post-backup-1", "row": [107, "LAB-P4-POST-D3A1F9D819-1", "Pen", 1, 25000, "2026-11-10T13:56:07.677272Z"]}
+{"utc": "2026-11-10T13:56:07.681171+00:00", "monotonic_ns": 40578291790794, "event": "REQUEST_SENT", "run_id": "p4-main-20261110", "request_id": "post-backup-2", "alias": "LAB-P4-POST-D3A1F9D819-2", "payload": {"customer_alias": "LAB-P4-POST-D3A1F9D819-2", "product_name": "Pen", "quantity": 1, "unit_price_vnd": 25000}}
+{"utc": "2026-11-10T13:56:07.689187+00:00", "monotonic_ns": 40578299808123, "event": "REQUEST_ACKNOWLEDGED", "run_id": "p4-main-20261110", "request_id": "post-backup-2", "row": [108, "LAB-P4-POST-D3A1F9D819-2", "Pen", 1, 25000, "2026-11-10T13:56:07.686748Z"]}
+{"utc": "2026-11-10T13:56:07.689754+00:00", "monotonic_ns": 40578300373774, "event": "WORKLOAD_DRAINED", "run_id": "p4-main-20261110", "acknowledged_requests": 4, "uncertain_requests": 0}
+{"utc": "2026-11-10T13:56:07.690147+00:00", "monotonic_ns": 40578300766484, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "guard existing target containers"}
+{"utc": "2026-11-10T13:56:07.711403+00:00", "monotonic_ns": 40578322038767, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "guard existing target containers", "exit_code": 0}
+{"utc": "2026-11-10T13:56:07.712062+00:00", "monotonic_ns": 40578322683848, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "guard existing target volumes"}
+{"utc": "2026-11-10T13:56:07.732432+00:00", "monotonic_ns": 40578343065135, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "guard existing target volumes", "exit_code": 0}
+{"utc": "2026-11-10T13:56:07.733069+00:00", "monotonic_ns": 40578343688593, "event": "TARGET_PREFLIGHT_PASSED", "run_id": "p4-main-20261110", "project": "group08-restore-p4-main-20261110"}
+{"utc": "2026-11-10T13:56:07.739531+00:00", "monotonic_ns": 40578350153477, "event": "LAST_HEALTHY", "run_id": "p4-main-20261110", "http_status": 200, "health": {"database": "ok", "orders_count": 108, "status": "ok"}}
+{"utc": "2026-11-10T13:56:07.740120+00:00", "monotonic_ns": 40578350740781, "event": "FAULT_REQUESTED", "run_id": "p4-main-20261110", "service": "db"}
+{"utc": "2026-11-10T13:56:07.740396+00:00", "monotonic_ns": 40578351014532, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source stop"}
+{"utc": "2026-11-10T13:56:09.613193+00:00", "monotonic_ns": 40580223827994, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source stop", "exit_code": 0}
+{"utc": "2026-11-10T13:56:09.726470+00:00", "monotonic_ns": 40580337134382, "event": "FAULT_DETECTED", "run_id": "p4-main-20261110", "http_status": 503, "health": {"database": "unavailable", "status": "unavailable"}}
+{"utc": "2026-11-10T13:56:09.734297+00:00", "monotonic_ns": 40580344925061, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source stop"}
+{"utc": "2026-11-10T13:56:11.051467+00:00", "monotonic_ns": 40581662103982, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source stop", "exit_code": 0}
+{"utc": "2026-11-10T13:56:11.052303+00:00", "monotonic_ns": 40581662925283, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source logs"}
+{"utc": "2026-11-10T13:56:11.148433+00:00", "monotonic_ns": 40581759067306, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source logs", "exit_code": 0}
+{"utc": "2026-11-10T13:56:11.149709+00:00", "monotonic_ns": 40581760331377, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source logs"}
+{"utc": "2026-11-10T13:56:11.225682+00:00", "monotonic_ns": 40581836316314, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source logs", "exit_code": 0}
+{"utc": "2026-11-10T13:56:11.226653+00:00", "monotonic_ns": 40581837274145, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:56:11.269013+00:00", "monotonic_ns": 40581879647363, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:56:11.269885+00:00", "monotonic_ns": 40581880504944, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:56:11.310001+00:00", "monotonic_ns": 40581920635637, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:56:11.310875+00:00", "monotonic_ns": 40581921496047, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "release stopped source containers; preserve volumes"}
+{"utc": "2026-11-10T13:56:12.165091+00:00", "monotonic_ns": 40582775725908, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "release stopped source containers; preserve volumes", "exit_code": 0}
+{"utc": "2026-11-10T13:56:12.166031+00:00", "monotonic_ns": 40582776656297, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "confirm source volume retained"}
+{"utc": "2026-11-10T13:56:12.207320+00:00", "monotonic_ns": 40582817954388, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "confirm source volume retained", "exit_code": 0}
+{"utc": "2026-11-10T13:56:12.208017+00:00", "monotonic_ns": 40582818640070, "event": "SOURCE_CONTAINERS_RELEASED", "run_id": "p4-main-20261110", "volume_preserved": "group08-lab_db_data"}
+{"utc": "2026-11-10T13:56:12.208329+00:00", "monotonic_ns": 40582818948223, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "extract and verify selected Restic snapshot"}
+{"utc": "2026-11-10T13:56:20.570689+00:00", "monotonic_ns": 40591181323366, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "extract and verify selected Restic snapshot", "exit_code": 0}
+{"utc": "2026-11-10T13:56:20.571741+00:00", "monotonic_ns": 40591182361277, "event": "ARTIFACT_VERIFIED", "run_id": "p4-main-20261110", "snapshot_id": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78"}
+{"utc": "2026-11-10T13:56:20.572205+00:00", "monotonic_ns": 40591182824794, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "guard existing target containers"}
+{"utc": "2026-11-10T13:56:20.590288+00:00", "monotonic_ns": 40591200915146, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "guard existing target containers", "exit_code": 0}
+{"utc": "2026-11-10T13:56:20.590751+00:00", "monotonic_ns": 40591201370881, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "guard existing target volumes"}
+{"utc": "2026-11-10T13:56:20.607132+00:00", "monotonic_ns": 40591217757981, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "guard existing target volumes", "exit_code": 0}
+{"utc": "2026-11-10T13:56:20.607680+00:00", "monotonic_ns": 40591218300908, "event": "TARGET_PREFLIGHT_PASSED", "run_id": "p4-main-20261110", "project": "group08-restore-p4-main-20261110"}
+{"utc": "2026-11-10T13:56:20.608209+00:00", "monotonic_ns": 40591218829523, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect storage driver"}
+{"utc": "2026-11-10T13:56:20.659774+00:00", "monotonic_ns": 40591270407578, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect storage driver", "exit_code": 0}
+{"utc": "2026-11-10T13:56:20.660414+00:00", "monotonic_ns": 40591271033760, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect DB image size"}
+{"utc": "2026-11-10T13:56:20.676275+00:00", "monotonic_ns": 40591286900867, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect DB image size", "exit_code": 0}
+{"utc": "2026-11-10T13:56:20.677059+00:00", "monotonic_ns": 40591287679989, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect web image size"}
+{"utc": "2026-11-10T13:56:20.691147+00:00", "monotonic_ns": 40591301772627, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect web image size", "exit_code": 0}
+{"utc": "2026-11-10T13:56:20.691728+00:00", "monotonic_ns": 40591302348984, "event": "RESOURCE_CHECK", "run_id": "p4-main-20261110", "driver": "vfs", "host_free_bytes": 2305085440, "estimated_required_bytes": 2136002336, "estimated_stopped_container_release_bytes": 0}
+{"utc": "2026-11-10T13:56:20.692494+00:00", "monotonic_ns": 40591303114235, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target up"}
+{"utc": "2026-11-10T13:56:50.001437+00:00", "monotonic_ns": 40620612070660, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target up", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.002135+00:00", "monotonic_ns": 40620612755450, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:56:50.025060+00:00", "monotonic_ns": 40620635694286, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.025962+00:00", "monotonic_ns": 40620636587480, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect target volume"}
+{"utc": "2026-11-10T13:56:50.045681+00:00", "monotonic_ns": 40620656314419, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect target volume", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.046386+00:00", "monotonic_ns": 40620657006140, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "read DB metadata"}
+{"utc": "2026-11-10T13:56:50.167516+00:00", "monotonic_ns": 40620778153497, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "read DB metadata", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.168327+00:00", "monotonic_ns": 40620778948623, "event": "TARGET_READY", "run_id": "p4-main-20261110", "volume": "group08-restore-p4-main-20261110_restore_data", "seed_tables": 0}
+{"utc": "2026-11-10T13:56:50.171336+00:00", "monotonic_ns": 40620781959698, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target cp"}
+{"utc": "2026-11-10T13:56:50.239018+00:00", "monotonic_ns": 40620849651189, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target cp", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.239661+00:00", "monotonic_ns": 40620850281697, "event": "IMPORT_STARTED", "run_id": "p4-main-20261110", "target_state": "DIRTY until all checks succeed"}
+{"utc": "2026-11-10T13:56:50.239943+00:00", "monotonic_ns": 40620850561478, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "SQL import; every nonzero exit is failure"}
+{"utc": "2026-11-10T13:56:50.372868+00:00", "monotonic_ns": 40620983502206, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "SQL import; every nonzero exit is failure", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.373566+00:00", "monotonic_ns": 40620984189981, "event": "IMPORT_FINISHED", "run_id": "p4-main-20261110"}
+{"utc": "2026-11-10T13:56:50.374114+00:00", "monotonic_ns": 40620984733849, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "provision target app role"}
+{"utc": "2026-11-10T13:56:50.559117+00:00", "monotonic_ns": 40621169752185, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "provision target app role", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.559629+00:00", "monotonic_ns": 40621170248722, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "verify target app grants"}
+{"utc": "2026-11-10T13:56:50.822905+00:00", "monotonic_ns": 40621433538880, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "verify target app grants", "exit_code": 0}
+{"utc": "2026-11-10T13:56:50.823772+00:00", "monotonic_ns": 40621434394697, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope"}
+{"utc": "2026-11-10T13:56:51.048979+00:00", "monotonic_ns": 40621659614247, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope", "exit_code": 0}
+{"utc": "2026-11-10T13:56:51.050219+00:00", "monotonic_ns": 40621660840972, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture every orders row"}
+{"utc": "2026-11-10T13:56:51.161353+00:00", "monotonic_ns": 40621771987491, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture every orders row", "exit_code": 0}
+{"utc": "2026-11-10T13:56:51.162716+00:00", "monotonic_ns": 40621773336911, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture orders schema"}
+{"utc": "2026-11-10T13:56:51.274246+00:00", "monotonic_ns": 40621884879991, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture orders schema", "exit_code": 0}
+{"utc": "2026-11-10T13:56:51.277028+00:00", "monotonic_ns": 40621887649367, "event": "DATA_VERIFIED", "run_id": "p4-main-20261110", "row_count": 105, "rows_sha256": "cbf7c9f6f7aa838001c90904f3449b63a47d0a85afa3d2207fbb0d10f34960a7", "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"}
+{"utc": "2026-11-10T13:56:51.277496+00:00", "monotonic_ns": 40621888116299, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target up"}
+{"utc": "2026-11-10T13:56:55.326634+00:00", "monotonic_ns": 40625937266739, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target up", "exit_code": 0}
+{"utc": "2026-11-10T13:56:56.366647+00:00", "monotonic_ns": 40626977271214, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:56:56.390745+00:00", "monotonic_ns": 40627001379337, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:56:56.391722+00:00", "monotonic_ns": 40627002345781, "event": "URL_READ_VERIFIED", "run_id": "p4-main-20261110", "url": "http://127.0.0.1:8080"}
+{"utc": "2026-11-10T13:56:56.392304+00:00", "monotonic_ns": 40627002925553, "event": "REQUEST_SENT", "run_id": "p4-main-20261110", "request_id": "recovery-write-probe", "alias": "LAB-P3-PROBE-D3A1F9D819", "payload": {"customer_alias": "LAB-P3-PROBE-D3A1F9D819", "product_name": "Pen", "quantity": 1, "unit_price_vnd": 25000}}
+{"utc": "2026-11-10T13:56:56.400604+00:00", "monotonic_ns": 40627011225388, "event": "REQUEST_ACKNOWLEDGED", "run_id": "p4-main-20261110", "request_id": "recovery-write-probe", "row": [106, "LAB-P3-PROBE-D3A1F9D819", "Pen", 1, 25000, "2026-11-10T13:56:56.397680Z"]}
+{"utc": "2026-11-10T13:56:56.401156+00:00", "monotonic_ns": 40627011777068, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope"}
+{"utc": "2026-11-10T13:56:56.526805+00:00", "monotonic_ns": 40627137438529, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope", "exit_code": 0}
+{"utc": "2026-11-10T13:56:56.528079+00:00", "monotonic_ns": 40627138700647, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture every orders row"}
+{"utc": "2026-11-10T13:56:56.644672+00:00", "monotonic_ns": 40627255306807, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture every orders row", "exit_code": 0}
+{"utc": "2026-11-10T13:56:56.645675+00:00", "monotonic_ns": 40627256295975, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture orders schema"}
+{"utc": "2026-11-10T13:56:56.755038+00:00", "monotonic_ns": 40627365672749, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture orders schema", "exit_code": 0}
+{"utc": "2026-11-10T13:56:56.756677+00:00", "monotonic_ns": 40627367297714, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target restart"}
+{"utc": "2026-11-10T13:56:58.414079+00:00", "monotonic_ns": 40629024713064, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target restart", "exit_code": 0}
+{"utc": "2026-11-10T13:56:59.449017+00:00", "monotonic_ns": 40630059647258, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope"}
+{"utc": "2026-11-10T13:56:59.570255+00:00", "monotonic_ns": 40630180889476, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "verify fixed six-column scope", "exit_code": 0}
+{"utc": "2026-11-10T13:56:59.570959+00:00", "monotonic_ns": 40630181579695, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture every orders row"}
+{"utc": "2026-11-10T13:56:59.674967+00:00", "monotonic_ns": 40630285601520, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture every orders row", "exit_code": 0}
+{"utc": "2026-11-10T13:56:59.675962+00:00", "monotonic_ns": 40630286583357, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "capture orders schema"}
+{"utc": "2026-11-10T13:56:59.780460+00:00", "monotonic_ns": 40630391098454, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "capture orders schema", "exit_code": 0}
+{"utc": "2026-11-10T13:56:59.800032+00:00", "monotonic_ns": 40630410655162, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:56:59.817667+00:00", "monotonic_ns": 40630428300576, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:56:59.818517+00:00", "monotonic_ns": 40630429137545, "event": "RESTART_VERIFIED", "run_id": "p4-main-20261110", "row_count": 106}
+{"utc": "2026-11-10T13:56:59.818978+00:00", "monotonic_ns": 40630429597537, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "cleanup target SQL staging"}
+{"utc": "2026-11-10T13:56:59.918785+00:00", "monotonic_ns": 40630529420235, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "cleanup target SQL staging", "exit_code": 0}
+{"utc": "2026-11-10T13:56:59.919585+00:00", "monotonic_ns": 40630530205396, "event": "TARGET_CLEANUP", "run_id": "p4-main-20261110", "status": "PASS"}
+{"utc": "2026-11-10T13:56:59.925243+00:00", "monotonic_ns": 40630535874143, "event": "STABILITY_PROBE", "run_id": "p4-main-20261110", "sample": 1, "http_status": 200, "health": {"database": "ok", "orders_count": 106, "status": "ok"}}
+{"utc": "2026-11-10T13:57:00.931780+00:00", "monotonic_ns": 40631542409437, "event": "STABILITY_PROBE", "run_id": "p4-main-20261110", "sample": 2, "http_status": 200, "health": {"database": "ok", "orders_count": 106, "status": "ok"}}
+{"utc": "2026-11-10T13:57:01.937873+00:00", "monotonic_ns": 40632548504043, "event": "STABILITY_PROBE", "run_id": "p4-main-20261110", "sample": 3, "http_status": 200, "health": {"database": "ok", "orders_count": 106, "status": "ok"}}
+{"utc": "2026-11-10T13:57:01.938469+00:00", "monotonic_ns": 40632549091978, "event": "SERVICE_VERIFIED", "run_id": "p4-main-20261110", "url": "http://127.0.0.1:8080", "row_count": 106}
+{"utc": "2026-11-10T13:57:01.938869+00:00", "monotonic_ns": 40632549488775, "event": "REQUEST_COMPARISON_FINISHED", "run_id": "p4-main-20261110", "recovered_requests": ["pre-backup-checkpoint"], "unrecovered_acknowledged": ["post-backup-0", "post-backup-1", "post-backup-2"], "duplicates": [], "recovered_prefix": true, "recovered_commit_age_bounds": {"lower_seconds": 10.518407983, "upper_seconds": 10.532435583, "meaning": "bounds on age of last recovered commit from client send/ack; not exact RPO"}}
+{"utc": "2026-11-10T13:57:01.939574+00:00", "monotonic_ns": 40632550194617, "event": "TRIAL_ENDED", "run_id": "p4-main-20261110", "status": "PASS"}
+{"utc": "2026-11-10T13:57:01.939870+00:00", "monotonic_ns": 40632550489330, "event": "POST_TRIAL_RETURN_SOURCE_STARTED", "run_id": "p4-main-20261110"}
+{"utc": "2026-11-10T13:57:01.940213+00:00", "monotonic_ns": 40632550833047, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target ps"}
+{"utc": "2026-11-10T13:57:02.010124+00:00", "monotonic_ns": 40632620757987, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target ps", "exit_code": 0}
+{"utc": "2026-11-10T13:57:02.010906+00:00", "monotonic_ns": 40632621526433, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:57:02.029346+00:00", "monotonic_ns": 40632639980232, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:57:02.030782+00:00", "monotonic_ns": 40632641403613, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target logs"}
+{"utc": "2026-11-10T13:57:02.104915+00:00", "monotonic_ns": 40632715548706, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target logs", "exit_code": 0}
+{"utc": "2026-11-10T13:57:02.106186+00:00", "monotonic_ns": 40632716806363, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target ps"}
+{"utc": "2026-11-10T13:57:02.172539+00:00", "monotonic_ns": 40632783174367, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target ps", "exit_code": 0}
+{"utc": "2026-11-10T13:57:02.173446+00:00", "monotonic_ns": 40632784067130, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "inspect lab resource"}
+{"utc": "2026-11-10T13:57:02.189027+00:00", "monotonic_ns": 40632799657522, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "inspect lab resource", "exit_code": 0}
+{"utc": "2026-11-10T13:57:02.189931+00:00", "monotonic_ns": 40632800551687, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target logs"}
+{"utc": "2026-11-10T13:57:02.257011+00:00", "monotonic_ns": 40632867645933, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target logs", "exit_code": 0}
+{"utc": "2026-11-10T13:57:02.258097+00:00", "monotonic_ns": 40632868718597, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "target stop"}
+{"utc": "2026-11-10T13:57:04.750892+00:00", "monotonic_ns": 40635361529062, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "target stop", "exit_code": 0}
+{"utc": "2026-11-10T13:57:04.751557+00:00", "monotonic_ns": 40635362179330, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "release stopped target containers; preserve target volume"}
+{"utc": "2026-11-10T13:57:05.418520+00:00", "monotonic_ns": 40636029155098, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "release stopped target containers; preserve target volume", "exit_code": 0}
+{"utc": "2026-11-10T13:57:05.419328+00:00", "monotonic_ns": 40636029953199, "event": "COMMAND_STARTED", "run_id": "p4-main-20261110", "label": "source up"}
+{"utc": "2026-11-10T13:57:24.726315+00:00", "monotonic_ns": 40655336949933, "event": "COMMAND_FINISHED", "run_id": "p4-main-20261110", "label": "source up", "exit_code": 0}
+{"utc": "2026-11-10T13:57:24.733167+00:00", "monotonic_ns": 40655343796902, "event": "POST_TRIAL_RETURN_SOURCE_FINISHED", "run_id": "p4-main-20261110", "health": {"database": "ok", "orders_count": 108, "status": "ok"}}

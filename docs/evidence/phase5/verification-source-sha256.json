@@ -1,0 +1,14 @@
+{
+  "fingerprinted_at_utc": "2026-11-10T15:43:00.530495+00:00",
+  "method": "sources unchanged in this session between post-trial verification and fingerprinting; no backdated events",
+  "files": {
+    "SOURCE/metrics/verify_retained.py": "d73ba6ab6298c2b76eb373bff460f0b50a76e91ee9ee0c67679d8c16c4ea2915",
+    "SOURCE/metrics/evidence.py": "dbdabe0256115c9651c0ea0b016240e54876bdbc01afc94f72b3d68113bf269a",
+    "SOURCE/recovery/controller.py": "4deeeb8c7a3083bd29815fd3aadcbd01bed68870b092964f65eb995b757fd6df",
+    "SOURCE/recovery/common.py": "87ea52e0025dbbdf4bd34aca5f875af3cdbe1c4e10fe147551b916563dc329b2",
+    "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad",
+    "compose.restore.yaml": "4b6ddf71c7805512277512d669c820094caa785424275a6e167eda8fc38cddd7",
+    "compose.recovery-tools.yaml": "6b5a6b724517211de0377583cdf75b9df8946a3d2c60a54e9ed47cfd6249b277",
+    "compose.backup.yaml": "7d8ae673235b0e717136db817091fddc8a6d8f7fce21cb04bddb1e1e66bf5656"
+  }
+}

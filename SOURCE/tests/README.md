@@ -117,3 +117,44 @@ dump cắt cụt và kiểm tra không có snapshot mới từ đầu vào lỗi
 phải fail. Không sửa backup đã tin cậy hoặc dữ liệu DB. Chạy khi không có lượt
 backup khác đồng thời để so sánh danh sách snapshot. Lệnh PowerShell điều phối
 và lịch Task Scheduler vẫn cần nhóm kiểm thử trực tiếp trên Windows 10.
+
+## Phase 3/4
+
+Unit stdlib (không kết nối DB/Docker thật):
+
+```powershell
+py -3 -B -m unittest discover -s SOURCE/tests -p test_recovery.py -v
+```
+
+Kiểm thử thật là các action trong `SOURCE/recovery/README.md`; các action này có
+thể dừng dịch vụ lab và tạo đơn giả. Chỉ chạy khi chủ động diễn tập, có đủ tài
+nguyên và không có người khác ghi dữ liệu. `docs/PHASE3_RESULTS.md` và
+`docs/PHASE4_RESULTS.md` tách unit/mock, test thật Linux, Windows NOT TESTED.
+
+## Phase 5
+
+```powershell
+py -3 -B -m unittest discover -s SOURCE/tests -p test_metrics.py -v
+```
+
+Đọc corpus đã pin, test math/CSV/hash trong thư mục tạm; không dừng service.
+Một test cần SQL artifact private và sẽ SKIP nếu clone mới không có artifact.
+Exporter và integrity workflow: `SOURCE/metrics/README.md`. Không đưa fixture/mock
+vào CSV thực nghiệm hoặc dùng zero thay giá trị N/A/NOT TESTED.
+
+## Phase 6 — rehearsal runbook
+
+Runbook hiện tại: [v1.1](../../THESIS/runbook/Runbook_v1.1.md);
+kết quả thực: [PHASE6_RESULTS](../../docs/PHASE6_RESULTS.md).
+Suite recovery nay có 27 test: thêm malformed HTTP 201/uncertain, valid ACK,
+secret, host low-space và Docker-capacity checks. Unit dùng mock/fixture, không
+được ghi thành bằng chứng restore thật. Lệnh từng suite ở các mục trên vẫn dùng
+đúng runtime; đừng discover toàn bộ trên host chưa có dependency Flask/PyMySQL.
+
+Trước rehearsal, chạy preflight ở recovery README. Clean gate FAIL thì dừng
+nhánh restore/drill, không xóa volume hoặc dùng scope web-control thay thế gate
+clean-recovery. Sau gate web PASS mới chạy `web-outage`; script
+`runtime_phase1.py` kiểm DB-stop/start và restart nguồn, không là Restic restore.
+Các lệnh gây outage chỉ chạy trong cửa sổ chủ động, không có writer khác và có
+`ReturnSource`/finally. Lưu raw command/result/exit code, source full hash trước/
+sau, inventory và lỗi; Windows/native PowerShell giữ NOT TESTED đến khi chạy thật.
