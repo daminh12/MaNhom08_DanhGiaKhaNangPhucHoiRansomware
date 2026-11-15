@@ -223,7 +223,9 @@ class Lab:
         checks['docker_filesystems']=disks
         if scope=='clean-recovery':
             resources=self.resource_check(allow_release_credit=self.a.release_source_containers)
-            if any(d['available_bytes']+resources['estimated_stopped_container_release_bytes']<resources['estimated_required_bytes'] for d in disks):
+            # Release credit is only a host estimate: it cannot establish free
+            # space on a separate Docker VM/volume filesystem before release.
+            if any(d['available_bytes']<resources['estimated_required_bytes'] for d in disks):
                 raise RuntimeError('Insufficient Docker filesystem space for clean recovery; retain all data volumes/snapshots')
             checks['clean_recovery_resources']='PASS (estimate only; rechecked by restore)'
         else:

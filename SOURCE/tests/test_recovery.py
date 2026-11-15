@@ -161,7 +161,7 @@ class RecoveryTests(unittest.TestCase):
         # Host capacity alone cannot grant permission when the Docker VM is full.
         lab.a.preflight_scope='clean-recovery'
         lab.resource_check=lambda **kwargs:{'estimated_required_bytes':1024*1024**2,
-                                            'estimated_stopped_container_release_bytes':0}
+                                            'estimated_stopped_container_release_bytes':2*1024*1024**2}
         with self.assertRaises(RuntimeError):lab.preflight()
         self.assertEqual(lab.result['preflight']['status'],'FAILED')
 
