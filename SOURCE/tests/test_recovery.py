@@ -1,6 +1,8 @@
 """Recovery invariants, using synthetic fixtures/mocks, never live Docker/DB."""
 from datetime import datetime, timezone
+from contextlib import nullcontext, redirect_stdout
 import importlib.util
+import io
 import json
 from pathlib import Path
 import sys
@@ -8,6 +10,7 @@ import tempfile
 import types
 import unittest
 from unittest.mock import patch
+from unittest.mock import MagicMock
 
 CODE=Path(__file__).resolve().parents[1]/'recovery'
 sys.path.insert(0,str(CODE))
@@ -173,6 +176,65 @@ class RecoveryTests(unittest.TestCase):
         lab.source=lambda *args,**kwargs:'Filesystem Available\n'
         with self.assertRaises(ValueError):lab.preflight()
         self.assertEqual(lab.result['preflight']['status'],'FAILED')
+
+    def direct_resource_lab(self, action, available_kib):
+        """Fake Docker/HTTP metadata, keeping the real source/resource gates."""
+        lab=object.__new__(controller.Lab)
+        lab.a=types.SimpleNamespace(action=action,release_source_containers=True)
+        lab.result={'status':'FAILED'};lab.source_touched=False;lab.target_created=False
+        lab.source_port=lambda:8080
+        lab.http=MagicMock(return_value=(200,{'status':'ok','database':'ok','orders_count':108}))
+        lab.local_inputs=lambda **kwargs:{'credential_files':'fixture only'}
+        def inspect(name):
+            service='db' if name.endswith('db-1') else 'web'
+            return {'Id':'fixture-'+service,'Config':{'Labels':{'com.docker.compose.project':'group08-lab','com.docker.compose.service':service}},
+                    'State':{'Running':True},'Mounts':[{'Destination':'/var/lib/mysql','Name':'group08-lab_db_data'}],
+                    'NetworkSettings':{'Ports':{'8000/tcp':[{'HostIp':'127.0.0.1','HostPort':'8080'}]}}}
+        lab.inspect=inspect
+        events=[];lab.event=lambda name,**kwargs:events.append(name)
+        def call(command,*args,**kwargs):
+            if 'df' in command:
+                return ('Filesystem 1024-blocks Used Available Capacity Mounted on\n'
+                        f'fixture 9999999 1 {available_kib[0]} 1% /var/lib/mysql\n'
+                        f'fixture 9999999 1 {available_kib[1]} 1% /\n')
+            if command[:2]==['docker','info']:return 'vfs'
+            if '--format' in command:return str((512 if 'mysql:8.4.7' in command else 128)*1024**2)
+            return '[]'
+        lab.call=MagicMock(side_effect=call)
+        for name in ['create_order','stop_source','backup','recover','receipt']:
+            setattr(lab,name,MagicMock(side_effect=AssertionError('Mutation reached during blocked fixture')))
+        return lab,events
+
+    def test_direct_restore_and_drill_reject_full_docker_before_mutation(self):
+        for action in ['restore','drill']:
+            for capacity in [(1,2097152),(2097152,1)]:
+                with self.subTest(action=action,capacity=capacity),tempfile.TemporaryDirectory() as tmp:
+                    lab,events=self.direct_resource_lab(action,capacity);lab.work=Path(tmp)
+                    argv=['controller.py',action,'--run-id','p3-resource-fixture','--release-source-containers']
+                    with patch.object(controller,'Lab',return_value=lab), \
+                         patch.object(controller,'controller_lock',return_value=nullcontext()), \
+                         patch.object(controller.subprocess,'check_output',return_value='fixture-id'), \
+                         patch.object(controller.sys,'argv',argv), \
+                         patch.object(controller.shutil,'disk_usage',return_value=types.SimpleNamespace(free=8*1024**3)), \
+                         redirect_stdout(io.StringIO()):
+                        self.assertEqual(controller.main(),1)
+                    self.assertEqual(lab.result['status'],'FAILED')
+                    self.assertIn('Docker filesystem space',lab.result['error'])
+                    self.assertFalse(lab.source_touched or lab.target_created)
+                    for name in ['create_order','stop_source','backup','recover','receipt']:
+                        getattr(lab,name).assert_not_called()
+                    self.assertIn('DOCKER_RESOURCE_CHECK',events)
+                    self.assertTrue((lab.work/'result.json').exists())
+
+    def test_direct_restore_and_drill_accept_measured_sufficient_docker_space(self):
+        for action in ['restore','drill']:
+            with self.subTest(action=action):
+                lab,events=self.direct_resource_lab(action,(2097152,2097152))
+                with patch.object(controller.shutil,'disk_usage',return_value=types.SimpleNamespace(free=8*1024**3)):
+                    lab.validate_source()
+                self.assertIn('DOCKER_RESOURCE_CHECK',events)
+                self.assertEqual(len(lab.result['docker_filesystems']),2)
+                self.assertFalse(lab.source_touched or lab.target_created)
 
     def test_acknowledged_loss_and_bounds_not_created_at(self):
         a=[{'request_id':str(i),'alias':row[1],'row':row,'sent_ns':i*100,'ack_ns':i*100+10} for i,row in enumerate(self.rows,1)]

@@ -178,7 +178,9 @@ class Lab:
         for image in ['mysql:8.4.7','group08-lab-web','group08-lab-backup']:
             self.call(['docker','image','inspect',image],'require preinstalled '+image)
         if self.a.action in ['restore','drill']:
-            self.resource_check(allow_release_credit=self.a.release_source_containers)
+            # Direct CLI calls must pass the Docker gate too, before any POST
+            # or source stop, even when no separate preflight was requested.
+            self.recovery_resource_check()
 
     def local_inputs(self, backup=True, archive=True):
         names=['db_root_password.txt','db_app_password.txt']
@@ -213,20 +215,10 @@ class Lab:
         if [g for g in grants.splitlines() if not g.startswith('GRANT USAGE ON ')]!=[expected]:
             raise ValueError('Unexpected source application privileges')
         checks['app_grants']='PASS'
-        raw=self.source('exec','-T','db','df','-Pk','/var/lib/mysql','/tmp',label='read Docker volume and staging filesystem capacity')
-        disks=[]
-        for line in raw.splitlines()[1:]:
-            fields=line.split()
-            if len(fields)!=6 or not fields[3].isdecimal():raise ValueError('Cannot verify Docker filesystem free space')
-            disks.append({'filesystem':fields[0],'available_bytes':int(fields[3])*1024,'mount':fields[-1]})
-        if len(disks)!=2:raise ValueError('Missing Docker filesystem capacity observations')
+        disks=self.docker_filesystems()
         checks['docker_filesystems']=disks
         if scope=='clean-recovery':
-            resources=self.resource_check(allow_release_credit=self.a.release_source_containers)
-            # Release credit is only a host estimate: it cannot establish free
-            # space on a separate Docker VM/volume filesystem before release.
-            if any(d['available_bytes']<resources['estimated_required_bytes'] for d in disks):
-                raise RuntimeError('Insufficient Docker filesystem space for clean recovery; retain all data volumes/snapshots')
+            self.recovery_resource_check(disks)
             checks['clean_recovery_resources']='PASS (estimate only; rechecked by restore)'
         else:
             # Explicit policy reserve for logs/control, without allocating a new DB.
@@ -237,6 +229,28 @@ class Lab:
             checks['control_reserve_bytes']=reserve
         checks['status']='PASS'
         self.event('PREFLIGHT_PASSED',scope=scope,service_mutations=False)
+
+    def docker_filesystems(self):
+        raw=self.source('exec','-T','db','df','-Pk','/var/lib/mysql','/tmp',label='read Docker volume and staging filesystem capacity')
+        disks=[]
+        for line in raw.splitlines()[1:]:
+            fields=line.split()
+            if len(fields)!=6 or not fields[3].isdecimal():raise ValueError('Cannot verify Docker filesystem free space')
+            disks.append({'filesystem':fields[0],'available_bytes':int(fields[3])*1024,'mount':fields[-1]})
+        if len(disks)!=2:raise ValueError('Missing Docker filesystem capacity observations')
+        return disks
+
+    def recovery_resource_check(self, disks=None):
+        if disks is None:disks=self.docker_filesystems()
+        self.result['docker_filesystems']=disks
+        resources=self.resource_check(allow_release_credit=self.a.release_source_containers)
+        self.event('DOCKER_RESOURCE_CHECK',filesystems=disks,
+                   estimated_required_bytes=resources['estimated_required_bytes'])
+        # Release credit is only a host estimate: it cannot establish free
+        # space on a separate Docker VM/volume filesystem before release.
+        if any(d['available_bytes']<resources['estimated_required_bytes'] for d in disks):
+            raise RuntimeError('Insufficient Docker filesystem space for clean recovery; retain all data volumes/snapshots')
+        return resources
 
     def preflight_target(self):
         if self.project==SOURCE_PROJECT or not self.project.startswith('group08-restore-p'):
