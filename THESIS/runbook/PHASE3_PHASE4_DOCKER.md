@@ -1,5 +1,9 @@
 # Phần bổ sung Runbook v1.0 — Phase 3/4 Docker
 
+Phase 6 đã tạo [Runbook v1.1](Runbook_v1.1.md) để thay phần placeholder/restore
+nguồn của DOCX; dùng v1.1 cho lượt chạy tiếp. Kết quả và các mục chưa chạy ở
+[PHASE6_RESULTS](../../docs/PHASE6_RESULTS.md). DOCX v1.0 gốc vẫn giữ nguyên.
+
 Phần này bổ sung quy trình phục hồi sạch cho DOCX của Minh Quân; DOCX gốc được
 giữ nguyên để nhóm review. Không dùng mục 9.2 cũ để import vào DB nguồn.
 
@@ -23,6 +27,7 @@ giữ nguyên để nhóm review. Không dùng mục 9.2 cũ để import vào D
    ReturnSource diễn ra sau trial, không phải phục hồi từ snapshot và không nằm
    trong observed RTO. Cleanup lỗi không được che lỗi chính.
 10. Copy log/metadata đã kiểm tra vào evidence, không copy secret hoặc SQL dump.
-    MQ đối chiếu từng bước trên Windows và ghi sai sót; v1.1 formal thuộc Phase 6.
+    MQ còn cần đối chiếu độc lập từng bước trên Windows và ghi sai sót; v1.1 đã
+    được soạn trong Phase 6 nhưng chưa có transcript Windows để nghiệm thu.
 
 Lệnh và prerequisite chính xác: [SOURCE/recovery/README.md](../../SOURCE/recovery/README.md).

@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "SOURCE/recovery/controller.py",
+      "preflight",
+      "--run-id",
+      "p3-p6-gate-20261115"
+    ],
+    "started_at_utc": "2026-11-15T02:55:33.258356+00:00",
+    "exit_code": 1,
+    "result": "clean-gate-result.json",
+    "service_mutations": false,
+    "target_created": false
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "SOURCE/recovery/controller.py",
+      "preflight",
+      "--run-id",
+      "p3-p6-gate-release-20261115",
+      "--release-source-containers"
+    ],
+    "started_at_utc": "2026-11-15T02:55:34.337734+00:00",
+    "exit_code": 1,
+    "result": "release-gate-result.json",
+    "service_mutations": false,
+    "target_created": false
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "SOURCE/recovery/controller.py",
+      "preflight",
+      "--run-id",
+      "p4-p6-gate-web-20261115",
+      "--preflight-scope",
+      "web-control"
+    ],
+    "started_at_utc": "2026-11-15T02:55:35.296702+00:00",
+    "exit_code": 0,
+    "result": "web-gate-result.json",
+    "service_mutations": false,
+    "target_created": false
+  }
+]

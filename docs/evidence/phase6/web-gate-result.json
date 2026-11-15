@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "p4-p6-gate-web-20261115",
+  "scenario": "preflight",
+  "status": "PASS",
+  "started_at_utc": "2026-11-15T02:55:35.386709+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p4-p6-gate-web-20261115",
+  "release_source_containers": false,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "preflight": {
+    "scope": "web-control",
+    "service_mutations": false,
+    "status": "PASS",
+    "local_inputs": {
+      "credential_files": "PASS (presence/format only; values not recorded)",
+      "repository_config": "NOT TESTED"
+    },
+    "source_baseline": {
+      "schema_version": 1,
+      "canonicalization": "orders-jsonl-v1",
+      "row_count": 108,
+      "rows_sha256": "dc0897f10c8612e3e546929f146ce9310f6945a34287d95e104e4b4d95529264",
+      "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+      "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+    },
+    "api_read": "PASS; API window checked against full DB, not used as full baseline",
+    "app_grants": "PASS",
+    "docker_filesystems": [
+      {
+        "filesystem": "overlay",
+        "available_bytes": 138678272,
+        "mount": "/var/lib/mysql"
+      },
+      {
+        "filesystem": "overlay",
+        "available_bytes": 138678272,
+        "mount": "/"
+      }
+    ],
+    "clean_recovery_resources": "NOT TESTED; this gate permits web-only control only",
+    "control_reserve_bytes": 67108864
+  },
+  "finished_at_utc": "2026-11-15T02:55:36.091912+00:00",
+  "source_touched": false,
+  "target_created": false
+}

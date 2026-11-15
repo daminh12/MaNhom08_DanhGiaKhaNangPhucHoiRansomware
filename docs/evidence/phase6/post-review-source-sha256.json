@@ -1,0 +1,25 @@
+{
+  "observed_at_utc": "2026-11-15T03:03:49.227125+00:00",
+  "commit": "de7b2ad3f4158f89f478bc6ccd729913532dff51",
+  "working_source_sha256": {
+    "SOURCE/recovery/controller.py": "1925eab272a375c1dddb148ae2d28637fd76665e4fba5d11e8bee148d3265e9c",
+    "SOURCE/recovery/common.py": "87ea52e0025dbbdf4bd34aca5f875af3cdbe1c4e10fe147551b916563dc329b2",
+    "SOURCE/recovery/archive.py": "b70e1e6e9133a47960147d47b70f99ff95448e0e4ec13cdc85dc25876fdac85e",
+    "SOURCE/recovery/run_lab.ps1": "3f5d64e97658d44fc739a2fea393d1b3ab9838d9634c2ae6797b940597314004",
+    "SOURCE/tests/test_recovery.py": "8bf2b6b36247fa0bf87761eec7c878c095a7e5501347af6ee7df6d136ef89da3",
+    "SOURCE/metrics/evidence.py": "dbdabe0256115c9651c0ea0b016240e54876bdbc01afc94f72b3d68113bf269a",
+    "SOURCE/metrics/export_metrics.py": "b3345f66643929105cf22595ec96445a58369ef0803b8cf8d31a855836d6275a",
+    "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad",
+    "SOURCE/backup/db_dump.sh": "11a58c1410d259f9889383a4215938e98f0078f74ebd07c82598daf03c4700cf",
+    "SOURCE/app/app.py": "935f788f76d2f758b6c481dd1dfb63d8a85aa87629a01c89ca57452ef7763f3e",
+    "SOURCE/app/requirements.txt": "8ce3553786fccfdc82d176058eb8a8442e878236a96c265d5f32e510f91e8756",
+    "compose.yaml": "72a99a166840223cbca731cfe66bae21cd90883638c87c7dec7a61f8a509ace8",
+    "compose.restore.yaml": "4b6ddf71c7805512277512d669c820094caa785424275a6e167eda8fc38cddd7",
+    "compose.backup.yaml": "7d8ae673235b0e717136db817091fddc8a6d8f7fce21cb04bddb1e1e66bf5656",
+    "compose.recovery-tools.yaml": "6b5a6b724517211de0377583cdf75b9df8946a3d2c60a54e9ed47cfd6249b277"
+  },
+  "python": "3.12.14",
+  "host_disk_free_bytes": 138338304,
+  "windows_10": "NOT TESTED",
+  "note": "post-review resource hardening gate/unit only; no new outage/main restore sample"
+}

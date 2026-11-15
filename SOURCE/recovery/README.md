@@ -20,6 +20,32 @@ không thay đổi dump/snapshot cũ. Không import vào DB nguồn.
 - Đủ dung lượng trong Docker và host. Kiểm tra dung lượng host không thay thế
   kiểm tra dung lượng VM/VHD của Docker Desktop. Kho cùng host chưa phải offsite.
 
+Runbook hiện tại: [v1.1](../../THESIS/runbook/Runbook_v1.1.md). DOCX v1.0 được
+giữ nguyên làm đầu vào review; không thực hiện phần import vào nguồn của bản đó.
+
+## Preflight Phase 6
+
+```powershell
+$gate = 'p3-gate-' + [guid]::NewGuid().ToString('N').Substring(0,12)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\recovery\run_lab.ps1 -Action preflight -RunId $gate
+if ($LASTEXITCODE -ne 0) { throw 'NO-GO: đọc result/journal của gate trước khi tiếp tục' }
+```
+
+Đây là action đã triển khai, chỉ đọc lab: full dataset/schema, cửa sổ API,
+grants, secret presence/format và dung lượng host + hai filesystem Docker. Không
+chạy Restic, dừng service hoặc tạo target. Kiểm Restic/SHA vẫn bắt buộc trong
+backup/archive. Gate mặc định `clean-recovery` phải PASS trước backup/restore/drill.
+Input secret thiếu/sai format còn được từ chối trước mutation ở các action đó;
+restore không cần secret của tài khoản dump. Gate không khóa client/backup cũ.
+
+Chỉ đối chứng web có scope riêng `-PreflightScope web-control`, không cho phép
+clean restore; yêu cầu tối thiểu 64 MiB dự trữ evidence trên host và Docker.
+Linux: `python3 -B SOURCE/recovery/controller.py preflight --run-id ...` và
+`--preflight-scope web-control`. Với cloud VFS, `--release-source-containers`
+chỉ cộng ước lượng giải phóng stopped containers, vẫn từ chối nếu không đủ.
+Không dùng credit host như số đo free space của Docker VM; gate filesystem Docker
+cố ý thận trọng. Không xóa volume/snapshot để vượt qua gate.
+
 ## Tương thích Phase 2 và baseline
 
 Giữ manifest v1 gồm `database.sql`, `metadata.json`. Baseline độc lập được
@@ -123,7 +149,9 @@ T0-first-send] từ observer khi recovered requests là prefix và không duplic
 Không dùng created_at_utc làm thời điểm commit hoặc tự gán RPO=0.
 
 Mọi lỗi/KeyboardInterrupt làm run FAILED/ABORTED; kết quả write không rõ không
-retry. Không tái sử dụng run, project/volume cũ để import; giữ dữ liệu dở để điều tra.
+retry. HTTP 201 sai/thiếu nội dung cũng tạo REQUEST_UNCERTAIN; chỉ ACK khi cả
+identity, kiểu dữ liệu và payload đúng. Đây không phải API idempotency. Không tái
+sử dụng run, project/volume cũ để import; giữ dữ liệu dở để điều tra.
 Không tự xóa khóa còn lại sau SIGKILL: xác minh process đã hết và điều tra riêng.
 `ReturnSource` là tùy chọn hậu kiểm, lỗi của nó được ghi riêng và exit khác 0.
 Trong lỗi tài nguyên nghiêm trọng, không xóa volume/snapshot để cố chạy tiếp.
