@@ -123,3 +123,18 @@ kiểm source/API/quyền/secret và dung lượng host/Docker trước cửa s�
 Các đối chứng Linux và 76 unit test đã PASS; lượt clean restore mới bị chặn bởi
 disk gần đầy. Windows 10 và lượt độc lập của Minh Quân chưa có bằng chứng, nên
 chưa nghiệm thu toàn bộ Phase 6. Không xóa volume/snapshot để vượt resource gate.
+
+## 13. Hồ sơ tổng hợp Phase 7
+
+- [Báo cáo Word](THESIS/BaoCao_Nhom08.docx) và [nguồn Markdown](THESIS/REPORT_GROUP08.md).
+- [Slide PowerPoint](THESIS/ThuyetTrinh_Nhom08.pptx), có ghi chú thuyết trình;
+  [nội dung slide](THESIS/SLIDES_GROUP08.md).
+- [Runbook v1.1 Word](THESIS/runbook/Runbook_v1.1.docx); giữ DOCX v1.0 gốc.
+- [Review cuối](docs/reviews/PHASE7_REVIEW.md), [kết quả/QA](docs/PHASE7_RESULTS.md),
+  [checklist truy vết](docs/CHECKLIST_YEU_CAU.md), [kịch bản demo](docs/KICH_BAN_DEMO.md).
+
+Phase 7 bổ sung gate Docker cho direct restore/drill trước mutation; 78 unit
+tests PASS trên Linux. Mẫu RTO chính vẫn là trial ngày 10/11, không phát sinh
+main trial mới. Hồ sơ được render kiểm tra bằng LibreOffice/Linux; Windows,
+nghiệm thu Phase 6 đầy đủ và các finding mở vẫn theo giới hạn trong báo cáo.
+Cách build và kiểm bản xuất: [THESIS/reporting/README.md](THESIS/reporting/README.md).

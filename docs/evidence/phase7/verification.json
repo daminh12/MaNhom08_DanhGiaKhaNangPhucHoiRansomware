@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "observed_at_utc": "2026-11-15T07:40:47.177002+00:00",
+  "code_commit": "5d6c8328b621c5cc3e8d08d4a303da3d8bb3d686",
+  "unit_counts": {
+    "recovery-unit.txt": 29,
+    "backup-unit.txt": 14,
+    "metrics-unit.txt": 21,
+    "app-unit.txt": 14
+  },
+  "unit_total": 78,
+  "unit_skips": 0,
+  "python_ast": "PASS",
+  "local_markdown_links": "PASS",
+  "historical_evidence_unchanged": 124,
+  "historic_Phase6_source_doc_manifest_via_Git": "8bb0d8e21485590258c2dd7e54562c5a3da4c3b9",
+  "historic_export_output_hashes": "PASS",
+  "artifact_qa": "PASS",
+  "new_outage_or_restore": "NOT TESTED; no service mutation in Phase7",
+  "Windows_native": "NOT TESTED",
+  "target_SLA": "NOT TESTED; no targets selected"
+}

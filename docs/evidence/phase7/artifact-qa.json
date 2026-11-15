@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "observed_at_utc": "2026-11-15T07:38:49.970456+00:00",
+  "packages": {
+    "THESIS/BaoCao_Nhom08.docx": "PASS XML/ZIP",
+    "THESIS/runbook/Runbook_v1.1.docx": "PASS XML/ZIP",
+    "THESIS/ThuyetTrinh_Nhom08.pptx": "PASS XML/ZIP"
+  },
+  "render_engine": "LibreOffice/Linux",
+  "pdf": {
+    "BaoCao_Nhom08": {
+      "pages": 17,
+      "no_empty_body_pages": true
+    },
+    "Runbook_v1.1": {
+      "pages": 11,
+      "no_empty_body_pages": true
+    },
+    "ThuyetTrinh_Nhom08": {
+      "pages": 15,
+      "no_empty_body_pages": true
+    }
+  },
+  "slide_count": 15,
+  "notes_slides": 15,
+  "slide_text_present_in_render": true,
+  "shape_bounds": "PASS",
+  "pdf_text_bounds": "PASS",
+  "metric_report_csv_agreement": "PASS",
+  "historical_raw_evidence_unchanged": 124,
+  "original_docx_unchanged": 3,
+  "embedded_credential_value_matches": 0,
+  "native_Microsoft_Office_Windows": "NOT TESTED",
+  "new_restore_E2E": "NOT TESTED"
+}

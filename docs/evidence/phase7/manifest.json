@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-11-15T07:40:47.181106+00:00",
+  "base_ref": "8bb0d8e21485590258c2dd7e54562c5a3da4c3b9",
+  "code_execution_ref": "5d6c8328b621c5cc3e8d08d4a303da3d8bb3d686",
+  "historical_metric_ref": "258ebc8b7bddb7b5fd4ce9562a37889bf1c2a36a",
+  "files": {
+    ".gitattributes": {
+      "size_bytes": 704,
+      "sha256": "381520d191273b5e42a2af34449342a9ca9c73d5bedb1825c08672ec374eb0a2"
+    },
+    "README.md": {
+      "size_bytes": 6844,
+      "sha256": "9d1264140cca68bac44c001d8656839c8cef5cefe48a060b23990a125f7d1945"
+    },
+    "SOURCE/recovery/controller.py": {
+      "size_bytes": 36102,
+      "sha256": "fae5fa27325a13885a460c04be9ceae74c60aacec724e9d593ae808b36226d99"
+    },
+    "SOURCE/tests/test_recovery.py": {
+      "size_bytes": 20358,
+      "sha256": "30687ec8cb070ac00710a8672a2f45a008a081cf71a0900d6c50bcbdd9c3ba96"
+    },
+    "THESIS/BaoCao_Nhom08.docx": {
+      "size_bytes": 205289,
+      "sha256": "c96fcfed7160e28694128859595205bb027c9e765a80f7ff97e079f267ab240d"
+    },
+    "THESIS/REPORT_GROUP08.md": {
+      "size_bytes": 42631,
+      "sha256": "64b7310657a524c370744904cec1a9c6530c03d630ac8a610a1e429a000ff196"
+    },
+    "THESIS/SLIDES_GROUP08.md": {
+      "size_bytes": 12836,
+      "sha256": "82b701eaae3d4f09266352ea8554161ecf9b93c8d77ddec772c2591c55f49f4c"
+    },
+    "THESIS/ThuyetTrinh_Nhom08.pptx": {
+      "size_bytes": 142760,
+      "sha256": "0a24f1b9429412f7b45b64f8201c43c86c8d3900c524331f56f8fd6a7ba540e6"
+    },
+    "THESIS/assets/architecture.png": {
+      "size_bytes": 91236,
+      "sha256": "34377e6b95b878c473c95b5276745d81b4cd9739386bc4c6160eff5dd06cdf28"
+    },
+    "THESIS/assets/recovery_timeline.png": {
+      "size_bytes": 73275,
+      "sha256": "fa1f5be417f2852a581c614922e0b3731f319173200087196c4e9428e45fc27e"
+    },
+    "THESIS/previews/BaoCao_Nhom08.pdf": {
+      "size_bytes": 510840,
+      "sha256": "fca1fb21a716da7ccae9857d7297c7640b3d708628cf13b59d0530a7a92634a5"
+    },
+    "THESIS/previews/Runbook_v1.1.pdf": {
+      "size_bytes": 201347,
+      "sha256": "766d281f4018f430c76602bc84f35524a054493249537b410c2df6d9ffe44e7a"
+    },
+    "THESIS/previews/ThuyetTrinh_Nhom08.pdf": {
+      "size_bytes": 336353,
+      "sha256": "22d1d25483195088bbf57330475e28987de7e989988c83535c9cabf5d7bb8738"
+    },
+    "THESIS/reporting/README.md": {
+      "size_bytes": 2916,
+      "sha256": "8d836c695f00bd137703daa62770175494dc33c94904de046033c654646cb803"
+    },
+    "THESIS/reporting/build_documents.py": {
+      "size_bytes": 15303,
+      "sha256": "40e0510d89d27dc0536b4e3232b4fede2fa2fd584ac3c2a34a6d37011b6f30e7"
+    },
+    "THESIS/reporting/slides.json": {
+      "size_bytes": 13897,
+      "sha256": "1de4866733a9827ea3025ce71d8e8eca214a0e96e3c7e5c3ff9d5d4d75764589"
+    },
+    "THESIS/runbook/Runbook_v1.1.docx": {
+      "size_bytes": 46664,
+      "sha256": "9795d35ae4378b0ecc232ce3d1c11deb158ccad4fb171c5d4666d83878a795ad"
+    },
+    "THESIS/templates/report_outline.md": {
+      "size_bytes": 3290,
+      "sha256": "dbeef4d2e324152f508cb61814a858a012cc0520cf7875f0656a5fbf21adf3eb"
+    },
+    "THESIS/templates/slide_outline.md": {
+      "size_bytes": 2492,
+      "sha256": "057565e7abfdb37985812e32662e9310cd2f14384b6b145cd900c9044c1d6495"
+    },
+    "docs/CHECKLIST_YEU_CAU.md": {
+      "size_bytes": 6390,
+      "sha256": "a7e3311871ba009349b3f78246556d4146b917a5d64fc655ed67efece390de83"
+    },
+    "docs/KICH_BAN_DEMO.md": {
+      "size_bytes": 6035,
+      "sha256": "4a335e3cce83ca7859713dc7d57f533b665da1ae9b298962f643799679c493a8"
+    },
+    "docs/NHAT_KY_THUC_NGHIEM.md": {
+      "size_bytes": 5524,
+      "sha256": "4557af0fd1b2c233654c7b9f7885a35c7b677dcd7689121a5c548e26407e7ffd"
+    },
+    "docs/PHAN_CONG_CONG_VIEC.md": {
+      "size_bytes": 3699,
+      "sha256": "b2bb37ff646e63d0dbea7dd34f208df9e90afd79e321abbfca98ed7986b95744"
+    },
+    "docs/PHASE7_RESULTS.md": {
+      "size_bytes": 7172,
+      "sha256": "08e11b772f8741dfba8aabeeaaeed27752543ce56bbb5057e8217b00446add40"
+    },
+    "docs/evidence/phase7/BaoCao_Nhom08-contact.png": {
+      "size_bytes": 570689,
+      "sha256": "b484047ce1ea34af43adf7aecb534e6ed2cac760dfd4713b35d96ce6f8f356d0"
+    },
+    "docs/evidence/phase7/Runbook_v1.1-contact.png": {
+      "size_bytes": 237915,
+      "sha256": "2d2a9ee99c47e9212748f3707a36f0a5a20c2b930f7ecbd83c0ae2f3af6721c9"
+    },
+    "docs/evidence/phase7/ThuyetTrinh_Nhom08-contact.png": {
+      "size_bytes": 312875,
+      "sha256": "f2d496f3d069de68c1e82ce22848b59c4837c6e23e16b87a25bd3e0a67d0d649"
+    },
+    "docs/evidence/phase7/app-unit.txt": {
+      "size_bytes": 2060,
+      "sha256": "bee7bce8b4395c50aca5fcb0539d3114754b2b012e4d8d9af1911d4957894a07"
+    },
+    "docs/evidence/phase7/artifact-qa.json": {
+      "size_bytes": 950,
+      "sha256": "2b72133cb9284616e86d026e2023c979534a91493d30d0a41b0e517cee8a2b90"
+    },
+    "docs/evidence/phase7/backup-unit.txt": {
+      "size_bytes": 1687,
+      "sha256": "bdededf4719ea89720a575cbe92206556e938b8624d9962aa2dffe3b5e40a214"
+    },
+    "docs/evidence/phase7/build-console.txt": {
+      "size_bytes": 146,
+      "sha256": "777aa7c14ae8bd53a7b4ba7ea7d34c684bf66b5ad767996da73acd66568381a3"
+    },
+    "docs/evidence/phase7/document-tools.json": {
+      "size_bytes": 377,
+      "sha256": "071c50f2a2896996337587eacf2c0fad95f94cee795720a8d53b90211aa9a40b"
+    },
+    "docs/evidence/phase7/initial-mock-fixture-error.txt": {
+      "size_bytes": 9885,
+      "sha256": "5de717f37e050aaae57d205fcd57e3a69741acf98d2748619480f37f6a37fe2d"
+    },
+    "docs/evidence/phase7/metrics-unit.txt": {
+      "size_bytes": 2706,
+      "sha256": "aaba3c7060957a08612b223dd4db129d052693e8a86c75851b40a936affa7d79"
+    },
+    "docs/evidence/phase7/recovery-unit.txt": {
+      "size_bytes": 4124,
+      "sha256": "dbcd511b3d89257e5fd4c709e2ceaaad6e07730105428054e3d7724559376c64"
+    },
+    "docs/evidence/phase7/render-console.txt": {
+      "size_bytes": 1075,
+      "sha256": "cef38c0850a06165e56c68713741fc253724bc30cc06c0a316051d1d69eb7fa5"
+    },
+    "docs/evidence/phase7/resource-gate-console.txt": {
+      "size_bytes": 2895,
+      "sha256": "c80b21ae4884760ecf90b48155f0fdea622ab66410f64fac29f1ac3220ae2698"
+    },
+    "docs/evidence/phase7/resource-gate-events.jsonl": {
+      "size_bytes": 6711,
+      "sha256": "7f822cb453ba225d0eeec8550e9e97d184873c070161c01789e99deae27b1d32"
+    },
+    "docs/evidence/phase7/resource-gate-result.json": {
+      "size_bytes": 2895,
+      "sha256": "c80b21ae4884760ecf90b48155f0fdea622ab66410f64fac29f1ac3220ae2698"
+    },
+    "docs/evidence/phase7/test-commands.json": {
+      "size_bytes": 1764,
+      "sha256": "e267e9474aa44e15dcc31e0193c3200112b6583f8bf014ef11873466805a6599"
+    },
+    "docs/evidence/phase7/verification.json": {
+      "size_bytes": 727,
+      "sha256": "c98d59bc9515e6cc3cb44a11c46adbca74de1dbe6d376498a6ee84f7cc0607b0"
+    },
+    "docs/reviews/PHASE7_REVIEW.md": {
+      "size_bytes": 5128,
+      "sha256": "92b2ae00638f563aad9c74637614eeb032ebc97668fb3e71ebcc2f3e19c3b974"
+    }
+  },
+  "manifest_self_hash": "excluded; anchored by Git review commit",
+  "native_windows": "NOT TESTED",
+  "project_full_acceptance": "NOT TESTED; outstanding requirements documented"
+}
