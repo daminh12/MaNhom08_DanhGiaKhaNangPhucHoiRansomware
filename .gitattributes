@@ -8,3 +8,5 @@ docs/evidence/**/*.jsonl text eol=lf
 docs/evidence/**/*.csv text eol=lf
 # Preserve the actual unittest subtest failure output, including its trailing space.
 docs/evidence/phase6/recovery-before-fix.txt whitespace=-blank-at-eol
+# Preserve the raw unittest subtest error captured while adding Phase 7 fixtures.
+docs/evidence/phase7/initial-mock-fixture-error.txt whitespace=-blank-at-eol

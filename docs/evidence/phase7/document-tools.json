@@ -1,0 +1,13 @@
+{
+  "observed_at_utc": "2026-11-15T07:33:13.090597+00:00",
+  "packages": {
+    "python-docx": "1.2.0",
+    "python-pptx": "1.0.2",
+    "matplotlib": "3.10.8",
+    "Pillow": "13.0.0",
+    "PyMuPDF": "1.26.6"
+  },
+  "render_engine": "LibreOffice headless on Linux",
+  "native_Microsoft_Office_Windows": "NOT TESTED",
+  "fonts": "Office Arial / code Consolas; plot DejaVu Sans"
+}

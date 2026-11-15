@@ -1,0 +1,6 @@
+convert /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/THESIS/BaoCao_Nhom08.docx as a Writer document -> /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/phase7-preview/BaoCao_Nhom08.pdf using filter : writer_pdf_Export
+Overwriting: /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/phase7-preview/BaoCao_Nhom08.pdf
+convert /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/THESIS/ThuyetTrinh_Nhom08.pptx as a Impress document -> /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/phase7-preview/ThuyetTrinh_Nhom08.pdf using filter : impress_pdf_Export
+Overwriting: /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/phase7-preview/ThuyetTrinh_Nhom08.pdf
+convert /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/THESIS/runbook/Runbook_v1.1.docx as a Writer document -> /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/phase7-preview/Runbook_v1.1.pdf using filter : writer_pdf_Export
+Overwriting: /workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/work/phase7-preview/Runbook_v1.1.pdf
