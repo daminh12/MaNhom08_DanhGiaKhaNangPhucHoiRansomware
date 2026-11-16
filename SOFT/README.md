@@ -1,34 +1,24 @@
-# Công cụ Phase 1
+# Phần mềm, nguồn và giấy phép — Nhóm 08
 
-| Công cụ | Phiên bản dùng trong lab | Nguồn / giấy phép |
+| Công cụ | Phiên bản/phạm vi | Nguồn / giấy phép |
 |---|---|---|
-| Python | Image `python:3.12.12-slim-bookworm` | python.org / PSF |
-| MySQL Community | Image `mysql:8.4.7` | hub.docker.com/_/mysql / GPL-2.0, xem license upstream |
-| Flask | 3.1.2 | palletsprojects.com / BSD-3-Clause |
+| Python container | python:3.12.12-slim-bookworm | python.org / PSF |
+| Python host | >=3.10 cho observer và exporter | python.org / PSF |
+| MySQL Community | mysql:8.4.7 | hub.docker.com/_/mysql / GPL-2.0; xem upstream |
+| Flask | 3.1.2; advisory còn mở trong lưu ý | palletsprojects.com / BSD-3-Clause |
 | Gunicorn | 23.0.0 | gunicorn.org / MIT |
-| PyMySQL | 1.1.2 với extra rsa | github.com/PyMySQL/PyMySQL / MIT |
-| Docker Desktop | Dùng bản đã chạy trên máy Windows 10 của nhóm; chưa xác nhận số phiên bản | docker.com; điều khoản Docker Desktop |
-| Docker Compose | v2, cần hỗ trợ `--wait` và `--wait-timeout` | github.com/docker/compose / Apache-2.0 |
+| PyMySQL | 1.1.2 extra rsa | github.com/PyMySQL/PyMySQL / MIT |
+| Restic | 0.18.1 trong image backup | github.com/restic/restic / BSD-2-Clause |
+| Docker Desktop | Ghi phiên bản thật của máy nhóm | docker.com / điều khoản Docker Desktop |
+| Docker Compose | v2 hỗ trợ --wait/--wait-timeout | github.com/docker/compose / Apache-2.0 |
+| Git / PowerShell | Ghi phiên bản máy Windows | git-scm.com / Microsoft |
+| OBS / Word / PowerPoint | Quay và biên tập, không cần cho controller | Theo giấy phép từng công cụ |
 
-Dependency Python được pin đầy đủ trong `SOURCE/app/requirements.txt`.
-Phiên bản image được pin theo tag; digest quan sát khi test nằm trong báo cáo.
-Chưa có kiểm thử trực tiếp trên Windows 10. Nhóm cần ghi `docker version` và
-`docker compose version` của máy demo vào minh chứng riêng.
+Dependency app pin ở [requirements](../SOURCE/app/requirements.txt); image tag
+khác digest, digest đã quan sát nằm trong evidence môi trường từng phase.
+Restic/MySQL chạy trong Docker; Python host là dependency của Phase 3 trở đi.
+Không cần SSH/VPS cho lab cục bộ. rest-server/Kopia/pgBackRest/MinIO chưa dùng
+để tạo bằng chứng hiện có.
 
-Tham khảo thiết kế networks/healthcheck/secrets từ
-https://github.com/docker/awesome-compose/tree/master/nginx-flask-mysql (CC0-1.0).
-Không sao chép nguyên stack mẫu. Restic và rest-server dành cho Phase 2, chưa cài
-hoặc dùng để tạo kết quả backup trong Phase 1.
-
-Phase 2 dùng image `restic/restic:0.18.1` để lấy binary vào image Python 3.12.12
-riêng cho công cụ backup (Restic BSD-2-Clause). Không cài Python/MySQL/Restic
-trực tiếp trên Windows. Không sao chép mã nguồn Restic vào dự án.
-Hướng dẫn chính thức đã đối chiếu theo tag v0.18.1:
-https://github.com/restic/restic/blob/v0.18.1/doc/040_backup.rst và
-https://github.com/restic/restic/blob/v0.18.1/doc/045_working_with_repos.rst.
-
-Phase 3–6 bổ sung observer/controller cần **Python 3.10+ trên host** và Git;
-PowerShell chỉ là launcher. Phát biểu không cần Python host ở phần Phase 2 phía
-trên chỉ áp dụng workflow Phase 1/2. Runbook hiện tại:
-[v1.1](../THESIS/runbook/Runbook_v1.1.md). Chưa có transcript Windows thật;
-Flask 3.1.2 chưa được nâng bản vá, xem review Phase 6 trước demo cuối.
+Lệnh chạy nằm ở [HUONGDAN](../HUONGDAN.md); điều kiện/giới hạn và tài liệu
+upstream nằm ở [các lưu ý](../LUU_Y_THUC_NGHIEM.md).

@@ -7,9 +7,9 @@ from build_documents import ROOT, THESIS, doc_from_md, textbox, card, INK, TEAL,
 
 
 def main():
-    source=THESIS/'runbook/windows/Runbook_Windows_v1.0.md'
-    target=source.with_suffix('.docx')
-    doc_from_md(source.read_text(encoding='utf-8'),target,'RUNBOOK WINDOWS v1.0',
+    source=ROOT/'HUONGDAN.md'
+    target=THESIS/'runbook/HuongDan_ThucNghiem.docx'
+    doc_from_md(source.read_text(encoding='utf-8'),target,'HƯỚNG DẪN THỰC NGHIỆM',
                 'Đa Minh kích hoạt • Minh Quân phục hồi • Chờ thực hành Windows 10')
     doc=Document(target)
     for section in doc.sections:
@@ -40,7 +40,7 @@ def main():
           ('Giới hạn','Chưa có exact RPO hoặc target. FAIL/ABORTED không gán 0; không trộn guided-v2 với automated-v1.')]),
         ('5. Ghi lỗi, cải tiến và chạy lại',
          [('Windows v1.0','Đóng băng trước lượt đầu; Đa Minh ghi khó khăn, trợ giúp và lỗi thật.'),
-          ('Windows v1.1','Sửa theo bằng chứng; ghi changelog và chạy lại bằng run/target mới. Bản hiện có chỉ DRAFT.'),
+          ('Windows v1.1','Cập nhật HUONGDAN theo bằng chứng; ghi changelog và retest bằng run/target mới. Chưa có retest thật.'),
           ('Video','Giữ bản đầy đủ; bản demo 3–5 phút chú thích tua/cắt. Không dùng độ dài video biên tập làm RTO.')]),
         ('6. Hoàn thiện bộ nộp',
          [('Số liệu','CSV đo lường, biên bản, danh sách minh chứng. Sheets ghi đúng kịch bản, trạng thái và link.'),
@@ -56,8 +56,8 @@ def main():
         textbox(slide,12.3,6.7,.6,.45,str(index),size=14,color=TEAL)
         slide.notes_slide.notes_text_frame.text=(
             'Đây là hướng dẫn thực hành, không phải số liệu hoặc bằng chứng đã chạy. '
-            'Nguồn: docs/WINDOWS_REHEARSAL_PLAN.md; THESIS/runbook/windows/Runbook_Windows_v1.0.md; '
-            'SOURCE/metrics/README.md. Google Sheets PROJECT NHÓM 8 ATTT, tab planning. '
+            'Nguồn: HUONGDAN.md; BAO_CAO_CAC_PHASE.md; LUU_Y_THUC_NGHIEM.md. '
+            'Google Sheets PROJECT NHÓM 8 ATTT, tab planning. '
             'Trình bày giới hạn trước khi diễn giải kết quả; không suy ra Windows PASS từ Linux/mock.')
     presentation=THESIS/'KeHoach_ThucHanh_Windows.pptx'
     prs.core_properties.author='Nhóm 08 — Đa Minh, Minh Quân'

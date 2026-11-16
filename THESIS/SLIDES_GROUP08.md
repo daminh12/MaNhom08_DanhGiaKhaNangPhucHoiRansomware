@@ -23,7 +23,7 @@ Khi DB không khả dụng, có thể đưa dịch vụ trở lại từ snapsho
 Chỉ dữ liệu đơn hàng giả; không mã độc, không xóa bảng hoặc volume.
 
 Ghi chú thuyết trình: Ba câu hỏi khác nhau cần ba loại bằng chứng. Snapshot backup PASS không đủ để kết luận restore PASS. Khả dụng không chỉ là trang chủ trả 200.
-Nguồn: docs/PHASE3_RESULTS.md; docs/PHASE4_RESULTS.md
+Nguồn: BAO_CAO_CAC_PHASE.md; BAO_CAO_CAC_PHASE.md
 
 ## 3. Kiến trúc thực thi
 MySQL 8.4.7 • lab_config.orders • InnoDB • Compose
@@ -60,7 +60,7 @@ Project, network và DB volume phục hồi độc lập
 API chỉ trả 100 dòng mới nhất; COUNT và API window không thay kiểm tra toàn bảng.
 
 Ghi chú thuyết trình: Không tự chọn latest hoặc tái sử dụng target dở. Read-before-write giúp probe không làm thay baseline. User và quyền phải tạo lại vì không nằm trong dump orders.
-Nguồn: docs/PHASE3_RESULTS.md; SOURCE/recovery/controller.py
+Nguồn: BAO_CAO_CAC_PHASE.md; SOURCE/recovery/controller.py
 
 ## 6. Kịch bản chính đã chạy
 Một lượt Linux ngày 10/11/2026 • dữ liệu giả, không retry
@@ -106,7 +106,7 @@ Số đo lấy từ raw events có pin Git; không dùng created_at_utc làm com
 
 
 Ghi chú thuyết trình: Tuổi backup đo từ SNAPSHOT_VERIFIED đến fault không thay RPO. Khoảng commit lag dựa trên yêu cầu tuần tự, ACK trước fault và recovered prefix; thời điểm commit thật không được quan sát độc lập. Nhóm chưa chốt mục tiêu nên không tự đặt SLA.
-Nguồn: SOURCE/metrics/README.md; docs/evidence/phase5/export-20261110/metrics.csv
+Nguồn: HUONGDAN.md; docs/evidence/phase5/export-20261110/metrics.csv
 
 ## 10. Bằng chứng và loại kiểm thử
 Mỗi PASS phải gắn với một phạm vi, môi trường và thời điểm
@@ -118,7 +118,7 @@ Mỗi PASS phải gắn với một phạm vi, môi trường và thời điểm
 CSV có 4 case lịch sử; tái xuất cùng dữ liệu không tạo thêm main trial.
 
 Ghi chú thuyết trình: Phase6 có 76 unit PASS. Phase7 bổ sung resource guard và kiểm lại suite. Kết quả mới chỉ được ghi sau khi có log; slide này không gán Windows PASS từ Linux. Web-only và corrupt-copy không được dùng làm ba main repeats.
-Nguồn: docs/PHASE6_RESULTS.md; docs/PHASE7_RESULTS.md
+Nguồn: BAO_CAO_CAC_PHASE.md; BAO_CAO_CAC_PHASE.md
 
 ## 11. Code review: điều gì còn cần xử lý?
 Đã chặn direct restore/drill khi host hoặc filesystem Docker không đủ chỗ
@@ -130,7 +130,7 @@ Nguồn: docs/PHASE6_RESULTS.md; docs/PHASE7_RESULTS.md
 Phase5 source_unchanged là health/count. Full source hash trước/sau là bằng chứng riêng của Phase6.
 
 Ghi chú thuyết trình: Không xóa hoặc viết lại proof cũ. Cơ chế kiểm retained DB vẫn có resource check muộn; không chạy trong môi trường disk gần đầy. Các finding không đóng bằng việc chỉ viết thêm tài liệu.
-Nguồn: docs/reviews/PHASE7_REVIEW.md; SOURCE/metrics/verify_retained.py
+Nguồn: LUU_Y_THUC_NGHIEM.md; SOURCE/metrics/verify_retained.py
 
 ## 12. Runbook v1.0 → v1.1
 Giữ DOCX của Minh Quân; tạo v1.1 Word riêng để nhóm đối chiếu
@@ -142,7 +142,7 @@ Giữ DOCX của Minh Quân; tạo v1.1 Word riêng để nhóm đối chiếu
 V1.1 đã có tài liệu và launcher; Minh Quân vẫn cần chạy độc lập trên Windows.
 
 Ghi chú thuyết trình: v1.0 còn khung import trong nguồn và công thức RPO lấy tuổi backup. V1.1 tách rõ đo lường và bằng chứng. Không coi tạo được DOCX là đã nghiệm thu quy trình.
-Nguồn: THESIS/runbook/Runbook_v1.0.docx; THESIS/runbook/Runbook_v1.1.md
+Nguồn: THESIS/runbook/Runbook_v1.0.docx; HUONGDAN.md
 
 ## 13. Demo tiến độ trong 5–7 phút
 Chọn phạm vi đủ điều kiện trên máy thực tế; mặc định ưu tiên bằng chứng đã có
@@ -153,8 +153,8 @@ Chọn phạm vi đủ điều kiện trên máy thực tế; mặc định ưu 
 
 Chỉ chạy web-control khi preflight đúng scope PASS và chủ động có cửa sổ diễn tập.
 
-Ghi chú thuyết trình: Đa Minh đề xuất thao tác, Minh Quân giải thích và ghi chép; chưa phải xác nhận nhóm đã thực hiện. Không cài/reset lab giữa giờ bảo vệ hoặc hứa full restore khi gate thiếu disk. Lệnh và cách quay về nguồn ở docs/KICH_BAN_DEMO.md.
-Nguồn: docs/KICH_BAN_DEMO.md; THESIS/runbook/Runbook_v1.1.md
+Ghi chú thuyết trình: Đa Minh đề xuất thao tác, Minh Quân giải thích và ghi chép; chưa phải xác nhận nhóm đã thực hiện. Không cài/reset lab giữa giờ bảo vệ hoặc hứa full restore khi gate thiếu disk. Lệnh và cách quay về nguồn ở HUONGDAN.md.
+Nguồn: HUONGDAN.md; HUONGDAN.md
 
 ## 14. Điều kiện còn thiếu để nghiệm thu
 Hồ sơ có thể review; toàn bộ dự án chưa được ký PASS
@@ -166,7 +166,7 @@ Hồ sơ có thể review; toàn bộ dự án chưa được ký PASS
 Independent storage, exact RPO và mục tiêu SLA chưa được chứng minh.
 
 Ghi chú thuyết trình: Tăng dung lượng không có nghĩa xóa volume hoặc snapshot. Sau khi Windows Phase3 PASS mới chạy main drill Windows. Có thể bổ sung nhiều trial khi có nguồn lực, không tạo bản sao log làm các mẫu mới.
-Nguồn: docs/CHECKLIST_YEU_CAU.md; docs/PHASE7_RESULTS.md
+Nguồn: BAO_CAO_CAC_PHASE.md; BAO_CAO_CAC_PHASE.md
 
 ## 15. Kết luận và trao đổi
 MVP chứng minh phục hồi trong kịch bản đã chạy; kết luận giữ đúng giới hạn bằng chứng
