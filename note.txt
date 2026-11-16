@@ -1,0 +1,596 @@
+﻿GHI CHÚ GIẢNG VIÊN: ĐÁNH GIÁ VÀ DEMO ĐỀ TÀI NHÓM 08
+Đề tài: Đánh giá khả năng phục hồi trước sự cố mã hóa tống tiền bằng mô phỏng an toàn.
+Thành viên: Đa Minh, Minh Quân.
+Ngày đối chiếu: 16/11/2026, giờ Việt Nam UTC+7.
+Mã nguồn được đọc: c378d73930d4de0f570eea033e1141ed7cfd5028.
+
+Đây là ghi chú giảng dạy và phản biện, không phải biên bản chấm điểm hoặc chữ ký
+của giảng viên phụ trách. Các câu nói của giảng viên bên dưới là kịch bản đề xuất;
+không chứng nhận rằng buổi demo, thao tác Windows hoặc đối thoại đã diễn ra.
+Ba tài liệu chính vẫn là BAO_CAO_CAC_PHASE.md, LUU_Y_THUC_NGHIEM.md, HUONGDAN.md.
+note.txt giải thích cách dạy và kiểm tra hiểu biết; lệnh vận hành chuẩn theo HUONGDAN.
+
+==========================================================================
+PHẦN I. ĐÁNH GIÁ THẲNG THEO GOOGLE SHEETS
+==========================================================================
+
+1. Căn cứ và cách kết luận
+
+Google Sheets: PROJECT NHÓM 8 ATTT
+https://docs.google.com/spreadsheets/d/1akuMwhM-N3BXN0V8xOcPl2OdIb3PAh_oW5JUYyJivjI/edit
+
+Các vùng được đọc trực tiếp ngày đánh giá:
+- Tab "planning " (tên có một dấu cách cuối): A1:H16.
+- Tab "Đo lường RPO & RTO": A1:J12.
+- Tab "Danh sách Minh chứng": A1:F12.
+- Tab "Biên bản Diễn tập & Runbook": A1:H10.
+- Tab "Kế hoạch 6 tuần": A1:H12 không trả về nội dung trong vùng đọc này.
+Không suy ra cả tab kế hoạch trống, không tự tạo lịch sáu tuần hoặc hạn nộp.
+
+Trong các vùng vừa đọc, bảng đo có tên bốn kịch bản nhưng chưa có số; các ô kết
+quả/liên kết minh chứng và nội dung biên bản vẫn chưa điền. Repo có bằng chứng
+Linux; ô Sheet trống không làm bằng chứng đó biến mất. Ngược lại, file trong repo
+không chứng minh nhóm đã hoàn thành việc tổng hợp link và thực hành hai người.
+Chưa có video được theo dõi trong repo hoặc link video ở vùng Sheet đã đọc;
+không kết luận rằng không thể có video ở nơi khác chưa được cung cấp.
+
+Quy ước:
+- PASS: có bằng chứng đạt đúng yêu cầu, phạm vi và môi trường đã ghi.
+- MỘT PHẦN: có sản phẩm hoặc kết quả kỹ thuật, còn thiếu một phần yêu cầu.
+- NOT TESTED: chưa có bằng chứng đủ cho thao tác/kịch bản đó.
+- FAIL: đã kiểm tra và không đạt, ví dụ resource gate thiếu dung lượng.
+- N/A: không áp dụng. Không thay N/A hoặc NOT TESTED bằng số 0.
+
+Kết luận giảng viên đề xuất:
+"Phần xây dựng hệ thống và kiểm chứng phục hồi trên Linux ở mức khá, có nhiều
+chi tiết làm đúng. Tuy nhiên, chưa thể nghiệm thu bài theo toàn bộ Google Sheets.
+Phần thiếu đáng kể nằm ở con người thực hành runbook, biên bản lỗi và cải tiến,
+Windows, video, đối chiếu mục tiêu và hồ sơ nộp có liên kết. Viết nhiều code hoặc
+xuất được Word/PPTX không thay được các phần đó."
+
+Sheet không có thang điểm/trọng số được đọc thấy. Không tự chấm 8/10, gán phần
+trăm hoàn thiện hoặc coi nhận xét này là điểm chính thức.
+
+2. Đối chiếu từng công việc ở tab planning
+
+2.1. Hàng 2: Đa Minh dựng Web + DB, dữ liệu giả và backup mốc 0.
+Đánh giá: PASS phạm vi kỹ thuật Linux; MỘT PHẦN khi nghiệm thu máy nhóm.
+Compose/Flask/MySQL đã có; backup/check/readback có result thật.
+Windows chưa có transcript. Docker được Sheet cho phép, không phải thiếu sót vì
+không thuê VPS hoặc không dùng VMware. Sheet cho snapshot HOẶC backup hằng ngày;
+không tự đặt thêm điều kiện bắt buộc Task Scheduler cho MVP này.
+Nguồn: compose.yaml; docs/evidence/phase1; phase2/successful-runs.json.
+
+2.2. Hàng 3: Đa Minh chuẩn bị kịch bản sự cố.
+Đánh giá: PASS cho kịch bản dừng DB trong lab đã chạy trên Linux.
+Sheet cho lựa chọn dừng service, nên không cần xóa bảng để chứng minh đúng đề.
+Lệnh stop có thể cho MySQL shutdown bình thường; không gọi đây là mô phỏng crash
+đột ngột hoặc hành vi mã hóa của ransomware. Đây là tác động mất khả dụng.
+Nguồn: SOURCE/recovery/controller.py, hàm stop_source; phase4/main-events.jsonl.
+
+2.3. Hàng 4: Minh Quân nghiên cứu NIST/SANS, PICERL, RTO/RPO.
+Đánh giá: MỘT PHẦN. Báo cáo có nội dung lý thuyết và dẫn tài liệu NIST.
+Cần vấn đáp để chứng minh hiểu và kiểm nguồn SANS/PICERL cụ thể. PICERL dùng làm
+khung SANS, không gán nguyên sáu bước đó thành cấu trúc NIST SP 800-61 Rev. 3.
+Nguồn: THESIS/REPORT_GROUP08.md, mục 2.3 và danh mục tham khảo.
+
+2.4. Hàng 5: Minh Quân viết Runbook v1.0 từng bước.
+Đánh giá: có sản phẩm; MỘT PHẦN về chất lượng và sử dụng.
+DOCX v1.0 được giữ; review trước đã chỉ ra placeholder và đoạn import vào nguồn
+không đáp ứng clean restore. HUONGDAN hiện hành đã có lệnh thật. Chưa có lần
+Minh Quân đi hết tài liệu trên Windows để nghiệm thu khả năng dùng được.
+Không chạy đoạn cũ không phù hợp chỉ để có video nói rằng đã chạy v1.0.
+
+2.5. Hàng 6: Đa Minh kích hoạt, bấm giờ, quan sát Minh Quân và ghi điểm vấp.
+Đánh giá: NOT TESTED cho buổi thực hành hai người theo yêu cầu.
+Có nhật ký script Linux và mẫu CSV, chưa có biên bản quan sát người thực hiện.
+Một controller tự chạy không chứng minh Đa Minh đã ghi chỗ Minh Quân lúng túng.
+
+2.6. Hàng 7: Minh Quân chỉ nhìn runbook để phục hồi.
+Đánh giá: NOT TESTED theo người thực hiện và môi trường Windows.
+Guided có ba điểm bàn giao, có unit test, nhưng chưa có lượt hai người thật.
+Gõ RECOVER chỉ là yêu cầu controller thực thi. Khi bảo vệ, Minh Quân phải giải
+thích được controller làm gì và dựa vào đâu để dừng/tiếp; không gọi đó là tự gõ
+từng lệnh MySQL. Cần thống nhất với giảng viên mức tự động hóa được chấp nhận.
+
+2.7. Hàng 8: đo lường, xuất CSV, so với mục tiêu lý thuyết.
+Đánh giá: MỘT PHẦN. Có RTO và CSV Linux truy được về raw events.
+Chưa chọn RTO/RPO mục tiêu nên chưa có so sánh đạt/không đạt mục tiêu. Khoảng
+send/ACK là quan sát có giới hạn, không phải exact RPO. Chưa có số đo Windows.
+Không tự đặt mục tiêu sau khi thấy kết quả rồi nhận đạt SLA.
+
+2.8. Hàng 9: sửa Runbook v1.1 dựa trên lỗi Đa Minh quan sát.
+Đánh giá: MỘT PHẦN. Có tài liệu sửa sau review và lỗi kỹ thuật Linux thật.
+Chưa có chuỗi Minh Quân thực hành -> Đa Minh ghi lỗi -> Minh Quân sửa -> chạy lại
+trên Windows. Một file tên v1.1 chưa đủ chứng minh vòng cải tiến đó.
+
+2.9. Hàng 10: diễn tập cuối và video 3–5 phút.
+Đánh giá: NOT TESTED/CHƯA CUNG CẤP BẰNG CHỨNG.
+Ảnh web, PDF preview hoặc contact sheet tài liệu không thay video phục hồi.
+Giữ bản quay đầy đủ; bản nộp rút gọn phải ghi tua/cắt, không tính RTO từ bản cắt.
+
+2.10. Hàng 11: biểu đồ các lần diễn tập, lý thuyết và thực tế.
+Đánh giá: MỘT PHẦN. Có timeline của một main trial; chưa phải so sánh nhiều lượt
+tương đương hoặc thực tế với mục tiêu được chốt. Bốn dòng CSV là bốn loại case,
+không phải bốn lần main. Không tự nhân bản một log thành nhiều mẫu.
+
+2.11. Hàng 12: Runbook Final định dạng, checklist và PDF.
+Đánh giá: MỘT PHẦN. Có DOCX/PDF lịch sử và hướng dẫn đã hợp nhất.
+Cần chốt bản dùng thực tế, bổ sung trạng thái từng checkpoint/người kiểm, retest
+và kiểm Office trên máy trình bày. Render LibreOffice/Linux chưa đủ nghiệm thu
+Microsoft Office/Windows. Bản final phải đúng lệnh, không chỉ đẹp về hình thức.
+
+2.12. Hàng 13: báo cáo Word và slide, cấu hình lab, biểu đồ, diễn tập.
+Đánh giá: PASS việc tạo/kiểm artifact Linux; MỘT PHẦN với bộ nộp cuối.
+Có Word 17 trang và 15 slide trong hồ sơ Phase 7. Cần bổ sung bằng chứng nhóm
+thực hành, kết quả Windows và liên kết; không đổi các mục chưa chạy thành PASS.
+
+2.13. Hàng 14: folder Drive, source/CSV/video và quyền xem link.
+Đánh giá: CHƯA CÓ BẰNG CHỨNG ĐỦ. GitHub không thay toàn bộ folder bàn giao.
+Vùng danh sách minh chứng vừa đọc chưa có link/status. Chỉ chia sẻ bộ hồ sơ đã
+review, kiểm bằng cửa sổ chưa đăng nhập; không share secret hoặc SQL plaintext.
+
+3. Bốn kịch bản riêng trong tab Đo lường RPO & RTO
+
+- Mất máy chủ: NOT TESTED. Dừng DB container trên host còn sống chưa là mất host.
+- Mất tài khoản quản trị: NOT TESTED. Kiểm grants app không thay bài mất quyền admin.
+- Backup trực tuyến bị sửa: NOT TESTED đúng nghĩa kho bị can thiệp. Chỉ có bài
+  sửa SQL copy và phát hiện SHA sai; snapshot/kho gốc không bị sửa.
+- Bản sao cách ly còn nguyên: NOT TESTED. Kho/password/journal vẫn cùng host.
+  Khác thư mục trên cùng ổ không tạo ra bản sao cách ly độc lập.
+
+Bốn hàng này có thật trong Sheet. Cần xác nhận chúng là bắt buộc hay danh sách
+tham khảo; không tự miễn trừ vì MVP đã xong. Nếu giảng viên yêu cầu cả bốn, phạm
+vi thực nghiệm hiện tại chưa đáp ứng đủ và phải thiết kế thêm lab phù hợp.
+Không triển khai thêm các kịch bản đó trong buổi demo của note này.
+
+4. Những phần làm tốt và những điểm phải phản biện
+
+Nên ghi nhận: backup nhất quán; đọc lại từ Restic; target volume/network riêng;
+SHA trước import; full schema/data thay COUNT; cấp lại app role; đọc trước probe;
+restart; giữ FAIL; ACK độc lập với DB; phân biệt số đo và không tạo kết quả giả.
+
+Phải yêu cầu bổ sung: buổi Windows hai người, biên bản/bàn giấy, cải tiến có retest,
+video/link, đối chiếu mục tiêu nếu được giao và xác nhận bốn kịch bản ngoài MVP.
+Các finding kỹ thuật idempotency, legacy backup cleanup/log/concurrency, Flask
+advisory và verify_retained gate muộn vẫn mở theo LUU_Y_THUC_NGHIEM.
+
+Kết luận nghiệm thu: GO demo tiến độ và giảng dạy đúng phạm vi; chưa GO kết luận
+hoàn thành toàn bộ Sheet. Full demo mới chỉ chạy khi tài nguyên và Phase 3 của
+máy đó đạt. Máy cloud khi đọc hiện còn khoảng 118 MiB/99% dùng, không chạy restore.
+
+==========================================================================
+PHẦN II. MỤC TIÊU BUỔI GIẢNG VÀ SƠ ĐỒ GIẢI THÍCH
+==========================================================================
+
+Buổi học đề xuất 45–60 phút; đây là thời lượng giảng dạy, không phải số đo RTO.
+Buổi thuyết trình nộp bài 3–5 phút là bản tóm tắt khác với buổi học chuyên sâu.
+
+Cuối buổi, sinh viên phải tự trả lời được:
+1) Dữ liệu hoạt động, SQL dump, Restic snapshot, manifest và baseline khác nhau gì?
+2) Tại sao backup PASS và start DB lại chưa chứng minh restore PASS?
+3) Dữ liệu nào được phục hồi, dữ liệu nào chưa; vì sao đúng hash vẫn mất đơn mới?
+4) Ai quyết định bắt đầu/kết thúc đo, ai xác nhận dịch vụ được sử dụng lại?
+5) Những giới hạn nào làm kết quả chưa đại diện cho ransomware/host-loss thật?
+
+Sơ đồ vẽ trên bảng:
+
+Trình duyệt -> Flask web -> MySQL lab_config.orders -> consistent SQL dump
+                                                      + business metadata
+                                                      + manifest SHA-256
+                                                               |
+                                                        Restic snapshot
+                                                               |
+                                      extract + check + verify trước import
+                                                               |
+                                     project/network/volume DB mới, không seed
+                                                               |
+                               schema + toàn bảng + quyền + API + restart
+                                                               |
+                                      URL phục vụ + xác nhận người sử dụng
+
+Observer giữ events/ACK bên ngoài web/DB nhưng hiện vẫn cùng host. Vẽ đường bao
+quanh host để thấy rằng tất cả có thể cùng mất nếu ổ đĩa/host bị mất.
+
+Lời mở đầu gợi ý:
+"Hôm nay ta không vận hành mã độc. Ta đặt dịch vụ vào tình trạng không dùng được
+để kiểm tra một năng lực cụ thể: có phục hồi đúng dữ liệu từ bản sao đã chọn và
+đưa dịch vụ trở lại được không. Trước khi chạy lệnh, hãy nói điều gì sẽ được chứng
+minh và điều gì vẫn nằm ngoài phép thử."
+
+Giải thích CIA:
+- Availability: web/DB dùng được tại URL quy định.
+- Integrity: SQL/metadata đúng byte và DB phục hồi đúng schema/nội dung baseline.
+- Confidentiality: Restic bảo vệ kho bằng mã hóa theo cấu hình của công cụ;
+  sự có mặt của Restic không có nghĩa đã kiểm chứng host/secret không bị lộ.
+Mã hóa bảo vệ kho Restic không phải hành vi mã hóa tống tiền trong lab.
+
+==========================================================================
+PHẦN III. DEMO A — CHỈ ĐỌC VÀ GIẢI THÍCH BẰNG CHỨNG CŨ
+==========================================================================
+
+Dùng khi chưa đủ disk, chưa chuẩn bị Windows hoặc đang báo cáo tiến độ. Các lệnh
+dưới dành cho PowerShell tại repo root. Đây là đọc dữ liệu Linux ngày 10/11,
+không tạo thử nghiệm mới. Không cần dừng dịch vụ để dạy phần này.
+
+A1. Cho sinh viên nhận diện phiên bản và các thành phần (khoảng 5 phút).
+
+    git status --short --branch
+    git rev-parse HEAD
+    Get-Content .\compose.yaml
+    Get-Content .\compose.restore.yaml
+
+Giảng viên chỉ vào db_data và restore_data, network riêng, source mount seed và
+target không có seed. Chỉ cho xem file cấu hình được theo dõi, không mở .env hoặc
+secrets. Container cùng Docker Desktop là hai dịch vụ logic, chưa là hai máy chủ
+vật lý chịu hai miền lỗi độc lập. Không cần SSH vào VPS cho kiến trúc cục bộ này.
+
+Hỏi: "Nếu target cũng mount db_data nguồn, màn hình có thể hiện đúng dữ liệu.
+Tại sao thầy vẫn không công nhận là phục hồi từ backup?"
+Đáp án mong đợi: vì có thể đang đọc dữ liệu nguồn; chưa chứng minh artifact dùng
+được. Volume mới loại bỏ lối tắt đó trong phạm vi DB của lab.
+
+A2. Kiểm source đang chạy chỉ khi Docker/lab đã sẵn sàng (tùy chọn).
+
+    docker compose ps
+    Invoke-RestMethod http://127.0.0.1:8080/health
+    $api = Invoke-RestMethod http://127.0.0.1:8080/api/orders
+    $api.total
+    @($api.orders).Count
+
+Nếu đã đổi WEB_PORT, dùng URL thật. Lỗi ở bước này được ghi lại, không chạy init,
+reset hoặc tạo secret mới ngay trước lớp. total có thể >100 nhưng mảng chỉ <=100.
+Không nhận mọi dòng đều đúng chỉ từ cửa sổ API đó. Số dòng hiện tại không nhất
+thiết bằng số dòng lịch sử hoặc seed vì các bài ghi thử đã thêm dữ liệu.
+
+A3. Đọc kết quả phục hồi lịch sử (khoảng 7 phút).
+
+    $old = Get-Content .\docs\evidence\phase4\main-result.json -Raw -Encoding UTF8 | ConvertFrom-Json
+    $old | Select-Object run_id,status,restored_snapshot_rows,integrity,schema,grants,api_read_write,persistence
+    $old.request_comparison
+    $old.backup | Select-Object run_id,snapshot_id,manifest_sha256
+
+Nói rõ: đây là result Linux lịch sử. Snapshot có 105 dòng nền; probe sau đọc tạo
+thêm một dòng riêng, target 106. Nguồn sau return có 108. Những con số này không
+mâu thuẫn: ba đơn ACK sau snapshot chỉ ở nguồn và không được lấy lại để cứu tail.
+105 dòng nền khớp không đồng nghĩa mọi đơn trước sự cố đều được phục hồi.
+
+Hỏi: "Một checkpoint phục hồi và ba tail ACK thiếu có nghĩa 75% bảng bị mất?"
+Đáp án: không. Bốn ACK là tập yêu cầu đo riêng; 105 là toàn bộ baseline snapshot.
+Mẫu số khác nhau. Không tính probe vào số đơn nghiệp vụ chưa phục hồi.
+
+A4. Tính lại RTO từ raw, không đọc chép số summary (khoảng 7 phút).
+
+    $events = @(Get-Content .\docs\evidence\phase4\main-events.jsonl -Encoding UTF8 | ForEach-Object { $_ | ConvertFrom-Json })
+    $fault = @($events | Where-Object { $_.event -eq 'FAULT_REQUESTED' })
+    $ready = @($events | Where-Object { $_.event -eq 'SERVICE_VERIFIED' })
+    if ($fault.Count -ne 1 -or $ready.Count -ne 1) { throw 'Missing or repeated time event' }
+    $rto = ([decimal]$ready[0].monotonic_ns - [decimal]$fault[0].monotonic_ns) / [decimal]1000000000
+    $rto.ToString('F9',[Globalization.CultureInfo]::InvariantCulture)
+
+Kết quả từ dữ liệu đã ghi: 54.198351197 s. Không nói Windows sẽ cũng mất 54 giây.
+UTC dùng đối chiếu log; monotonic cùng observer dùng đo khoảng để tránh chỉnh
+đồng hồ lịch. Phần chuẩn bị snapshot diễn ra trước T0; không tính là thời gian
+restore của sự cố. Chi phí dừng web để backup vẫn cần báo riêng khi đánh giá vận
+hành, không được làm như hệ thống chưa từng có gián đoạn lúc chuẩn bị.
+
+    Import-Csv .\docs\evidence\phase5\export-20261110\metrics.csv -Encoding UTF8 |
+        Format-Table scenario,trial_status,observed_rto_seconds,unrecovered_acknowledged_requests
+
+Giải thích: main RTO 54.198351197 s; import chỉ 0.133908284 s; tuổi backup từ
+verified 0.091588006 s; bounds tuổi commit cuối 10.518407983–10.532435583 s.
+Không dùng một trong ba đại lượng cuối để thay RTO. Không ghi exact RPO từ chúng.
+Bounds suy ra từ send/ACK và giả thiết tuần tự; created_at_utc nằm trong DB,
+không phải người quan sát commit độc lập.
+
+Historical automated-v1 chốt comparison ACK sau SERVICE_VERIFIED 396,797 ns.
+Guided-v2 chốt comparison, WEB_OK và recheck trước ready. Nói rõ hai định nghĩa,
+không hồi tố timestamp cũ hoặc gộp chúng để kết luận runbook cải thiện tốc độ.
+
+A5. Giải thích một FAIL có giá trị (khoảng 5 phút).
+
+    Get-Content .\docs\evidence\phase3\first-failed-result.json -Raw -Encoding UTF8 | ConvertFrom-Json
+    Get-Content .\docs\evidence\phase3\diagnostic-schema.json -Raw -Encoding UTF8 | ConvertFrom-Json
+
+Lần đầu schema compare FAIL do MySQL thêm CHARACTER SET dư thừa. Đã giữ target
+lỗi và raw, sửa chuẩn hóa có điều kiện rồi chạy target mới. Không bỏ qua collation
+hoặc sửa expected từ target để làm PASS. Giảng viên nhấn mạnh rằng giữ lỗi và
+giải thích cách sửa là bằng chứng học tập tốt hơn một thư mục chỉ có ảnh PASS.
+
+==========================================================================
+PHẦN IV. DEMO B — THỰC HÀNH MỚI CÓ ĐIỀU KIỆN
+==========================================================================
+
+Phần này là kịch bản đề xuất, CHƯA CHẠY trong đợt viết note. Chỉ thực hiện trên
+lab dữ liệu giả được chuẩn bị theo HUONGDAN. Không chạy trên cloud thiếu disk hiện
+tại. Nhóm cần đủ host/Docker disk, image/secret gốc, nguồn healthy, không writer
+khác và Phase 3 Windows PASS trước main Guided. Không dùng mã độc, xóa bảng,
+xóa volume/snapshot, reset repo hoặc cố tình sửa kho chính.
+
+B0. Chuẩn bị trước giờ học, không cài/build giữa cửa sổ đo.
+Theo HUONGDAN mục 2–4 để chuẩn bị Windows và backup tool nếu lab mới. Giữ trạng
+thái đang có nếu lab đã chạy; không chạy lại init trên volume cũ.
+Mở PowerShell ở repo root:
+
+    . .\SOURCE\recovery\start_session.ps1
+    $sourcePort = 8080
+    $restorePort = 8081
+    $sourceUrl = "http://127.0.0.1:$sourcePort"
+
+Sửa hai port theo cấu hình thật; chúng phải khác nhau cho Phase 3. Helper cung
+cấp Invoke-Checked/Invoke-Recovery/New-LabRunId và mở transcript, chưa cấp phép
+gây sự cố. Ghi người thao tác, version runbook và Git commit. Mỗi run ID đều mới.
+
+B1. Preflight — bắt sinh viên giải thích NO-GO trước khi gây sự cố.
+
+    $gate = New-LabRunId -Phase p3 -Label teacher-gate
+    Invoke-Recovery -LabArgs @('-Action','preflight','-RunId',$gate)
+    $g = Get-Content "work/recovery/$gate/result.json" -Raw -Encoding UTF8 | ConvertFrom-Json
+    $g.preflight
+
+Exit khác 0 hoặc status/scope không đúng thì dừng phần phục hồi. Gate chỉ đọc
+schema/toàn bảng/API/quyền/format secret/tài nguyên. Nó chưa chứng minh password
+Restic đúng hoặc snapshot nguyên vẹn; backup/archive phải kiểm tiếp.
+Hỏi: "Host còn chỗ nhưng Docker VM đầy thì có được chạy không?" Đáp án: không.
+Thấy gate từ chối thiếu chỗ là guard hoạt động; yêu cầu đủ tài nguyên vẫn FAIL.
+
+B2. Backup mốc 0 và giải thích ba lớp kiểm (khoảng 8 phút).
+
+    $backup = New-LabRunId -Phase p3 -Label teacher-backup
+    Invoke-Recovery -LabArgs @('-Action','backup','-RunId',$backup)
+    $r = Get-Content "work/recovery/$backup/backup-receipt.json" -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($r.status -ne 'PASS' -or $r.snapshot_id -notmatch '^[a-f0-9]{64}$' -or $r.manifest_sha256 -notmatch '^[a-f0-9]{64}$') { throw 'Invalid receipt' }
+    $r | Select-Object run_id,snapshot_id,manifest_sha256
+    $r.dump_metadata.business_baseline | Select-Object row_count,rows_sha256,schema_sha256
+
+Lớp 1: mysqldump single-transaction tạo nhất quán logic cho orders/InnoDB; lab
+dừng web, drain transaction và không DDL/writer ngoài, capture before/after khớp.
+Không copy nóng /var/lib/mysql. Đừng suy rộng sang mọi engine hoặc bảng mới.
+
+Lớp 2: manifest băm SQL và metadata; Restic lưu, check/readback đúng snapshot.
+Full ID tránh latest thay đổi khi có backup mới. Digest tin cậy phải được giữ/
+review ngoài luồng sửa artifact. Hash tốt không tự làm manifest đáng tin cậy
+nếu cùng một người có thể thay cả dữ liệu và manifest trên host bị chiếm quyền.
+
+Lớp 3: restore/import và xác minh nghiệp vụ. Check kho PASS chưa đảm bảo SQL
+import được, user tồn tại, app được cấp quyền hoặc dịch vụ dùng đúng DB.
+
+Không mở SQL đầy đủ hoặc secret để trình chiếu. Cho xem receipt/baseline/hash.
+Restic snapshot ở đây là bản sao các file dump, không phải VM snapshot/MySQL
+physical snapshot. Bản sao mã hóa và password cùng host chưa chịu được mất host.
+
+B3. Phase 3 — chứng minh restore thực sự, không chỉ start nguồn.
+
+    $phase3 = New-LabRunId -Phase p3 -Label teacher-restore
+    Invoke-Recovery -LabArgs @('-Action','restore','-RunId',$phase3,
+        '-BackupId',$r.run_id,'-SnapshotId',$r.snapshot_id,
+        '-ManifestSha256',$r.manifest_sha256,'-Port',"$restorePort",'-ReturnSource')
+    $restored = Get-Content "work/recovery/$phase3/result.json" -Raw -Encoding UTF8 | ConvertFrom-Json
+    $restored | Select-Object status,restored_snapshot_rows,integrity,schema,grants,api_read_write,persistence,return_source_status
+
+Giảng viên dừng để hỏi lần lượt:
+- Có mount volume nguồn không? Xem compose.restore.yaml và TARGET_READY.
+- Vì sao không seed? Nếu nạp 100 row rồi import, có thể trùng hoặc che lỗi.
+- Chưa có orders thì health kiểm gì? SELECT 1, không COUNT orders trước import.
+- Dump có user không? Không; phải tạo lại group08_app chỉ SELECT/INSERT.
+- SQL báo lỗi một câu mà vẫn tiếp thì sao? Toàn lượt FAIL, không --force/reuse target.
+- Vì sao COUNT giống chưa đủ? Có thể sửa giá một row mà count không đổi.
+- API 100 row có kiểm hết N>100 không? Không; controller đọc SQL toàn bảng theo ID.
+- Tại sao đọc trước ghi? Để chứng minh dữ liệu snapshot trước khi probe thay đổi DB.
+- Restart kiểm gì? Persistence của DB đã phục hồi, khác một lần HTTP 200.
+
+Phase 3 không có incident T0 nên không lấy thời gian này làm mẫu RTO chính.
+ReturnSource diễn ra sau trial; target containers được dừng/gỡ nhưng giữ volume.
+Đừng chụp URL sau return và gọi đó là target. Main Guided có điểm WEB_OK để chụp.
+
+B4. Hai đối chứng — mỗi bài chỉ chứng minh một điều.
+
+Web-only sau gate đúng scope:
+    $gw = New-LabRunId -Phase p4 -Label teacher-webgate
+    Invoke-Recovery -LabArgs @('-Action','preflight','-RunId',$gw,'-PreflightScope','web-control')
+    $web = New-LabRunId -Phase p4 -Label teacher-web
+    Invoke-Recovery -LabArgs @('-Action','web-outage','-RunId',$web,'-ReturnSource')
+
+Giải thích: dừng/bật web có thể phục vụ lại, DB không thay đổi. Không restore
+snapshot, không có recovery point bị lùi nên RPO N/A. Dừng service không tự chứng
+minh đã cô lập tài khoản/mạng hoặc phát hiện ransomware.
+
+Corrupt candidate sau clean gate còn đạt và receipt hợp lệ:
+    $bad = New-LabRunId -Phase p4 -Label teacher-corrupt
+    Invoke-Recovery -LabArgs @('-Action','reject-corrupt','-RunId',$bad,
+        '-BackupId',$r.run_id,'-SnapshotId',$r.snapshot_id,'-ManifestSha256',$r.manifest_sha256)
+
+Chỉ sửa byte của bản SQL copy trong work. Expected rejection=PASS,
+import_attempted=false; không outage, RTO/RPO N/A. Không sửa kho thật để làm demo.
+Hỏi: "Hash sai mà test PASS có mâu thuẫn không?" Không: mục tiêu negative test
+là hệ thống từ chối đúng đầu vào sai trước import. Hash kiểm độ nguyên vẹn so
+với mốc tin cậy, không tự phát hiện mã độc hoặc chứng minh backup sạch nhiễm.
+
+B5. Main Guided — để sinh viên quyết định và giải thích (khoảng 10–15 phút).
+
+Chỉ sau Phase 3 Windows PASS. Preflight mới, OBS sẵn sàng, không writer khác.
+Giảng viên không gõ hộ; Đa Minh quan sát/ghi, Minh Quân theo bản runbook đã chốt.
+
+    $gm = New-LabRunId -Phase p3 -Label teacher-maingate
+    Invoke-Recovery -LabArgs @('-Action','preflight','-RunId',$gm)
+    $main = New-LabRunId -Phase p4 -Label teacher-main
+    Invoke-Recovery -LabArgs @('-Action','drill','-RunId',$main,
+        '-Port',"$sourcePort",'-PostOrders','3','-Guided','-ReturnSource')
+
+Tại prompt controller, không phải PowerShell:
+    Đa Minh:   INJECT <run-id-thật>
+    Minh Quân: RECOVER <run-id-thật>
+    Minh Quân: WEB_OK <run-id-thật>
+Không nhập dấu < >; dùng đúng ID hiển thị; không pipe sẵn câu trả lời.
+
+Trước INJECT, controller đã ACK checkpoint, tạo snapshot mới và ACK ba tail đơn.
+Khi INJECT: T0 ngay trước stop DB; controller quan sát 503 rồi dừng web nguồn.
+Trình duyệt quan sát ở thời điểm sau có thể thấy mất kết nối do web đã dừng,
+không nhất thiết bắt được cửa sổ 503; đọc journal để xác minh lần quan sát 503.
+
+Khi RECOVER: chọn snapshot của chính lượt này, không đọc lại volume nguồn để cứu
+tail. Controller trích/xác minh/import/cấp quyền/kiểm dữ liệu, API, probe, restart.
+Minh Quân phải giải thích được các bước, xác định log nào chứng minh từng bước.
+
+Trước WEB_OK: mở URL nguồn để xem target phục vụ, không tạo thêm đơn. Lưu ảnh
+hoặc video tại đây. Với baseline N, target có N+1 vì probe; N không phải luôn 105.
+Đối chiếu ACK hoàn tất trước điểm này, ba tail thiếu đúng dự kiến. Sau WEB_OK,
+controller recheck toàn bảng/API, lấy health ổn định rồi chốt ready. Nhập xác
+nhận không tự chứng minh danh tính; biên bản/video mới xác nhận ai thực hiện.
+
+Lời giảng viên: "Đừng hô phục hồi xong chỉ vì trang chủ hiện lên. Hãy chỉ ra đúng
+URL, đúng target, dữ liệu/schema/quyền đúng và dịch vụ đã ổn định. Việc kiểm chứng
+cũng là thời gian người dùng phải chờ trong định nghĩa RTO của bài này."
+
+B6. Xuất CSV của đúng buổi và đọc nó (khoảng 5 phút).
+
+    $out = "work/metrics-$main"
+    Invoke-Checked -Exe 'py' -Arguments @('-3','-B','SOURCE/metrics/export_metrics.py',
+        '--trial-dir',"work/recovery/$main",'--output-dir',$out)
+    Import-Csv "$out/metrics.csv" -Encoding UTF8 |
+        Format-Table run_id,trial_status,measurement_version,observed_rto_seconds,unrecovered_acknowledged_requests,uncertain_requests
+
+Không --trial-dir sẽ tái xuất bốn case cũ, không phải số đo buổi này. Output phải
+mới; exporter kiểm seal, source Git, snapshot/baseline, timeline và ACK. Thiếu
+private SQL thì fresh artifact NOT TESTED; export không tự chạy Restic/DB check
+mới. Giữ measurement_version, OS, commit và manifest cùng CSV.
+
+Yêu cầu sinh viên đọc riêng: thời gian phát hiện, RTO, backup age, bounds lag,
+số ACK thiếu, duplicate/uncertain, integrity, return_source_status. Uncertain
+thì không được im lặng retry và bỏ qua: có thể DB đã commit nhưng ACK mất.
+FAIL/ABORTED trước ready không có RTO thành công; giữ censored, không cho 0.
+
+B7. Kết thúc hoặc hủy.
+
+Ctrl+C/EOF phải giữ result/events/uncertainty; không ép tiếp hoặc reuse target.
+SIGKILL/mất điện có thể thiếu seal/TRIAL_ENDED, ghi đúng lượt không hoàn tất.
+Xem status riêng với return_source_status; FAILED return-source vẫn là lỗi vận
+hành. Nếu không trả nguồn được, theo mục 11 HUONGDAN kiểm owner/secret/cổng gốc
+và giữ log trước xử lý. Không xóa volume/snapshot hoặc nhập tay vào nguồn.
+
+    Invoke-RestMethod "$sourceUrl/health"
+    Stop-Transcript
+
+Không sửa raw cho đẹp báo cáo. Không chạy verify_retained.py trong demo này vì
+finding resource gate muộn còn mở. Không nhận đã hoàn thành nếu cleanup/return
+vẫn lỗi hoặc chưa lưu bằng chứng.
+
+==========================================================================
+PHẦN V. BÀN GIẤY, CẢI TIẾN RUNBOOK VÀ HOÀN THIỆN SHEETS
+==========================================================================
+
+Cho hai sinh viên điền theo đúng năm giai đoạn trong tab biên bản:
+- Phát hiện: thấy gì, kênh nào báo, ai xác nhận unavailable, timestamp nào?
+- Cô lập: đã làm hành động nào, mục đích gì? Nếu chưa có cơ chế cô lập thì ghi
+  N/A/chưa triển khai; không gọi stop DB tự động là phong tỏa attacker.
+- Bảo toàn: giữ receipt, snapshot, log, ACK, run ID, target lỗi và secret gốc;
+  ai có quyền sửa, bản công bố đã che gì? Đây là bảo toàn trong lab, chưa tự coi
+  đủ chain of custody pháp chứng hoặc bằng chứng độc lập trước host admin.
+- Phục hồi: ai chọn snapshot, căn cứ, lệnh/exit, target owner và import ra sao?
+- Xác nhận: ai nhìn URL, dữ liệu/schema/quyền/restart kiểm bằng gì, ai chốt ready?
+
+Liên hệ PICERL: chuẩn bị, nhận diện, cô lập, loại bỏ, phục hồi, rút kinh nghiệm.
+Không chạy mã độc nên không có chứng cứ đã loại bỏ malware. NIST/SANS là nguồn
+phương pháp cần dẫn đúng phiên bản; không tuyên bố đạt tuân thủ chỉ vì có bảng.
+
+Vòng cải tiến đúng yêu cầu Sheet:
+1) Đóng băng HUONGDAN v1.0 bằng commit/hash trước lượt đầu.
+2) Minh Quân thực hành; Đa Minh ghi bước khó hiểu, câu lệnh lỗi, trợ giúp đã cho.
+3) Giữ FAIL và thời gian thật. Nếu không có lỗi, ghi không quan sát lỗi; không
+   cố tình nhập sai để tạo minh chứng giả. Negative test phải được ghi là test.
+4) Minh Quân sửa HUONGDAN lên v1.1, nêu chính xác lỗi -> thay đổi -> lý do.
+5) Chạy lại run/target mới, cùng guided-v2; ghi khác biệt tải/cache/dataset.
+6) Hai người review. Hai lượt minh họa cải tiến quy trình, chưa đủ suy luận thống
+   kê nhân quả rằng mọi thay đổi RTO đều do runbook. Không trộn scenario khác.
+
+Cập nhật ba CSV từ buổi thật:
+- Đo_lường_RPO_RTO.csv: do --trial-dir xuất; không nhập số giả vào mẫu.
+- Biên_bản_Diễn_tập_Runbook.csv: người/kênh/quyết định, lệnh/exit, lỗi/cải tiến.
+- Danh_sách_Minh_chứng.csv: yêu cầu, status, link, run ID, môi trường và reviewer.
+Thay_đổi_Runbook.csv ghi changelog/retest, không là nhật ký ký thay thành viên.
+
+Tab đo lường phải thêm đúng tên kịch bản đã chạy. Bốn kịch bản chưa chạy giữ
+NOT TESTED, không dán số DB-stop vào hàng Mất máy chủ. Cột cô lập N/A nếu chưa
+đo riêng. Cột dữ liệu mất nêu ACK thiếu và bounds với đơn vị/giả thiết; exact RPO
+không có thì ghi chưa đo chính xác. Tỷ lệ tệp phải nêu mẫu số SQL/metadata, không
+thay tỷ lệ đơn hàng. Chưa mục tiêu thì chưa có biểu đồ đạt mục tiêu.
+
+Sau retest, quay video đầy đủ và bản demo 3–5 phút có chú thích cắt/tua. Cập nhật
+nguồn Word/PPTX từ CSV có provenance, chèn hình thật và ghi OS/ngày/run. Mở kiểm
+native Office. Kiểm folder/link từ cửa sổ chưa đăng nhập, chỉ share bộ đã review;
+không cấp public cho secrets, toàn work hoặc kho chứa SQL plaintext.
+
+==========================================================================
+PHẦN VI. CÂU HỎI VẤN ĐÁP VÀ TIÊU CHÍ NGHIỆM THU
+==========================================================================
+
+1) Restart DB khác restore ra sao?
+   Restart dùng volume cũ. Restore tái tạo dữ liệu từ snapshot đã chọn vào volume
+   mới; ảnh web chạy được sau restart không chứng minh backup có thể dùng.
+
+2) SHA-256 PASS có chứng minh backup an toàn trước mọi attacker không?
+   Không. Cần mốc hash tin cậy; host admin có thể sửa cả file/manifest nếu cùng
+   miền kiểm soát. Hash cũng không tự kiểm tính đúng nghiệp vụ hay malware-free.
+
+3) Ba đơn mới chưa phục hồi nhưng toàn bảng snapshot khớp có mâu thuẫn không?
+   Không. Snapshot phản ánh điểm trước ba ACK; đúng bản sao không đồng nghĩa
+   toàn bộ trạng thái trước sự cố đều được lưu. Đây là lý do phải bàn về RPO.
+
+4) Vì sao RPO không bằng tuổi backup verified?
+   Verified là lúc hoàn tất kiểm artifact, không phải timestamp transaction
+   capture/commit. Send/ACK chỉ bao mốc commit theo giả thiết, chưa exact RPO.
+
+5) Vì sao không dùng created_at_utc làm đồng hồ commit?
+   Đó là timestamp dữ liệu trong DB; commit có thể muộn hơn và trường này không
+   là quan sát commit độc lập. Dùng nó để kiểm thứ tự dữ liệu khác với đo commit.
+
+6) HTTP 201 chưa về mà DB có thể đã commit thì làm gì?
+   Ghi uncertain, dừng profile đo, không retry; điều tra chỉ đọc. Alias chưa
+   unique/idempotency chưa có nên retry có thể tạo hai đơn.
+
+7) Copy backup sang thư mục D:\backup-khac có đủ cách ly không?
+   Không suy từ tên đường dẫn. Phải kiểm thiết bị/vị trí và miền lỗi/quyền độc
+   lập thực sự; hai thư mục cùng ổ vẫn cùng mất khi ổ/host hỏng.
+
+8) 102 unit PASS có phải 102 lần phục hồi không?
+   Không. Phần lớn dùng mock/fixture; có giá trị kiểm logic nhưng khác evidence
+   Docker/MySQL/Restic thật. Windows/Git line endings/PowerShell cần chạy riêng.
+
+9) Người dùng thấy trang chủ 200 đã đủ chốt ready chưa?
+   Không. Trang HTML có thể còn trong khi DB unavailable; phải kiểm health/API,
+   dữ liệu toàn bảng/schema/quyền, URL của target, probe/restart và stable health.
+
+10) Lab chứng minh gì trước ransomware?
+    Khả năng phục hồi sau tác động mất khả dụng và kiểm integrity đầu vào trong
+    phạm vi đã thử. Chưa chứng minh phát hiện/ngăn mã hóa, giải mã, chống tống
+    tiền, chống mất host/quyền admin/kho hoặc exfiltration.
+
+Trước khi nghiệm thu, tôi yêu cầu nhóm chỉ ra được:
+[ ] Phạm vi đã được thống nhất, gồm quyết định về bốn hàng kịch bản trong Sheet.
+[ ] Windows tool versions, commit, preflight và Phase 3 thật đạt.
+[ ] Minh Quân thực hành theo bản chốt; Đa Minh có biên bản lỗi/trợ giúp thật.
+[ ] Full ID/digest, target sạch, import, schema/toàn bảng, grants/API/restart đạt.
+[ ] RTO/lag/ACK/uncertain tái tính được, có version và không giả target/exact RPO.
+[ ] Có v1.0 -> quan sát -> v1.1 -> retest, không chỉ hai tên file khác nhau.
+[ ] Video, ba CSV, biên bản bàn giấy, báo cáo/slide/runbook final và link xem được.
+[ ] Lỗi/NOT TESTED còn hiện rõ; cleanup/return-source được kiểm, không ký thay.
+
+Ưu tiên hoàn thiện: chốt scope -> đủ disk -> Phase 3 Windows -> hai người Guided
+và biên bản -> sửa/retest -> CSV/video -> Sheets và hồ sơ. Nếu giảng viên giữ yêu
+cầu so mục tiêu, chốt mục tiêu trước lượt đo tiếp theo; nếu chỉ chấp nhận quan sát,
+ghi thỏa thuận đó và không kết luận đạt SLA. Không chạy thêm tính năng chỉ để có
+nhiều code khi phần thực hành/giải thích và bằng chứng con người vẫn còn thiếu.
+
+Khi kết thúc buổi, sinh viên phải tự kể lại được câu chuyện bằng bằng chứng:
+"Chúng em chọn bản sao nào, vì sao tin nó, đã phục hồi trên đâu, kiểm đúng dữ liệu
+thế nào, người dùng trở lại khi nào, thiếu những đơn gì và kết luận dừng ở đâu."
+
+Nguồn kiểm tra chính trong repo:
+- BAO_CAO_CAC_PHASE.md, LUU_Y_THUC_NGHIEM.md, HUONGDAN.md.
+- SOURCE/recovery/controller.py: preflight, backup, archive, create_target,
+  recover, drill, finish_recovery, confirm; SOURCE/recovery/common.py.
+- compose.yaml, compose.restore.yaml, SOURCE/backup/db_dump.sh.
+- SOURCE/metrics/trial_metrics.py; docs/evidence/phase4/main-result.json,
+  main-events.jsonl, acknowledgements.json; phase3/clean-result.json và first-failed-result.json.
+- docs/evidence/phase5/export-20261110/metrics.csv; phase7/artifact-qa.json;
+  windows-tooling-20261116/tests.json và read-only-verification.json.

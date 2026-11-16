@@ -11,6 +11,9 @@ Ba tài liệu chính, đọc theo nhu cầu:
 | [Các lưu ý thực nghiệm](LUU_Y_THUC_NGHIEM.md) | Đường dẫn thật, gate, finding, định nghĩa RTO/RPO và giới hạn |
 | [Hướng dẫn thực nghiệm](HUONGDAN.md) | Chuẩn bị Windows, lệnh từng bước, bàn giao hai người, CSV, retest và hồ sơ |
 
+[Ghi chú giảng viên và kịch bản demo chuyên sâu](note.txt) đối chiếu Google Sheets,
+giải thích từng bước và đưa câu hỏi vấn đáp; dùng cùng ba tài liệu chính ở trên.
+
 Stack: Docker Compose, Flask, MySQL 8.4.7 (`lab_config.orders`), mysqldump,
 Restic và SHA-256. Chỉ dùng đơn hàng giả; kịch bản chính dừng service DB.
 
