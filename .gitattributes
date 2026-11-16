@@ -1,5 +1,12 @@
 SOURCE/backup/*.sh text eol=lf
 SOURCE/backup/Dockerfile text eol=lf
+# Execution fingerprints compare raw Git bytes on Windows as well as Linux.
+SOURCE/recovery/*.py text eol=lf
+SOURCE/recovery/*.ps1 text eol=lf
+SOURCE/backup/*.py text eol=lf
+SOURCE/app/*.py text eol=lf
+SOURCE/app/requirements.txt text eol=lf
+compose*.yaml text eol=lf
 # Preserve verbatim timestamp-prefixed blank lines in captured Docker DB logs.
 docs/evidence/phase4/*-db.txt whitespace=-blank-at-eol
 # Evidence hashes are byte-exact; Windows checkout must retain the original LF.

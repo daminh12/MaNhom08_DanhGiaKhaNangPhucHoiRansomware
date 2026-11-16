@@ -1,5 +1,37 @@
 # Phase 5 — RTO, bounded recovery lag, integrity và CSV
 
+## Lượt mới (bổ sung 16/11/2026)
+
+```powershell
+py -3 -B SOURCE/metrics/export_metrics.py --trial-dir work/recovery/p4-RUN-ID-THAT --output-dir work/metrics-RUN-ID-THAT
+```
+
+Thay chỗ RUN-ID-THAT bằng tên run lowercase thực tế. Thư mục đầu vào phải giữ
+đúng tên run, có result schema 2 và evidence-manifest.json do controller mới tạo.
+Exporter kiểm SHA/size từng input, đầy đủ events, snapshot/metadata/baseline, Git
+fingerprints tại commit thực thi, ACK và runtime. Git commit phải có trong clone;
+không sửa raw hoặc đổi fingerprint để làm PASS. Commit code trước chạy diễn tập.
+
+Output mới gồm metrics.csv, Đo_lường_RPO_RTO.csv (cùng số liệu, UTF-8 BOM),
+metrics.json, integrity.json và manifest.json. Không overwrite output, không đặt
+output trong input. --trial-dir không dùng cùng --evidence-ref/--verification/
+--artifact-root lịch sử. Không gọi Docker hoặc sửa dữ liệu.
+
+automated-v1 giữ comparison ACK sau SERVICE_VERIFIED; guided-v2 yêu cầu comparison,
+WEB_OK, final data check trước ready. CSV ghi measurement_version/OS/commit/observer;
+không trộn phiên bản khi so hiệu năng. Xác nhận operator chỉ là ghi nhận, không xác
+thực danh tính. Chỉ runtime do observer ghi không đủ chứng minh hai người đã diễn tập.
+
+SQL private còn tại run thì đọc/hash lại; thiếu SQL ghi fresh_artifact_integrity
+NOT TESTED. Kiểm byte không là Restic check/DB check mới: hai trường đó vẫn NOT
+TESTED. Khi chia sẻ, giữ metadata/manifest/verified/observed baseline và ACK đã
+review, không đưa SQL hoặc secret vào Git. Seal cục bộ không có chữ ký, cần review
+và pin bằng chứng. Failed/aborted vẫn xuất censored; corrupt/web/restore có N/A
+đúng phạm vi. Cột containment không suy ra từ thời gian stop service.
+
+Các hướng dẫn bên dưới tiếp tục dành cho **corpus lịch sử**. Không có --trial-dir
+thì exporter vẫn tái xuất bốn case đã pin, không là phép đo lượt Windows vừa chạy.
+
 Chỉ đọc dữ liệu diễn tập đã có; exporter không gọi Docker, tạo đơn, dừng service
 hoặc chỉnh bằng chứng Phase 4. Python 3.10+ và Git với đầy đủ commit evidence.
 Không có dependency Python ngoài stdlib. Windows workflow ứng dụng vẫn NOT TESTED;

@@ -154,11 +154,17 @@ def export(output,ref,artifact_root=None,verification=None):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--evidence-ref',default=EVIDENCE_REF);p.add_argument('--artifact-root',type=Path)
+    mode=p.add_mutually_exclusive_group()
+    mode.add_argument('--evidence-ref');mode.add_argument('--trial-dir',type=Path)
+    p.add_argument('--artifact-root',type=Path)
     p.add_argument('--verification',type=Path);p.add_argument('--output-dir',type=Path,required=True)
     a=p.parse_args()
+    if a.trial_dir and (a.artifact_root or a.verification):p.error('--trial-dir cannot use historical --artifact-root/--verification')
     try:
-        answer=export(a.output_dir,a.evidence_ref,a.artifact_root,a.verification)
+        if a.trial_dir:
+            from trial_metrics import export_trial
+            answer=export_trial(a.trial_dir,a.output_dir)
+        else:answer=export(a.output_dir,a.evidence_ref or EVIDENCE_REF,a.artifact_root,a.verification)
         print(json.dumps({'output':str(a.output_dir),'main_trial_count':answer['main_trial_count'],'status':'PASS'},indent=2))
     except (ValueError,OSError,KeyError,TypeError) as e:
         p.exit(1,'Evidence/export failed: '+str(e)+'\n')
