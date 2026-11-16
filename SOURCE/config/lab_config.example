@@ -27,4 +27,4 @@ BACKUP_PATH=backups/runs
 RESTIC_REPOSITORY=backups/restic
 # Phase 4 chỉ dừng service trong lab, không có script phá dữ liệu.
 INCIDENT_SCRIPT=SOURCE/recovery/controller.py
-RUNBOOK=THESIS/runbook/Runbook_v1.1.md
+RUNBOOK=HUONGDAN.md

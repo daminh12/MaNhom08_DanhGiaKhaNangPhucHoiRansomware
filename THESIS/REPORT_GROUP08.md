@@ -44,7 +44,7 @@ VFS, image cached; không tính trung bình hoặc độ tin cậy từ các k�
 Phase 6 đã review runbook v1.0, chạy các control an toàn và tạo v1.1. Resource gate
 từ chối clean restore mới vì disk gần đầy; các mục Windows và lượt Minh Quân chạy
 độc lập vẫn NOT TESTED. Phase 7 tổng hợp hồ sơ và kiểm tính nhất quán, không biến
-những phần chưa thử thành PASS. Nhật ký cloud do Codex hỗ trợ không được gán là
+những phần chưa thử thành PASS. Nhật ký kiểm tra tự động trên Linux/cloud không được gán là
 hai thành viên đã trực tiếp thao tác trên máy Windows.
 
 ## 2. Câu hỏi nghiên cứu, lý thuyết và phạm vi
@@ -127,7 +127,7 @@ trên nhánh audit khỏi verifier Phase 2 đang dùng trong workflow hiện hà
 
 | Phase | Đã có | Điểm còn thiếu |
 |---|---|---|
-| 0 | Audit/review, nhận diện prototype và module chưa có | AGENTS/implementation plan/prompts không có trên nhánh thực thi; không suy đoán nội dung |
+| 0 | Audit/review, nhận diện prototype và module chưa có | Prototype verifier không nằm trong pipeline hiện hành; chưa đóng finding bằng một module khác |
 | 1 | Flask/MySQL/Compose, fake seed, API, health, UI và runtime Linux | Bootstrap và toàn bộ workflow Windows thật |
 | 2 | Hai backup PASS, SHA, Restic readback; unit và negative integration | Scheduler/PowerShell native, xử lý finding entrypoint cũ |
 | 3 | Clean restore Linux, full schema/data/grants/API/restart; giữ run FAILED | SQL interruption thật và restore Windows |
@@ -136,8 +136,7 @@ trên nhánh audit khỏi verifier Phase 2 đang dùng trong workflow hiện hà
 | 6 | Review v1.0, control Linux, uncertain-response fix, v1.1 | Disk, clean rehearsal mới, Windows và Minh Quân chạy độc lập |
 | 7 | Biên soạn/review hồ sơ báo cáo và slide | Nghiệm thu artifact theo log Phase 7; kỹ thuật thiếu ở Phase 6 vẫn pending |
 
-Checklist chi tiết ở docs/CHECKLIST_YEU_CAU.md. Nhật ký và phân công được tổng
-hợp riêng; owner là đề xuất chưa ký xác nhận. Main/PR có thể khác nhau về phần
+Truy vết, nhật ký và phân công được tổng hợp ở BAO_CAO_CAC_PHASE.md; owner là đề xuất chưa ký xác nhận. Main/PR có thể khác nhau về phần
 đã tích hợp, vì vậy người chạy phải ghi branch và commit thực tế. Không gọi các
 phần trên nhánh draft là đã merge main hoặc đã được nhóm phê duyệt.
 
@@ -552,8 +551,8 @@ minh trong báo cáo này.
    https://docs.docker.com/compose/
 7. Flask, *Flask documentation*.
    https://flask.palletsprojects.com/en/stable/
-8. Repository Nhóm 08, SOURCE/backup, SOURCE/recovery, SOURCE/metrics và docs/
-   PHASE1_RESULTS.md đến PHASE6_RESULTS.md; raw evidence trong docs/evidence/.
+8. Repository Nhóm 08, SOURCE/backup, SOURCE/recovery, SOURCE/metrics và
+   BAO_CAO_CAC_PHASE.md; raw evidence trong docs/evidence/.
 
 Input metric được pin tại 258ebc8b7bddb7b5fd4ce9562a37889bf1c2a36a; execution source
 của main trial đối chiếu tại dde61a2241de9bfd2b9f8138433b60f63d140cdd. Các bản
@@ -569,8 +568,9 @@ manifest/build/QA riêng; đọc hồ sơ đó để biết chính xác version 
 | compose.yaml | Stack nguồn group08-lab |
 | compose.restore.yaml | Stack restore standalone, target mới |
 | compose.backup.yaml / compose.recovery-tools.yaml | Tool backup/extract và mount theo scope |
-| SOURCE/recovery/README.md | Prerequisite và lệnh Windows/Linux |
-| THESIS/runbook/Runbook_v1.1.md | Runbook hiện hành; DOCX v1.0 giữ lịch sử |
+| HUONGDAN.md | Lệnh thực nghiệm hiện hành; DOCX v1.0 giữ lịch sử |
+| LUU_Y_THUC_NGHIEM.md | Điều kiện, finding và giới hạn trước chạy |
+| BAO_CAO_CAC_PHASE.md | Kết quả, nhật ký và truy vết các phase |
 | docs/evidence/phase4/main-events.jsonl | Timeline observer main gốc |
 | docs/evidence/phase4/acknowledgements.json | Tập ACK nghiệp vụ main |
 | docs/evidence/phase5/export-20261110/metrics.csv | Bốn case metric lịch sử |
@@ -612,5 +612,5 @@ if ($LASTEXITCODE -ne 0) { throw 'Gate FAIL: giữ log và dừng nhánh phục 
 
 Các lệnh backup/restore/drill đầy đủ nằm trong runbook; chỉ thực hiện sau đúng
 gate/prerequisite, không trong lúc người khác ghi dữ liệu. Kịch bản demo 5–7 phút
-ở docs/KICH_BAN_DEMO.md ưu tiên evidence và chỉ đọc; control cần gate/ReturnSource.
+ở HUONGDAN.md ưu tiên evidence và chỉ đọc; control cần gate/ReturnSource.
 Không có mật khẩu, SQL plaintext hoặc chữ ký nghiệm thu được nhúng trong hồ sơ.

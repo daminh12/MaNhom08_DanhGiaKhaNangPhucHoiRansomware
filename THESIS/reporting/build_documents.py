@@ -222,12 +222,12 @@ def build_slides(main):
         if item.get('callout'):textbox(s,.65,6.15,12.05,.65,item['callout'],size=15,color=item.get('callout_color',MUTED))
         textbox(s,.6,7.05,11.7,.3,'NHÓM 08 • AN TOÀN THÔNG TIN  |  Linux evidence • Windows NOT TESTED',size=10,color=MUTED)
         textbox(s,12.3,7.05,.5,.3,f'{idx:02}',size=11,color=TEAL,bold=True)
-        s.notes_slide.notes_text_frame.text=item.get('notes','')+'\nNguồn: '+item.get('source','docs/PHASE6_RESULTS.md')
+        s.notes_slide.notes_text_frame.text=item.get('notes','')+'\nNguồn: '+item.get('source','BAO_CAO_CAC_PHASE.md')
         md+=['## '+str(idx)+'. '+item['title'],item.get('subtitle',''),'']
         if 'body' in item:md += [item['body'],item.get('detail','')]
         for c in item.get('cards',[]):md+=['- '+c['title']+': '+c['body'].replace('\n','; ')]
         if item.get('image'):md+=['![Timeline thực nghiệm](assets/'+item['image']+')']
-        md+=['',item.get('callout',''),'','Ghi chú thuyết trình: '+item.get('notes',''),'Nguồn: '+item.get('source','docs/PHASE6_RESULTS.md'),'']
+        md+=['',item.get('callout',''),'','Ghi chú thuyết trình: '+item.get('notes',''),'Nguồn: '+item.get('source','BAO_CAO_CAC_PHASE.md'),'']
     prs.core_properties.author='Nhóm 08 — Đa Minh, Minh Quân'
     prs.core_properties.title='Đánh giá khả năng phục hồi bằng mô phỏng an toàn'
     prs.save(THESIS/'ThuyetTrinh_Nhom08.pptx')
@@ -239,9 +239,8 @@ def main():
     report=(THESIS/'REPORT_GROUP08.md').read_text(encoding='utf-8')
     if re.search(r'\{(?:FINAL_UNIT_TOTAL|RECOVERY_TESTS)\}',report):raise ValueError('Review counts must be resolved before build')
     doc_from_md(report,THESIS/'BaoCao_Nhom08.docx','ĐÁNH GIÁ KHẢ NĂNG PHỤC HỒI TRƯỚC SỰ CỐ MÃ HÓA TỐNG TIỀN','Báo cáo kỹ thuật • Mô phỏng an toàn trên lab Docker')
-    doc_from_md((THESIS/'runbook/Runbook_v1.1.md').read_text(encoding='utf-8'),THESIS/'runbook/Runbook_v1.1.docx','RUNBOOK v1.1','Phục hồi lab Docker và diễn tập lành tính')
     build_slides(main)
-    print(json.dumps({'status':'BUILT','docx':'THESIS/BaoCao_Nhom08.docx','pptx':'THESIS/ThuyetTrinh_Nhom08.pptx','runbook':'THESIS/runbook/Runbook_v1.1.docx'},ensure_ascii=False))
+    print(json.dumps({'status':'BUILT','docx':'THESIS/BaoCao_Nhom08.docx','pptx':'THESIS/ThuyetTrinh_Nhom08.pptx'},ensure_ascii=False))
 
 
 if __name__=='__main__':main()

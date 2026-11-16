@@ -1,157 +1,37 @@
+# Nhóm 08 — Phục hồi sau sự cố mất khả dụng bằng mô phỏng an toàn
 
-# ĐÁNH GIÁ KHẢ NĂNG PHỤC HỒI TRƯỚC SỰ CỐ MÃ HÓA TỐNG TIỀN BẰNG MÔ PHỎNG AN TOÀN
+Đề tài: Đánh giá khả năng phục hồi trước sự cố mã hóa tống tiền bằng mô phỏng an toàn.
+Thành viên: Đa Minh, Minh Quân. Máy thực hành: Windows 10, Docker Desktop.
 
-## 1. Thông tin đề tài
+Ba tài liệu chính, đọc theo nhu cầu:
 
-- Môn học: An toàn thông tin
-- Đề tài: 08
-- Nhóm: 08
-- Số lượng thành viên: 02
-- Thời gian thực hiện: 06 tuần
+| Tài liệu | Nội dung |
+|---|---|
+| [Báo cáo các phase](BAO_CAO_CAC_PHASE.md) | Phase 0–7, kết quả/bằng chứng, PASS/FAIL/NOT TESTED và việc còn thiếu |
+| [Các lưu ý thực nghiệm](LUU_Y_THUC_NGHIEM.md) | Đường dẫn thật, gate, finding, định nghĩa RTO/RPO và giới hạn |
+| [Hướng dẫn thực nghiệm](HUONGDAN.md) | Chuẩn bị Windows, lệnh từng bước, bàn giao hai người, CSV, retest và hồ sơ |
 
-## 2. Mục tiêu
+Stack: Docker Compose, Flask, MySQL 8.4.7 (`lab_config.orders`), mysqldump,
+Restic và SHA-256. Chỉ dùng đơn hàng giả; kịch bản chính dừng service DB.
 
-Xây dựng môi trường mô phỏng an toàn nhằm đánh giá khả năng phòng ngừa, phát hiện, cô lập và phục hồi dữ liệu trước sự cố mã hóa tống tiền.
+Mã và bằng chứng Linux đã có; Windows, Guided hai người, video và retest vẫn
+NOT TESTED. Chưa chọn mục tiêu RTO/RPO. Có code hoặc tài liệu chưa đủ nghiệm thu.
 
-## 3. Công nghệ sử dụng
-
-- VirtualBox / VMware
-- Python
-- Restic / BorgBackup
-- MinIO
-- SHA-256
-- Git và GitHub
-
-## 4. Cấu trúc Repository
-
-- SETUP: Hướng dẫn cài đặt môi trường.
-- SOURCE: Mã nguồn và dữ liệu thực nghiệm.
-- THESIS: Báo cáo, slide, runbook và minh chứng.
-- SOFT: Danh sách phần mềm sử dụng.
-- docs: Checklist và tài liệu quản lý dự án.
-
-## 5. Quy trình thực hiện
-
-1. Xây dựng môi trường lab.
-2. Tạo dữ liệu mẫu và bản sao lưu.
-3. Tạo baseline SHA-256.
-4. Mô phỏng sự cố bằng chương trình lành tính.
-5. Đánh giá khả năng phát hiện và cô lập.
-6. Thực hiện phục hồi.
-7. Kiểm tra tính toàn vẹn dữ liệu.
-8. Tổng hợp kết quả và đánh giá RPO/RTO.
-
-## 6. Giới hạn an toàn
-
-- Chỉ thao tác trên dữ liệu giả.
-- Không sử dụng mã độc thực tế.
-- Không có cơ chế tự lây lan hoặc né tránh.
-- Chương trình mô phỏng chỉ được phép thao tác trong thư mục lab cố định.
-- Backup dùng tài khoản và secret riêng; kho hiện vẫn cùng host, chưa có bản sao độc lập để chịu mất host.
-
-## 7. Kết quả
-
-Các kết quả thực nghiệm, bảng đo lường, hình ảnh và video demo được lưu trong Repository.
-
-## 8. Lab Phase 1 — đơn hàng giả (Docker)
-
-Phase 1 chọn Docker Compose + Flask/Gunicorn + MySQL 8.4.7; database
-`lab_config`, bảng `orders`, 100 đơn hàng tổng hợp khi khởi tạo volume lần đầu.
-Ứng dụng dùng `http://127.0.0.1:8080`, MySQL không publish cổng ra host.
-
-Trên Windows 10, mở PowerShell tại repository root với Docker Desktop ở chế độ
-Linux containers:
+Mở PowerShell tại repository root, làm từng checkpoint trong HUONGDAN:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\SETUP\installation\init_lab.ps1
-docker compose config --quiet
-docker compose up -d --build --wait --wait-timeout 180
-Start-Process http://127.0.0.1:8080/
+. .\SOURCE\recovery\start_session.ps1
 ```
 
-Chạy script tạo cấu hình một lần; nó từ chối ghi đè secret đã có.
-Xem [hướng dẫn Windows 10](SETUP/installation/install_guide.md),
-[cấu hình lab và đối chiếu Runbook](SETUP/environment/lab_config.md),
-[các lệnh test](SOURCE/tests/README.md) và
-[kết quả Phase 1](docs/PHASE1_RESULTS.md).
-Các lựa chọn VM/BorgBackup/MinIO ở phần công nghệ phía trên là phạm vi nghiên cứu
-ban đầu. Phase 1 chưa triển khai backup, restore, mô phỏng sự cố hoặc đo RTO/RPO.
+| Thư mục | Nội dung giữ trong repo |
+|---|---|
+| SETUP | Script khởi tạo lab |
+| SOURCE | Mã ứng dụng, backup/recovery/metrics và test |
+| docs/evidence | Log, JSON/CSV, hash và ảnh kiểm thử gốc, gồm cả FAIL |
+| docs/templates/windows | CSV mẫu biên bản, minh chứng và thay đổi runbook |
+| THESIS | Word/PPTX, nguồn nội dung, công cụ build và PDF lịch sử |
+| SOFT | Phiên bản công cụ, nguồn và giấy phép |
 
-## 9. Backup Phase 2 — MySQL + Restic
-
-Trên nhánh có Phase 2, sau khi lab Phase 1 hoạt động, chạy tại repository root:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\backup\backup.ps1 -Action Setup
-powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\backup\backup.ps1 -Action Backup
-powershell -NoProfile -ExecutionPolicy Bypass -File .\SOURCE\backup\backup.ps1 -Action Snapshots
-```
-
-Setup giữ nguyên mật khẩu đã có, cấp tài khoản backup SELECT-only và khởi tạo
-kho Restic mới nếu chưa có. Mỗi lần backup tạo run riêng với dump, manifest,
-snapshot ID và kết quả kiểm chứng. Xem [hướng dẫn backup](SOURCE/backup/README.md)
-và [kết quả Phase 2](docs/PHASE2_RESULTS.md). Restore DB sạch thuộc Phase 3.
-
-## 10. Phục hồi sạch và diễn tập Phase 3/4
-
-Workflow trong [SOURCE/recovery/README.md](SOURCE/recovery/README.md) dùng Restic,
-baseline nghiệp vụ độc lập trong metadata, MySQL target mới và ghi sự kiện observer.
-Cần thêm Python 3.10+ trên host; có PowerShell launcher cho Windows 10 (chưa chạy
-trực tiếp trên Windows). Phase 1/2 vẫn chạy theo hướng dẫn Docker hiện có.
-
-[Kết quả Phase 3](docs/PHASE3_RESULTS.md), [Phase 4](docs/PHASE4_RESULTS.md) và
-[bổ sung Runbook](THESIS/runbook/PHASE3_PHASE4_DOCKER.md) ghi bằng chứng Linux thật,
-bao gồm cả run FAILED, giới hạn cloud và các hạng mục NOT TESTED.
-
-## 11. Review Phase 0–4 và số đo Phase 5
-
-[Code review](docs/reviews/PHASE0_4_REVIEW_2026-11-10.md) ghi finding còn mở và
-phạm vi GO. [Phase 5](docs/PHASE5_RESULTS.md) tính lại số đo từ raw events đã pin,
-kiểm toàn vẹn và xuất [CSV](docs/evidence/phase5/export-20261110/metrics.csv).
-[Hướng dẫn exporter](SOURCE/metrics/README.md) chạy offline bằng Python/Git, không
-gây outage; fresh retained-DB verification là một action riêng có tác động lab.
-Người dùng chưa chọn RTO/RPO target; không tự kết luận đạt SLA hoặc Windows PASS.
-
-## 12. Runbook Phase 6
-
-[Review Phase 0–5](docs/reviews/PHASE0_5_REVIEW_2026-11-15.md) và
-[kết quả Phase 6](docs/PHASE6_RESULTS.md) ghi cả bước chạy được, lỗi và NOT TESTED.
-[Runbook v1.1](THESIS/runbook/Runbook_v1.1.md) thay các bước placeholder/import
-nguồn của v1.0; DOCX gốc được giữ nguyên. Controller có `preflight` chỉ đọc lab,
-kiểm source/API/quyền/secret và dung lượng host/Docker trước cửa sổ thử.
-
-Các đối chứng Linux và 76 unit test đã PASS; lượt clean restore mới bị chặn bởi
-disk gần đầy. Windows 10 và lượt độc lập của Minh Quân chưa có bằng chứng, nên
-chưa nghiệm thu toàn bộ Phase 6. Không xóa volume/snapshot để vượt resource gate.
-
-## 13. Hồ sơ tổng hợp Phase 7
-
-- [Báo cáo Word](THESIS/BaoCao_Nhom08.docx) và [nguồn Markdown](THESIS/REPORT_GROUP08.md).
-- [Slide PowerPoint](THESIS/ThuyetTrinh_Nhom08.pptx), có ghi chú thuyết trình;
-  [nội dung slide](THESIS/SLIDES_GROUP08.md).
-- [Runbook v1.1 Word](THESIS/runbook/Runbook_v1.1.docx); giữ DOCX v1.0 gốc.
-- [Review cuối](docs/reviews/PHASE7_REVIEW.md), [kết quả/QA](docs/PHASE7_RESULTS.md),
-  [checklist truy vết](docs/CHECKLIST_YEU_CAU.md), [kịch bản demo](docs/KICH_BAN_DEMO.md).
-
-Phase 7 bổ sung gate Docker cho direct restore/drill trước mutation; 78 unit
-tests PASS trên Linux. Mẫu RTO chính vẫn là trial ngày 10/11, không phát sinh
-main trial mới. Hồ sơ được render kiểm tra bằng LibreOffice/Linux; Windows,
-nghiệm thu Phase 6 đầy đủ và các finding mở vẫn theo giới hạn trong báo cáo.
-Cách build và kiểm bản xuất: [THESIS/reporting/README.md](THESIS/reporting/README.md).
-
-## 14. Thực hành Windows theo yêu cầu Google Sheets
-
-Bắt đầu từ [kế hoạch từng bước](docs/WINDOWS_REHEARSAL_PLAN.md) và
-[Runbook Windows v1.0](THESIS/runbook/windows/Runbook_Windows_v1.0.md).
-PowerShell tại repo root: `. .\SOURCE\recovery\start_session.ps1` để mở transcript
-và CSV mẫu; sau đó chạy từng checkpoint trong runbook. Helper không tự gây sự cố.
-
-`drill -Guided` trên launcher PowerShell (`--guided` trên Python) bổ sung bàn giao
-Đa Minh INJECT → Minh Quân RECOVER → WEB_OK. RTO guided-v2 gồm thời gian thao tác,
-comparison ACK và xác nhận URL; không trộn với automated-v1 lịch sử.
-Exporter nhận `--trial-dir work/recovery/<run-id>` để đọc đúng lượt mới; mặc định
-vẫn xuất corpus cũ. Các dấu `<...>` là chỗ điền run ID thật, không phải lệnh chạy.
-
-Windows, lượt hai người, video và retest v1.1 vẫn **NOT TESTED** cho tới khi nhóm
-thực hiện. Bản v1.1 Windows hiện chỉ là DRAFT; không thay bằng chứng Linux bằng
-số đo hoặc chữ ký giả. Không merge PR tự động.
+Báo cáo Word/PPTX và runbook cũ trong THESIS được giữ làm hồ sơ; lệnh hiện hành
+lấy từ HUONGDAN. Tài liệu phase/review/hướng dẫn rời trước đây đã được hợp nhất;
+lịch sử xem trong Git. Không xóa volume/snapshot hoặc tự merge các PR.
