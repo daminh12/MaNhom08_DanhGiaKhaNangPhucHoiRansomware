@@ -29,6 +29,16 @@ Windows 10. Chưa có RTO/RPO mục tiêu do nhóm phê duyệt.
 | R20 | Bản sao độc lập cho mất host/kho chính | Thiết bị/vị trí độc lập chưa có bằng chứng | NOT TESTED; kho/password/journal hiện cùng host, không tuyên bố 3-2-1/offsite/immutable đã đạt |
 | R21 | Báo cáo và slide truy được về evidence | `THESIS/REPORT_GROUP08.md`, `BaoCao_Nhom08.docx`, `SLIDES_GROUP08.md`, `ThuyetTrinh_Nhom08.pptx` | PASS kiểm artifact: Word 17 trang, 15 slide có Notes, ZIP/XML/render và metric agreement; xem `docs/evidence/phase7/artifact-qa.json`. Native Microsoft Office/Windows và nghiệm thu dự án đầy đủ NOT TESTED |
 
+Các yêu cầu bổ sung sau khi đối chiếu Sheets ngày 16/11:
+
+| ID | Yêu cầu | Thực thi/hồ sơ | Bằng chứng và trạng thái |
+|---|---|---|---|
+| R22 | Bàn giao Đa Minh gây sự cố, Minh Quân theo runbook | controller.py --guided, Runbook Windows v1.0 | Mã và unit/mock PASS; bàn giao và phục hồi Windows thật NOT TESTED |
+| R23 | Xuất đúng lượt mới và giữ lịch sử | export_metrics.py --trial-dir | Unit/fixture PASS; xuất preflight FAILED Linux thật đúng phạm vi, không phải RTO mới |
+| R24 | Ghi lỗi, cải tiến Windows v1.0 → v1.1, video/Sheet | docs/templates/windows, Windows v1.1 DRAFT | Mẫu đã có; quan sát lỗi, retest, video, ký review và số đo Windows NOT TESTED |
+
+Chi tiết tại [kết quả bổ sung](WINDOWS_TOOLING_RESULTS.md).
+
 Các finding còn mở: API idempotency, entrypoint backup cũ dùng script chung/cleanup
 và log chưa đầy đủ, Flask 3.1.2 chưa nâng bản vá, cùng host và giới hạn controller
 bắt đầu từ nguồn healthy. Chi tiết/owner/điều kiện đóng nằm trong review Phase 6.

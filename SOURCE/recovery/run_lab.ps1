@@ -4,7 +4,7 @@ param(
     [Parameter(Mandatory=$true)][string]$RunId,
     [string]$BackupId='', [string]$SnapshotId='', [string]$ManifestSha256='',
     [int]$Port=8081, [int]$PostOrders=3,
-    [switch]$ReleaseSourceContainers, [switch]$ReturnSource,
+    [switch]$ReleaseSourceContainers, [switch]$ReturnSource, [switch]$Guided,
     [ValidateSet('clean-recovery','web-control')][string]$PreflightScope='clean-recovery'
 )
 $ErrorActionPreference='Stop'
@@ -15,6 +15,7 @@ if ($SnapshotId) {$arguments+=@('--snapshot-id',$SnapshotId)}
 if ($ManifestSha256) {$arguments+=@('--manifest-sha256',$ManifestSha256)}
 if ($ReleaseSourceContainers) {$arguments+='--release-source-containers'}
 if ($ReturnSource) {$arguments+='--return-source'}
+if ($Guided) {$arguments+='--guided'}
 if ($Action -eq 'preflight') {$arguments+=@('--preflight-scope',$PreflightScope)}
 # Windows launcher is explicit: unlike Phase 1/2, this observer needs host Python.
 if (Get-Command py -ErrorAction SilentlyContinue) {& py -3 @arguments}

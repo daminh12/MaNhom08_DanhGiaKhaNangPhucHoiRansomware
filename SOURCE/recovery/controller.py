@@ -9,6 +9,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import platform
 from pathlib import Path
 import re
 import secrets
@@ -22,6 +23,7 @@ import urllib.request
 
 from common import (acknowledged_comparison, baseline_for, canonical_api, compare,
                     full_snapshot, rows_hash, run_id, sha, utc)
+from protocol import AUTOMATED, GUIDED, CODE_FILES, EVIDENCE_FILES
 
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / 'work/recovery'
@@ -35,13 +37,23 @@ MYSQL = 'export MYSQL_PWD="$(cat /run/secrets/db_root_password)"; exec mysql -u 
 
 def write_json(path, data):
     temp = path.with_suffix('.tmp')
-    temp.write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    with temp.open('w',encoding='utf-8',newline='\n') as stream:
+        stream.write(json.dumps(data, ensure_ascii=False, indent=2,allow_nan=False)+'\n')
     temp.replace(path)
 
 
 def reject_symlinks(path):
     if any(p.is_symlink() for p in [path, *path.parents]):
         raise ValueError('Symlink components are forbidden in recovery paths')
+
+
+def committed_sources(commit, hashes):
+    """Check actual bytes too: git diff may hide a CRLF-only checkout change."""
+    for name,digest in hashes.items():
+        blob=subprocess.check_output(['git','show',commit+':'+name],cwd=ROOT)
+        if hashlib.sha256(blob).hexdigest()!=digest:
+            raise ValueError('Execution bytes differ from Git (including line endings): '+name+
+                             '; use committed LF source before rehearsal; do not rewrite evidence')
 
 
 @contextmanager
@@ -78,15 +90,44 @@ class Lab:
         self.source_touched = False
         self.target_created = False
         self.t0 = None
-        self.result = {'schema_version':1,'run_id':self.rid,'scenario':args.action,'status':'FAILED',
+        self.result = {'schema_version':2,'run_id':self.rid,'scenario':args.action,'status':'FAILED',
+                       'measurement_version':GUIDED if getattr(args,'guided',False) else AUTOMATED,
+                       'runtime':{'host_os':platform.system(),'os_release':platform.release(),
+                                  'os_version':platform.version(),'python':sys.version.split()[0]},
                        'started_at_utc':utc(),'windows_execution':'NOT TESTED' if os.name!='nt' else 'native host',
                        'source_volume':SOURCE_VOLUME,'target_project':self.project,
                        'release_source_containers':args.release_source_containers,
+                       'return_source_requested':getattr(args,'return_source',False),
                        'rto_rpo_objectives':'NOT TESTED; no numeric objectives configured'}
+
+    def confirm(self, action, operator):
+        """One observer stays alive across both operators' handover and URL check."""
+        expected=action+' '+self.rid
+        self.event('OPERATOR_PROMPT',action=action,operator=operator)
+        print('\n'+operator+': '+expected,flush=True)
+        if action=='WEB_OK':
+            print('Open http://127.0.0.1:'+str(self.a.port)+'/ and verify the restored UI. '
+                  'Do not submit another order. Capture evidence before confirming.',flush=True)
+        answer=input('Confirmation (Ctrl+C to abort): ')
+        if answer.strip()!=expected:
+            self.event('OPERATOR_CONFIRMATION_REJECTED',action=action,operator=operator)
+            raise ValueError('Confirmation did not match; no dependent action performed')
+        # Never log arbitrary input: it may accidentally contain a secret.
+        self.event('OPERATOR_CONFIRMED',action=action,operator=operator)
+
+    def seal_evidence(self):
+        files={}
+        for name in EVIDENCE_FILES:
+            path=self.work/name
+            reject_symlinks(path)
+            if path.is_file():files[name]={'sha256':sha(path),'size_bytes':path.stat().st_size}
+        write_json(self.work/'evidence-manifest.json',{
+            'schema_version':1,'run_id':self.rid,'created_at_utc':utc(),'files':files,
+            'trust':'Local hashes detect changes; not a signature or independent storage. Review/pin this manifest.'})
 
     def event(self, name, **data):
         value={'utc':utc(),'monotonic_ns':time.monotonic_ns(),'event':name,'run_id':self.rid,**data}
-        with (self.work/'events.jsonl').open('a',encoding='utf-8') as f:
+        with (self.work/'events.jsonl').open('a',encoding='utf-8',newline='\n') as f:
             f.write(json.dumps(value,ensure_ascii=False)+'\n');f.flush();os.fsync(f.fileno())
         return value
 
@@ -173,6 +214,7 @@ class Lab:
         if code!=200:raise ValueError('Source health precondition failed')
         self.event('SOURCE_VALIDATED',db_id=db['Id'],web_id=web['Id'],health=health,volume=SOURCE_VOLUME)
         self.result['source_before']=health
+        self.result['source_url']='http://127.0.0.1:'+str(self.source_port())
         if self.a.action in ['backup','restore','drill','reject-corrupt']:
             self.result['local_inputs']=self.local_inputs(backup=self.a.action in ['backup','drill'])
         for image in ['mysql:8.4.7','group08-lab-web','group08-lab-backup']:
@@ -409,6 +451,9 @@ class Lab:
         payload={'customer_alias':alias,'product_name':'Pen','quantity':1,'unit_price_vnd':25000}
         sent=self.event('REQUEST_SENT',request_id=request_id,alias=alias,payload=payload)
         try:code,body=self.http('/api/orders',port,payload)
+        except (KeyboardInterrupt,EOFError) as e:
+            self.event('REQUEST_UNCERTAIN',request_id=request_id,error=type(e).__name__)
+            raise
         except (OSError,ValueError) as e:
             self.event('REQUEST_UNCERTAIN',request_id=request_id,error=type(e).__name__)
             raise RuntimeError('Uncertain write outcome; no automatic retry') from e
@@ -467,11 +512,44 @@ class Lab:
         self.event('RESTART_VERIFIED',row_count=len(after))
         self.target('exec','-T','db','rm','-f','/tmp/group08-import.sql',label='cleanup target SQL staging')
         self.event('TARGET_CLEANUP',status='PASS')
-        self.stable_health(self.a.port,len(after))
-        ready=self.event('SERVICE_VERIFIED',url='http://127.0.0.1:'+str(self.a.port),row_count=len(after))
-        if self.t0 is not None:self.result['observed_rto_seconds']=(ready['monotonic_ns']-self.t0)/1e9
         self.result.update(integrity='PASS',schema='PASS',grants='PASS',api_read_write='PASS',persistence='PASS')
+        if not getattr(self.a,'guided',False):self.finish_recovery(len(after))
         return rows
+
+    def finish_recovery(self, count):
+        self.stable_health(self.a.port,count)
+        ready=self.event('SERVICE_VERIFIED',url='http://127.0.0.1:'+str(self.a.port),row_count=count)
+        if self.t0 is not None:self.result['observed_rto_seconds']=(ready['monotonic_ns']-self.t0)/1e9
+
+    def drill(self):
+        if self.a.port!=self.source_port():raise ValueError('Main drill must restore the original serving URL')
+        acknowledgements=[self.create_order('LAB-P4-PRE-'+self.token,self.source_port(),'pre-backup-checkpoint')]
+        receipt=self.backup()
+        for i in range(self.a.post_orders):
+            acknowledgements.append(self.create_order('LAB-P4-POST-'+self.token+'-'+str(i),self.source_port(),'post-backup-'+str(i)))
+        write_json(self.work/'acknowledgements.json',acknowledgements)
+        self.event('WORKLOAD_DRAINED',acknowledged_requests=len(acknowledgements),uncertain_requests=0)
+        self.preflight_target()
+        if self.a.guided:
+            self.confirm('INJECT','Đa Minh')
+            # Human preparation may take minutes. Recheck capacity before fault.
+            self.recovery_resource_check()
+        self.stop_source(fault=True)
+        if self.a.guided:self.confirm('RECOVER','Minh Quân')
+        rows=self.recover(receipt)
+        comparison=acknowledged_comparison(acknowledgements,rows,self.t0)
+        if comparison['duplicates'] or not comparison['recovered_prefix'] or len(comparison['unrecovered_acknowledged'])!=self.a.post_orders:
+            raise ValueError('Unexpected acknowledged request recovery/duplicate result')
+        self.result['request_comparison']=comparison
+        self.event('REQUEST_COMPARISON_FINISHED',**comparison)
+        if self.a.guided:
+            self.confirm('WEB_OK','Minh Quân')
+            # Read-only recheck after human pause, before ending the RTO clock.
+            schema,after=self.capture(True)
+            compare(schema,after,receipt['dump_metadata']['business_baseline'],self.result['write_probe'])
+            self.verify_api(after)
+            self.event('FINAL_DATA_VERIFIED',row_count=len(after))
+            self.finish_recovery(len(after))
 
     def return_source(self):
         self.event('POST_TRIAL_RETURN_SOURCE_STARTED')
@@ -509,6 +587,8 @@ class Lab:
                            data_unchanged='PASS',rpo='NOT APPLICABLE; no snapshot recovery')
 
     def reject_corrupt(self, receipt):
+        self.result['backup']=receipt
+        write_json(self.work/'backup-receipt.json',receipt)
         directory,_=self.archive(receipt)
         candidate=self.work/'corrupt-candidate'
         shutil.copytree(directory/'payload',candidate)
@@ -532,8 +612,11 @@ def main():
     p.add_argument('--post-orders',type=int,default=3)
     p.add_argument('--release-source-containers',action='store_true')
     p.add_argument('--return-source',action='store_true')
+    p.add_argument('--guided',action='store_true',help='Interactive drill: Đa Minh INJECT, Minh Quân RECOVER and WEB_OK; includes handover in RTO')
     p.add_argument('--preflight-scope',choices=['clean-recovery','web-control'],default='clean-recovery')
     args=p.parse_args()
+    if args.guided and args.action!='drill':p.error('--guided is only supported for drill')
+    if args.guided and not sys.stdin.isatty():p.error('--guided requires an interactive terminal; do not pipe confirmations')
     if sys.version_info<(3,10):p.error('Host Python 3.10+ is required')
     if not 1024<=args.port<=65535 or not 1<=args.post_orders<=20:p.error('Invalid lab port/order bound')
     run_id(args.run_id)
@@ -541,9 +624,16 @@ def main():
     with controller_lock(daemon):
         lab=Lab(args)
         try:
-            code_files=['SOURCE/recovery/controller.py','SOURCE/recovery/archive.py','SOURCE/recovery/common.py','compose.restore.yaml','compose.recovery-tools.yaml','SOURCE/backup/backup.py','SOURCE/backup/db_dump.sh']
-            lab.event('TRIAL_PREPARED',commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),python=sys.version.split()[0],
-                      working_source_sha256={f:sha(ROOT/f) for f in code_files})
+            execution_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+            execution_hashes={f:sha(ROOT/f) for f in CODE_FILES}
+            lab.event('TRIAL_PREPARED',commit=execution_commit,python=sys.version.split()[0],
+                      measurement_version=GUIDED if args.guided else AUTOMATED,
+                      runtime=lab.result.get('runtime',{}),observer_id=secrets.token_hex(16),
+                      working_source_sha256=execution_hashes)
+            if args.guided:
+                lab.call(['git','diff','--exit-code','HEAD','--',*CODE_FILES],
+                         'require committed execution source before guided rehearsal')
+                committed_sources(execution_commit,execution_hashes)
             lab.validate_source()
             if args.action=='preflight':lab.preflight()
             elif args.action=='backup':lab.backup()
@@ -551,26 +641,14 @@ def main():
             elif args.action=='reject-corrupt':lab.reject_corrupt(lab.receipt())
             elif args.action=='restore':
                 receipt=lab.receipt();lab.preflight_target();lab.stop_source();lab.result['backup']=receipt
+                write_json(lab.work/'backup-receipt.json',receipt)
                 lab.recover(receipt)
             else:
-                if args.port!=lab.source_port():raise ValueError('Main drill must restore the original serving URL')
-                acknowledgements=[lab.create_order('LAB-P4-PRE-'+lab.token,lab.source_port(),'pre-backup-checkpoint')]
-                receipt=lab.backup()
-                for i in range(args.post_orders):
-                    acknowledgements.append(lab.create_order('LAB-P4-POST-'+lab.token+'-'+str(i),lab.source_port(),'post-backup-'+str(i)))
-                write_json(lab.work/'acknowledgements.json',acknowledgements)
-                lab.event('WORKLOAD_DRAINED',acknowledged_requests=len(acknowledgements),uncertain_requests=0)
-                lab.preflight_target();lab.stop_source(fault=True)
-                rows=lab.recover(receipt)
-                comparison=acknowledged_comparison(acknowledgements,rows,lab.t0)
-                if comparison['duplicates'] or not comparison['recovered_prefix'] or len(comparison['unrecovered_acknowledged'])!=args.post_orders:
-                    raise ValueError('Unexpected acknowledged request recovery/duplicate result')
-                lab.result['request_comparison']=comparison
-                lab.event('REQUEST_COMPARISON_FINISHED',**comparison)
+                lab.drill()
             lab.result['status']='PASS'
             lab.event('TRIAL_ENDED',status='PASS')
         except BaseException as e:
-            lab.result.update(status='ABORTED' if isinstance(e,KeyboardInterrupt) else 'FAILED',error_type=type(e).__name__,error=str(e),
+            lab.result.update(status='ABORTED' if isinstance(e,(KeyboardInterrupt,EOFError)) else 'FAILED',error_type=type(e).__name__,error=str(e),
                               target_state='do not reuse for import' if lab.target_created else 'NOT CREATED; run ID remains reserved')
             lab.event('TRIAL_ENDED',status=lab.result['status'],error_type=type(e).__name__,error=str(e))
         finally:
@@ -582,6 +660,7 @@ def main():
             lab.result['finished_at_utc']=utc()
             lab.result.update(source_touched=lab.source_touched,target_created=lab.target_created)
             write_json(lab.work/'result.json',lab.result)
+            lab.seal_evidence()
         print(json.dumps(lab.result,ensure_ascii=False,indent=2))
         return 0 if lab.result['status']=='PASS' and lab.result.get('return_source_status')!='FAILED' else 1
 

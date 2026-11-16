@@ -138,6 +138,19 @@ py -3 -B -m unittest discover -s SOURCE/tests -p test_metrics.py -v
 ```
 
 Đọc corpus đã pin, test math/CSV/hash trong thư mục tạm; không dừng service.
+
+## Guided và export lượt mới
+
+```powershell
+py -3 -B -m unittest discover -s SOURCE/tests -p 'test_*recovery.py' -v
+py -3 -B -m unittest discover -s SOURCE/tests -p 'test_*metrics.py' -v
+```
+
+Bao gồm suite cũ và test_guided_recovery.py/test_trial_metrics.py. Guided dùng
+mock Docker/HTTP và input giả; live-export fixtures cố ý mock Git và dùng
+FixtureOS. Không lấy các fixture làm số đo hoặc bằng chứng Windows. Kiểm EOF/
+Ctrl+C, xác nhận sai, tài nguyên thay đổi, dữ liệu đổi lúc chờ, seal/hash/source
+pin, protocol event order, uncertain, failure và không ghi đè export.
 Một test cần SQL artifact private và sẽ SKIP nếu clone mới không có artifact.
 Exporter và integrity workflow: `SOURCE/metrics/README.md`. Không đưa fixture/mock
 vào CSV thực nghiệm hoặc dùng zero thay giá trị N/A/NOT TESTED.

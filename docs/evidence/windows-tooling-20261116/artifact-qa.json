@@ -1,0 +1,19 @@
+{
+  "render_environment": "LibreOffice/Linux; Microsoft Office/Windows NOT TESTED",
+  "artifacts": [
+    {
+      "file": "THESIS/runbook/windows/Runbook_Windows_v1.0.docx",
+      "pages": 10,
+      "zip_xml": "PASS",
+      "empty_pages": [],
+      "text_outside_page": []
+    },
+    {
+      "file": "THESIS/KeHoach_ThucHanh_Windows.pptx",
+      "pages": 7,
+      "zip_xml": "PASS",
+      "empty_pages": [],
+      "text_outside_page": []
+    }
+  ]
+}

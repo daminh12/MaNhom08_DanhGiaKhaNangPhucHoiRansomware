@@ -138,3 +138,20 @@ tests PASS trên Linux. Mẫu RTO chính vẫn là trial ngày 10/11, không ph�
 main trial mới. Hồ sơ được render kiểm tra bằng LibreOffice/Linux; Windows,
 nghiệm thu Phase 6 đầy đủ và các finding mở vẫn theo giới hạn trong báo cáo.
 Cách build và kiểm bản xuất: [THESIS/reporting/README.md](THESIS/reporting/README.md).
+
+## 14. Thực hành Windows theo yêu cầu Google Sheets
+
+Bắt đầu từ [kế hoạch từng bước](docs/WINDOWS_REHEARSAL_PLAN.md) và
+[Runbook Windows v1.0](THESIS/runbook/windows/Runbook_Windows_v1.0.md).
+PowerShell tại repo root: `. .\SOURCE\recovery\start_session.ps1` để mở transcript
+và CSV mẫu; sau đó chạy từng checkpoint trong runbook. Helper không tự gây sự cố.
+
+`drill -Guided` trên launcher PowerShell (`--guided` trên Python) bổ sung bàn giao
+Đa Minh INJECT → Minh Quân RECOVER → WEB_OK. RTO guided-v2 gồm thời gian thao tác,
+comparison ACK và xác nhận URL; không trộn với automated-v1 lịch sử.
+Exporter nhận `--trial-dir work/recovery/<run-id>` để đọc đúng lượt mới; mặc định
+vẫn xuất corpus cũ. Các dấu `<...>` là chỗ điền run ID thật, không phải lệnh chạy.
+
+Windows, lượt hai người, video và retest v1.1 vẫn **NOT TESTED** cho tới khi nhóm
+thực hiện. Bản v1.1 Windows hiện chỉ là DRAFT; không thay bằng chứng Linux bằng
+số đo hoặc chữ ký giả. Không merge PR tự động.

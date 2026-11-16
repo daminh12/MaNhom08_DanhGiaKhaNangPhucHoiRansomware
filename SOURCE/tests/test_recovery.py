@@ -180,6 +180,7 @@ class RecoveryTests(unittest.TestCase):
     def direct_resource_lab(self, action, available_kib):
         """Fake Docker/HTTP metadata, keeping the real source/resource gates."""
         lab=object.__new__(controller.Lab)
+        lab.rid='p3-resource-fixture'
         lab.a=types.SimpleNamespace(action=action,release_source_containers=True)
         lab.result={'status':'FAILED'};lab.source_touched=False;lab.target_created=False
         lab.source_port=lambda:8080

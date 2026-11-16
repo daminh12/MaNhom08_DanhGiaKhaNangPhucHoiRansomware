@@ -1,0 +1,6 @@
+﻿session_id,run_id,runbook_version,stage,operator,observer,channel,decision_maker,started_at_utc,finished_at_utc,command,exit_code,expected,observed,status,failure,improvement,evidence_link
+,,,Phát hiện,Đa Minh,Minh Quân,,,,,,,,,NOT TESTED,,,
+,,,Cô lập,Đa Minh,Minh Quân,,,,,,,,,NOT TESTED,,,
+,,,Bảo toàn,Đa Minh,Minh Quân,,,,,,,,,NOT TESTED,,,
+,,,Phục hồi,Minh Quân,Đa Minh,,,,,,,,,NOT TESTED,,,
+,,,Xác nhận,Minh Quân,Đa Minh,,,,,,,,,NOT TESTED,,,

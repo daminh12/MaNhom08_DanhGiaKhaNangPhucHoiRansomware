@@ -1,5 +1,18 @@
 # Phục hồi sạch và diễn tập lành tính — Phase 3/4
 
+Cập nhật 16/11: [Runbook Windows v1.0](../../THESIS/runbook/windows/Runbook_Windows_v1.0.md)
+thêm phiên thực hành hai người. `drill --guided` / launcher `-Guided` yêu cầu
+terminal tương tác, ba xác nhận INJECT/RECOVER/WEB_OK và source đã commit.
+EOF/Ctrl+C ghi ABORTED; không tự retry. Chế độ guided-v2 chốt SERVICE_VERIFIED sau
+đối chiếu ACK, người thao tác xem URL, recheck full data/API và stable health.
+Không truyền `--guided` giữ automated-v1 (comparison ACK sau ready).
+
+Run mới ghi result schema 2, runtime, observer ID, execution fingerprints và
+evidence-manifest.json cho các file cho phép; không đóng gói SQL/secret. Manifest
+phải được review/pin riêng; hash cục bộ không là chữ ký/bản sao độc lập. Dùng
+metrics exporter `--trial-dir` cho run mới. Script mở session không dừng dịch vụ:
+`. .\SOURCE\recovery\start_session.ps1`. Windows thực tế vẫn NOT TESTED.
+
 Chỉ dùng lab Docker `group08-lab`, MySQL 8.4.7, `lab_config.orders`, dữ liệu
 `LAB-...`. Không có thao tác xóa volume, reset kho, xóa snapshot, mã hóa tống tiền
 hoặc gây sự cố bằng xóa bảng. SQL dump có DDL chuẩn do mysqldump sinh ra; chỉ import

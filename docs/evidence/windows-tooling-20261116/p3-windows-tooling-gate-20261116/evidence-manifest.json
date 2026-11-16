@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "run_id": "p3-windows-tooling-gate-20261116",
+  "created_at_utc": "2026-11-16T04:36:01.524234+00:00",
+  "files": {
+    "result.json": {
+      "sha256": "48887b76ca7f491f8f8e67c3b61078d5195529d5f2457c619ae4633b3a964de8",
+      "size_bytes": 3193
+    },
+    "events.jsonl": {
+      "sha256": "811eb9ebcd9b43fed3496a9d19072b5b899367fe5d21c082c4207065ae696c45",
+      "size_bytes": 7854
+    }
+  },
+  "trust": "Local hashes detect changes; not a signature or independent storage. Review/pin this manifest."
+}

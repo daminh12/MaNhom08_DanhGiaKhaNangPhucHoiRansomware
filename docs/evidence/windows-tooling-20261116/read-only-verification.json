@@ -1,0 +1,69 @@
+{
+  "at_utc": "2026-11-16T04:36:01.628782+00:00",
+  "execution_commit": "01396dd6b7efd5e1b84d78b963b0299f2b39982a",
+  "gate_command": [
+    "python3",
+    "-B",
+    "SOURCE/recovery/controller.py",
+    "preflight",
+    "--run-id",
+    "p3-windows-tooling-gate-20261116"
+  ],
+  "gate_exit": 1,
+  "gate_status": "FAILED",
+  "error": "Insufficient host space for clean recovery; do not remove data volumes/snapshots",
+  "source_touched": false,
+  "target_created": false,
+  "export_command": [
+    "python3",
+    "-B",
+    "SOURCE/metrics/export_metrics.py",
+    "--trial-dir",
+    "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/docs/evidence/windows-tooling-20261116/p3-windows-tooling-gate-20261116",
+    "--output-dir",
+    "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/docs/evidence/windows-tooling-20261116/gate-export"
+  ],
+  "export_exit": 0,
+  "before": {
+    "health": {
+      "database": "ok",
+      "orders_count": 108,
+      "status": "ok"
+    },
+    "volumes": [
+      "group08-lab_db_data",
+      "group08-restore-p3-clean-20261110_restore_data",
+      "group08-restore-p3-clean-v2-20261110_restore_data",
+      "group08-restore-p3-preflight-probe_restore_data",
+      "group08-restore-p4-main-20261110_restore_data"
+    ],
+    "snapshot_file_hashes": {
+      "7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f": "7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f",
+      "5044d86ed493778891581971975300df590c94f17245707f566bab14bc852581": "5044d86ed493778891581971975300df590c94f17245707f566bab14bc852581",
+      "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78",
+      "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c": "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c"
+    }
+  },
+  "after": {
+    "health": {
+      "database": "ok",
+      "orders_count": 108,
+      "status": "ok"
+    },
+    "volumes": [
+      "group08-lab_db_data",
+      "group08-restore-p3-clean-20261110_restore_data",
+      "group08-restore-p3-clean-v2-20261110_restore_data",
+      "group08-restore-p3-preflight-probe_restore_data",
+      "group08-restore-p4-main-20261110_restore_data"
+    ],
+    "snapshot_file_hashes": {
+      "7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f": "7589d7b35dd8b5e1393d0e0f344615d4a28e0592a24a09d200167563f1ef367f",
+      "5044d86ed493778891581971975300df590c94f17245707f566bab14bc852581": "5044d86ed493778891581971975300df590c94f17245707f566bab14bc852581",
+      "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78": "23a5aa61e65808bcae3680900a5f708f7c42ef1af64ef28ca5f2a842b36f6f78",
+      "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c": "42e4948c0d191d32afcd81fb0bca95fa83982f1d0f7162a4c3d6422ff8dc8b9c"
+    }
+  },
+  "inventory_unchanged": true,
+  "scope": "Read-only Linux preflight. Health/count, volume names and encrypted snapshot file hashes; not full before/after source content or Windows evidence."
+}
