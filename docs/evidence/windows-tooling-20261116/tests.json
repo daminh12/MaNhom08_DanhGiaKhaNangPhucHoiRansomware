@@ -1,0 +1,83 @@
+{
+  "execution_commit": "01396dd6b7efd5e1b84d78b963b0299f2b39982a",
+  "platform": "Linux",
+  "commands": [
+    {
+      "name": "recovery-tests",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "SOURCE/tests",
+        "-p",
+        "test_*recovery.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-16T04:35:32.954369+00:00",
+      "exit_code": 0,
+      "scope": "unit/mock; not Windows or a new restore"
+    },
+    {
+      "name": "metrics-tests",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "SOURCE/tests",
+        "-p",
+        "test_*metrics.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-16T04:35:33.173170+00:00",
+      "exit_code": 0,
+      "scope": "unit/mock; not Windows or a new restore"
+    },
+    {
+      "name": "backup-tests",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "SOURCE/tests",
+        "-p",
+        "test_backup.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-16T04:35:34.074588+00:00",
+      "exit_code": 0,
+      "scope": "unit/mock; not Windows or a new restore"
+    },
+    {
+      "name": "app-tests",
+      "command": [
+        "docker",
+        "compose",
+        "exec",
+        "-T",
+        "web",
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/tests",
+        "-p",
+        "test_app.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-16T04:35:34.232984+00:00",
+      "exit_code": 0,
+      "scope": "unit/mock; not Windows or a new restore"
+    }
+  ]
+}

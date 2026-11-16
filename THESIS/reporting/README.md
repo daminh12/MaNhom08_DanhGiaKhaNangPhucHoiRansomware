@@ -1,5 +1,18 @@
 # Build và sử dụng hồ sơ Nhóm 08
 
+Bổ sung thực hành Windows (16/11), không ghi đè báo cáo kết quả Linux:
+
+```powershell
+py -3 -B THESIS/reporting/build_windows_guide.py
+```
+
+Xuất Runbook_Windows_v1.0.docx cạnh nguồn Markdown và
+THESIS/KeHoach_ThucHanh_Windows.pptx (7 slide hướng dẫn, không có số đo giả).
+Windows v1.1 vẫn là DRAFT cho tới khi có lỗi quan sát/retest thật. Đây là phụ
+lục thực hành; báo cáo Word/PPTX Phase 7 bên dưới giữ corpus đã review.
+Khi có số đo Windows, cập nhật nguồn Markdown/slides.json, CSV/timeline pin và
+review nhất quán trước build; không tự đổi mọi nhãn NOT TESTED thành PASS.
+
 Bộ file để nhóm review trước khi nộp:
 
 - `THESIS/BaoCao_Nhom08.docx`: báo cáo tổng hợp, mở/sửa bằng Word.

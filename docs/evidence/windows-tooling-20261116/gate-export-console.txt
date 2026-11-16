@@ -1,0 +1,5 @@
+{
+  "output": "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/docs/evidence/windows-tooling-20261116/gate-export",
+  "main_trial_count": 0,
+  "status": "PASS"
+}

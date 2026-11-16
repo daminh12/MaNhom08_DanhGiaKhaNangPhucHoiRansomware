@@ -1,0 +1,37 @@
+{
+  "execution_commit": "01396dd6b7efd5e1b84d78b963b0299f2b39982a",
+  "tests": {
+    "app-tests.txt": 14,
+    "backup-tests.txt": 14,
+    "recovery-tests.txt": 38,
+    "metrics-tests.txt": 36
+  },
+  "total_unit_tests": 102,
+  "files": {
+    "docs/evidence/windows-tooling-20261116/tests.json": "3d91c86988504020675899d39f523650d5d69d7c7b76881be46e410f03e77431",
+    "docs/evidence/windows-tooling-20261116/artifact-qa.json": "ea2954b5cda3011eff81d6b5591c8efc2c79e0794a239dfdc9932b94ad9bf003",
+    "docs/evidence/windows-tooling-20261116/app-tests.txt": "c75cc720fb50cbcbfcd655b0a1b4dad6b8e49367659fbb15eb2521c9043d610d",
+    "docs/evidence/windows-tooling-20261116/backup-tests.txt": "4ed472bc82916ac872cafb6b6cc47dd0e61d1029e6b8403c6246f1773f25c834",
+    "docs/evidence/windows-tooling-20261116/gate-export-console.txt": "c353eb071b8fe6afd563618ccdd584534e2eb11f465c1c65c15bde3db7552683",
+    "docs/evidence/windows-tooling-20261116/recovery-tests.txt": "f7b1e70b2f8a8b5ee1b77254eda1c20c6ce72daaac665da27a8e2e113e12b1f3",
+    "docs/evidence/windows-tooling-20261116/preflight-console.txt": "48887b76ca7f491f8f8e67c3b61078d5195529d5f2457c619ae4633b3a964de8",
+    "docs/evidence/windows-tooling-20261116/README.md": "9d151e7353e2a8478aa95a564c95be0dca9dd69419dee5c15e049f78a3d17c1b",
+    "docs/evidence/windows-tooling-20261116/preservation.json": "9f7bed39799d9e1cecc4a9927bb2a78c5239dad0dec64f11a067055d4c590651",
+    "docs/evidence/windows-tooling-20261116/metrics-tests.txt": "77fc5d59de758907eecace6d96416594ce00ebdd0e96a10b5b0b38449f015114",
+    "docs/evidence/windows-tooling-20261116/guide-slides-contact.png": "26d2d1dc0e0b2548cb2af330040d8bfdafe3448ebef0ab3da2c01d7c9cbc739d",
+    "docs/evidence/windows-tooling-20261116/read-only-verification.json": "96c0821a64b45742d4e8625a265d277442c908ec3c46bca2f94a52f167969ba8",
+    "docs/evidence/windows-tooling-20261116/gate-export/integrity.json": "19b0e1d4c86ba6be989bd2e108b9cd432103f97c87b3f5343700ef5f02fa6018",
+    "docs/evidence/windows-tooling-20261116/gate-export/manifest.json": "14cb28fc887d83ec56068808f2eaf6388727961f4d7cd3a36cbc14d155741ef3",
+    "docs/evidence/windows-tooling-20261116/gate-export/metrics.csv": "2fb4c0d67e4e98cf78f2952499df53a32b268eb9e2ffd84febbede3db184700a",
+    "docs/evidence/windows-tooling-20261116/gate-export/Đo_lường_RPO_RTO.csv": "2fb4c0d67e4e98cf78f2952499df53a32b268eb9e2ffd84febbede3db184700a",
+    "docs/evidence/windows-tooling-20261116/gate-export/metrics.json": "b5c91abd09692a6dcc89fb649f1db08d349a7af35bd4788c4aa0466a7a05413d",
+    "docs/evidence/windows-tooling-20261116/p3-windows-tooling-gate-20261116/evidence-manifest.json": "280d7384b5bddf792aa981f4a9f3154427717e356533e87d71b3ac999561223a",
+    "docs/evidence/windows-tooling-20261116/p3-windows-tooling-gate-20261116/events.jsonl": "811eb9ebcd9b43fed3496a9d19072b5b899367fe5d21c082c4207065ae696c45",
+    "docs/evidence/windows-tooling-20261116/p3-windows-tooling-gate-20261116/result.json": "48887b76ca7f491f8f8e67c3b61078d5195529d5f2457c619ae4633b3a964de8",
+    "THESIS/runbook/windows/Runbook_Windows_v1.0.docx": "5c3353110c1032c07f74e8a3edf28b05e86a07a0b0d684e121991ba8b0111566",
+    "THESIS/KeHoach_ThucHanh_Windows.pptx": "765d00d04b6e6fa7f42c88bf93fb54fe0d1d11f387280dd6f71f4c10aaabd144",
+    "THESIS/previews/windows/Runbook_Windows_v1.0.pdf": "2541ead52a9dfe667ad0e25b0f7c677b52552ec2404e85734e40ac5772f639b0",
+    "THESIS/previews/windows/KeHoach_ThucHanh_Windows.pdf": "b353e2a0c8fbb53d25ad884704105f6050774ca702eefceb74c734c8de358dc8"
+  },
+  "windows_execution": "NOT TESTED"
+}

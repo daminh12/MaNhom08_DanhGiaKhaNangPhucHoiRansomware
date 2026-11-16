@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "run_id": "p3-windows-tooling-gate-20261116",
+  "execution_commit": "01396dd6b7efd5e1b84d78b963b0299f2b39982a",
+  "inputs": {
+    "result.json": {
+      "sha256": "48887b76ca7f491f8f8e67c3b61078d5195529d5f2457c619ae4633b3a964de8",
+      "size_bytes": 3193
+    },
+    "events.jsonl": {
+      "sha256": "811eb9ebcd9b43fed3496a9d19072b5b899367fe5d21c082c4207065ae696c45",
+      "size_bytes": 7854
+    },
+    "evidence-manifest.json": {
+      "sha256": "280d7384b5bddf792aa981f4a9f3154427717e356533e87d71b3ac999561223a",
+      "size_bytes": 531
+    }
+  },
+  "processor_sha256": {
+    "SOURCE/metrics/verify_retained.py": "d73ba6ab6298c2b76eb373bff460f0b50a76e91ee9ee0c67679d8c16c4ea2915",
+    "SOURCE/metrics/evidence.py": "dbdabe0256115c9651c0ea0b016240e54876bdbc01afc94f72b3d68113bf269a",
+    "SOURCE/metrics/export_metrics.py": "a627d95db4309aab01a7a4294f0612ca94524dc716fd88765ccdc075f5cf81b7",
+    "SOURCE/metrics/trial_metrics.py": "ac577b7de5a17192ed5c054f4a0b8d9acf0c984e54ee05ffa962d01ea88d68b1",
+    "SOURCE/recovery/common.py": "87ea52e0025dbbdf4bd34aca5f875af3cdbe1c4e10fe147551b916563dc329b2",
+    "SOURCE/recovery/protocol.py": "8edda12c62037cca5c7480412456820c86047b5b8075962a663936c5a5b3242e",
+    "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad"
+  },
+  "outputs": {
+    "integrity.json": "19b0e1d4c86ba6be989bd2e108b9cd432103f97c87b3f5343700ef5f02fa6018",
+    "metrics.csv": "2fb4c0d67e4e98cf78f2952499df53a32b268eb9e2ffd84febbede3db184700a",
+    "Đo_lường_RPO_RTO.csv": "2fb4c0d67e4e98cf78f2952499df53a32b268eb9e2ffd84febbede3db184700a",
+    "metrics.json": "b5c91abd09692a6dcc89fb649f1db08d349a7af35bd4788c4aa0466a7a05413d"
+  },
+  "trust": "Review/pin input manifest separately. This is not a cryptographic signature."
+}

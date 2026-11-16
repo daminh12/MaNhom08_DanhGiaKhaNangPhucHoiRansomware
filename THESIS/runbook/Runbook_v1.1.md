@@ -1,5 +1,9 @@
 # Runbook v1.1 — phục hồi lab Docker và diễn tập lành tính
 
+Đợt thực hành hai người ngày 16/11 dùng [Runbook Windows v1.0](windows/Runbook_Windows_v1.0.md),
+chế độ Guided và exporter --trial-dir. DOCX v1.1 đã xuất ngày 15/11 là bản lịch
+sử; không coi bản đó đã có Guided hoặc bằng chứng Windows.
+
 Ngày cập nhật: 15/11/2026 (UTC+7). Nhóm 08: Đa Minh / Minh Quân.
 Trạng thái: bản cải tiến để review; phạm vi đã chạy ghi tại
 [kết quả Phase 6](../../docs/PHASE6_RESULTS.md). Chưa nghiệm thu Windows 10 hoặc
@@ -21,8 +25,8 @@ soát. `restore` hiện cũng yêu cầu nguồn running/healthy ở bước đ�
 cho sự cố nguồn đã hỏng từ trước. Với trường hợp đó, giữ bằng chứng và ghi giới
 hạn này; không nhập vào source hoặc bỏ gate để giả lập hoàn thành runbook.
 
-Đa Minh đề xuất làm người thao tác; Minh Quân đọc từng bước, ghi giờ/lệnh/exit code,
-phân loại lỗi và review kết quả. Phân công này chưa phải xác nhận hai thành viên
+Theo phân công trong Google Sheets: Đa Minh chuẩn bị/kích hoạt sự cố và ghi
+giờ/lệnh/exit code; Minh Quân phục hồi theo runbook. Phân công chưa xác nhận hai thành viên
 đã thực hiện. Một lượt do Codex chạy trên cloud không thay lượt chạy độc lập đó.
 
 | Thành phần | Giá trị thực thi |
@@ -239,8 +243,9 @@ Invoke-Checked -Exe 'py' -Arguments @('-3','-B','SOURCE/metrics/export_metrics.p
 Import-Csv "$export/metrics.csv" | Format-Table scenario,trial_status,observed_rto_seconds
 ```
 
-Exporter hiện chỉ đọc bốn case lịch sử tại Git ref cố định, không tự đọc trial mới
-ở phần 6. CSV này không phải số đo lượt vừa diễn tập. Không có private artifact
+Lệnh exporter ở trên chỉ đọc bốn case lịch sử tại Git ref cố định. Bổ sung
+--trial-dir ở Runbook Windows đọc run schema 2 mới. CSV từ lệnh ở trên không
+phải số đo lượt vừa diễn tập. Không có private artifact
 thì fresh artifact check giữ NOT TESTED. Khi còn đủ artifact và proof hậu kiểm,
 xem [metrics README](../../SOURCE/metrics/README.md) để kiểm tra thêm; proof cũ luôn
 giữ timestamp cũ. Một lần tái xuất không là một trial mới.

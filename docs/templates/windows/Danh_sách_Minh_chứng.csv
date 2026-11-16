@@ -1,0 +1,11 @@
+﻿requirement,status,evidence_link,run_id,platform,reviewer,note
+Cấu hình sao lưu đã che bí mật,NOT TESTED,,,,,Chưa gắn bằng chứng buổi Windows
+Bộ dữ liệu mẫu và hash trước sự cố,NOT TESTED,,,,,Dùng baseline toàn bảng; không dùng API LIMIT 100
+Log mô phỏng và phục hồi,NOT TESTED,,,,,Giữ result và events cùng evidence-manifest
+Biên bản diễn tập bàn giấy,NOT TESTED,,,,,Ghi người tham dự và quyết định thật
+Biên bản Minh Quân thực hành runbook,NOT TESTED,,,,,Ghi trợ giúp đã nhận nếu có
+Video phục hồi một tình huống,NOT TESTED,,,,,Giữ bản đầy đủ và bản demo 3–5 phút
+Mất máy chủ,NOT TESTED,,,,,Chờ xác nhận phạm vi; dừng DB không chứng minh mất host
+Mất tài khoản quản trị,NOT TESTED,,,,,Chờ xác nhận phạm vi
+Bản sao lưu trực tuyến bị sửa,NOT TESTED,,,,,SQL copy hỏng không chứng minh kho chính bị sửa
+Bản sao cách ly còn nguyên,NOT TESTED,,,,,Cần thiết bị/vị trí độc lập; thư mục cùng ổ không đủ
