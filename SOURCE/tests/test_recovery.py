@@ -61,6 +61,48 @@ class RecoveryTests(unittest.TestCase):
         with self.assertRaises(ValueError):rows_hash(rows)
         with self.assertRaises(ValueError):rows_hash(list(reversed(self.rows)))
 
+    def test_dataset_writer_captures_every_row_in_canonical_bytes(self):
+        rows=[[2**63+i,'LAB-'+str(i),'Pen',1,25000,'2026-01-01T00:00:00.000000Z'] for i in range(105)]
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'source-dataset.jsonl'
+            result=controller.write_dataset(path,rows)
+            data=path.read_bytes()
+            self.assertEqual(len(data.splitlines()),105)
+            self.assertEqual([json.loads(line) for line in data.splitlines()],rows)
+            self.assertEqual(data.splitlines()[0],b'[9223372036854775808,"LAB-0","Pen",1,25000,"2026-01-01T00:00:00.000000Z"]')
+            self.assertNotIn(b'\r',data)
+            self.assertTrue(data.endswith(b'\n'))
+            self.assertEqual(controller.sha(path),rows_hash(rows))
+            self.assertEqual(result,{'path':'source-dataset.jsonl','row_count':105,'rows_sha256':rows_hash(rows)})
+
+    def test_dataset_writer_rejects_invalid_capture_before_creating_file(self):
+        bad_bool=[list(row) for row in self.rows];bad_bool[0][0]=True
+        bad_alias=[list(row) for row in self.rows];bad_alias[1][1]='REAL-NAME'
+        for rows in [bad_bool,bad_alias,list(reversed(self.rows)),[self.rows[0],self.rows[0]],iter(self.rows)]:
+            with self.subTest(rows=repr(rows)),tempfile.TemporaryDirectory() as tmp:
+                path=Path(tmp)/'source-dataset.jsonl'
+                with self.assertRaises(ValueError):controller.write_dataset(path,rows)
+                self.assertFalse(path.exists())
+
+    def test_dataset_writer_refuses_overwrite_and_symlink_target_or_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            directory=Path(tmp);path=directory/'source-dataset.jsonl'
+            controller.write_dataset(path,self.rows);original=path.read_bytes()
+            with self.assertRaises(FileExistsError):controller.write_dataset(path,self.rows)
+            self.assertEqual(path.read_bytes(),original)
+            outside=directory/'outside';outside.mkdir()
+            target_link=directory/'restored-dataset.jsonl'
+            parent_link=directory/'linked-parent'
+            try:
+                target_link.symlink_to(path)
+                parent_link.symlink_to(outside,target_is_directory=True)
+            except OSError:self.skipTest('Host does not permit symlink fixture')
+            for candidate in [target_link,parent_link/'new.jsonl']:
+                with self.subTest(path=candidate),self.assertRaises(ValueError):
+                    controller.write_dataset(candidate,self.rows)
+            self.assertEqual(path.read_bytes(),original)
+            self.assertEqual(list(outside.iterdir()),[])
+
     def test_write_probe_does_not_rebaseline_existing_rows(self):
         probe=[3,'LAB-PROBE','Pen',1,5,'2026-01-01T00:00:02.000000Z']
         compare(self.schema,self.rows+[probe],self.baseline,probe)
