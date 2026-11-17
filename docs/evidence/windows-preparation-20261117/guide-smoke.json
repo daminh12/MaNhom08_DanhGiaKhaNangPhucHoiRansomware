@@ -1,0 +1,19 @@
+{
+  "scope": "Temporary build/ZIP/XML only; no Office layout or Windows execution",
+  "guide_sha256": "9e639a8f0bb815aef7191124c93074c74d3445cc24815ea1dbce26ec5a80e6b0",
+  "builder_sha256": "1b70bb843a852eacc91cc8294f883174bfcd2db3c907e844641db35ace2364df",
+  "outputs": [
+    {
+      "output": "KeHoach_ThucHanh_Windows.pptx",
+      "sha256": "11eccdc26fa14869bb2b5f02b6570f8f94814c97e6c9a8921e5ca50c3b186157",
+      "zip_xml": "PASS"
+    },
+    {
+      "output": "HuongDan_ThucNghiem.docx",
+      "sha256": "73607caa5ccaba7e7c2cf747456b06b49b6dd48361125d6b27c1ca4a3e109422",
+      "zip_xml": "PASS"
+    }
+  ],
+  "native_office": "NOT TESTED",
+  "historical_binaries_overwritten": false
+}

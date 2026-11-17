@@ -13,7 +13,7 @@ def main():
                 'Đa Minh kích hoạt • Minh Quân phục hồi • Chờ thực hành Windows 10')
     doc=Document(target)
     for section in doc.sections:
-        section.header.paragraphs[0].text='NHÓM 08 | HƯỚNG DẪN THỰC HÀNH WINDOWS | 16/11/2026'
+        section.header.paragraphs[0].text='NHÓM 08 | HƯỚNG DẪN THỰC HÀNH WINDOWS | Nguồn: HUONGDAN.md'
         section.footer.paragraphs[0].text='Windows/hai người thực hành: NOT TESTED | Tài liệu không thay bằng chứng'
     doc.core_properties.subject='Kế hoạch thực hành Windows; chưa có kết quả Windows được nghiệm thu'
     doc.save(target)

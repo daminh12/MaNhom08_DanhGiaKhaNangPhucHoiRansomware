@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "run_id": "p3-windows-prep-gate-20261117",
+  "scenario": "preflight",
+  "status": "FAILED",
+  "dataset_evidence_version": 1,
+  "measurement_version": "automated-v1",
+  "runtime": {
+    "host_os": "Linux",
+    "os_release": "6.18.57",
+    "os_version": "#1 SMP Tue Oct 20 21:56:04 UTC 2026",
+    "python": "3.12.14"
+  },
+  "started_at_utc": "2026-11-17T01:57:08.531100+00:00",
+  "windows_execution": "NOT TESTED",
+  "source_volume": "group08-lab_db_data",
+  "target_project": "group08-restore-p3-windows-prep-gate-20261117",
+  "release_source_containers": false,
+  "return_source_requested": false,
+  "rto_rpo_objectives": "NOT TESTED; no numeric objectives configured",
+  "source_before": {
+    "database": "ok",
+    "orders_count": 108,
+    "status": "ok"
+  },
+  "source_url": "http://127.0.0.1:8080",
+  "preflight": {
+    "scope": "clean-recovery",
+    "service_mutations": false,
+    "status": "FAILED",
+    "local_inputs": {
+      "credential_files": "PASS (presence/format only; values not recorded)",
+      "repository_config": "PRESENT; not a Restic integrity check"
+    },
+    "source_baseline": {
+      "schema_version": 1,
+      "canonicalization": "orders-jsonl-v1",
+      "row_count": 108,
+      "rows_sha256": "dc0897f10c8612e3e546929f146ce9310f6945a34287d95e104e4b4d95529264",
+      "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+      "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+    },
+    "api_read": "PASS; API window checked against full DB, not used as full baseline",
+    "app_grants": "PASS",
+    "docker_filesystems": [
+      {
+        "filesystem": "overlay",
+        "available_bytes": 122273792,
+        "mount": "/var/lib/mysql"
+      },
+      {
+        "filesystem": "overlay",
+        "available_bytes": 122273792,
+        "mount": "/"
+      }
+    ]
+  },
+  "docker_filesystems": [
+    {
+      "filesystem": "overlay",
+      "available_bytes": 122273792,
+      "mount": "/var/lib/mysql"
+    },
+    {
+      "filesystem": "overlay",
+      "available_bytes": 122273792,
+      "mount": "/"
+    }
+  ],
+  "resources": {
+    "driver": "vfs",
+    "host_free_bytes": 122273792,
+    "estimated_required_bytes": 2136002336,
+    "estimated_stopped_container_release_bytes": 0
+  },
+  "error_type": "RuntimeError",
+  "error": "Insufficient host space for clean recovery; do not remove data volumes/snapshots",
+  "target_state": "NOT CREATED; run ID remains reserved",
+  "finished_at_utc": "2026-11-17T01:57:09.523612+00:00",
+  "source_touched": false,
+  "target_created": false
+}

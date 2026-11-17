@@ -20,11 +20,21 @@ Restic và SHA-256. Chỉ dùng đơn hàng giả; kịch bản chính dừng se
 Mã và bằng chứng Linux đã có; Windows, Guided hai người, video và retest vẫn
 NOT TESTED. Chưa chọn mục tiêu RTO/RPO. Có code hoặc tài liệu chưa đủ nghiệm thu.
 
-Mở PowerShell tại repository root, làm từng checkpoint trong HUONGDAN:
+Bắt đầu tại [mục 0–2 của HUONGDAN](HUONGDAN.md#0-bắt-đầu-khi-nhóm-đang-quá-tải):
+chọn đúng checkout, kiểm Docker daemon và mở phiên. Máy mới lấy nhánh
+`nhom08/thuc-hanh-tung-buoc-20261117`; main chưa được giả định chứa mọi PR.
+File đầu tiên trong PowerShell tại repository root là:
 
 ```powershell
 . .\SOURCE\recovery\start_session.ps1
 ```
+
+Sau đó đi đúng thứ tự **init lab mới → compose up → backup Setup → tests →
+clean gate → backup receipt → Phase 3 → đối chứng → Guided → CSV → retest/nộp**.
+Lab cũ mất secret phải dừng tìm bản gốc, không init password mới. Guide có sổ run,
+cách mở lại terminal và đóng gói năm minh chứng; không cần đọc mọi log lịch sử
+để bắt đầu buổi chuẩn bị. Dataset JSONL của lượt mới gồm toàn bộ baseline trước
+probe, được kiểm bằng SHA-256; không tạo lại file cho lượt cũ.
 
 | Thư mục | Nội dung giữ trong repo |
 |---|---|

@@ -1,6 +1,6 @@
 # Các lưu ý trước và trong thực nghiệm — Nhóm 08
 
-Cập nhật 16/11/2026 (UTC+7). [Báo cáo các phase](BAO_CAO_CAC_PHASE.md) ghi kết quả;
+Cập nhật 17/11/2026 (UTC+7). [Báo cáo các phase](BAO_CAO_CAC_PHASE.md) ghi kết quả;
 [HUONGDAN](HUONGDAN.md) là đầu mối lệnh chạy. Bản này tập hợp cấu hình, điều kiện
 GO/NO-GO, finding và giới hạn còn mở; không tạo thêm một runbook song song.
 
@@ -27,6 +27,12 @@ GO/NO-GO, finding và giới hạn còn mở; không tạo thêm một runbook s
 | Evidence công bố | docs/evidence; không bao gồm SQL plaintext/secret |
 
 Alias chỉ LAB-..., sản phẩm Notebook/Pen/Folder, số lượng 1–100 và giá nguyên VND.
+Clone mới không tạo Docker daemon/volume mới. Init nay từ chối khi phát hiện
+`group08-lab_db_data` hoặc container nguồn cũ mà checkout chưa có config; tìm
+secret gốc, không tạo password mới hoặc xóa volume. Guard mới chưa chạy native
+Windows. Trước thao tác lifecycle phải kiểm đúng local Docker Desktop context;
+controller chưa cưỡng chế allowlist daemon. HUONGDAN có các lệnh kiểm chỉ đọc.
+
 100 seed chỉ áp dụng volume rỗng lần đầu. Smoke test/POST thêm dòng thật trong
 lab; không reset seed. Mạng frontend không chặn outbound Internet; chưa air-gap.
 
@@ -124,6 +130,14 @@ Seal cục bộ chỉ băm allowlist, không chữ ký hoặc storage độc l�
 receipt, manifest và raw đã che phù hợp; SQL/secret giữ ngoài Git. Bản chia sẻ
 đã che phải là bản riêng, không sửa raw rồi băm lại để làm PASS. Manifest lịch sử
 tham chiếu source tại đúng commit cũ; source hiện nay thay đổi không được sửa proof cũ.
+
+Lượt mới có dataset_evidence_version=1 lưu hai JSONL canonical tương ứng toàn
+bộ baseline trước tail/probe. Export kiểm SHA/row count/capture events và đối
+chiếu ACK membership với capture target; không chỉ tin summary. Không chỉnh
+JSONL bằng Excel hoặc trộn probe/tail vào baseline. Không suy ra fresh DB/Restic
+PASS từ việc đọc sidecar; lượt cũ thiếu sidecar giữ NOT TESTED. JSONL vẫn cần
+review dữ liệu giả trước công bố. Thứ tự cột là id/customer_alias/product_name/
+quantity/unit_price_vnd/created_at_utc.
 
 Export --trial-dir đọc SQL byte nếu artifact private còn, thiếu thì fresh artifact
 NOT TESTED. Nó không chạy Restic/DB mới. Đọc lại proof cũ không tạo fresh PASS.

@@ -1,0 +1,69 @@
+{
+  "started_at_utc": "2026-11-17T01:57:07.955574+00:00",
+  "host_os": "Linux",
+  "code_commit": "f3b6ca5d06ceb33c54d43bf4172487452b4decc1",
+  "preflight_command": [
+    "python3",
+    "-B",
+    "SOURCE/recovery/controller.py",
+    "preflight",
+    "--run-id",
+    "p3-windows-prep-gate-20261117"
+  ],
+  "preflight_exit_code": 1,
+  "trial_status": "FAILED",
+  "error": "Insufficient host space for clean recovery; do not remove data volumes/snapshots",
+  "source_touched": false,
+  "target_created": false,
+  "source_before": {
+    "baseline": {
+      "schema_version": 1,
+      "canonicalization": "orders-jsonl-v1",
+      "row_count": 108,
+      "rows_sha256": "dc0897f10c8612e3e546929f146ce9310f6945a34287d95e104e4b4d95529264",
+      "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+      "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+    },
+    "health": {
+      "database": "ok",
+      "orders_count": 108,
+      "status": "ok"
+    },
+    "containers": [
+      "46a3770fe3c4214e5080e5a61dedaccbff4376b74ea02c664cdf0c0cc459afd9 running 2026-11-17T00:35:02.496962015Z",
+      "9a45fdd044b05215b8b4f371ed2a0f490c696a6ef220ab1df2a1ff087cd6b42f running 2026-11-17T00:35:02.500092558Z"
+    ]
+  },
+  "source_after": {
+    "baseline": {
+      "schema_version": 1,
+      "canonicalization": "orders-jsonl-v1",
+      "row_count": 108,
+      "rows_sha256": "dc0897f10c8612e3e546929f146ce9310f6945a34287d95e104e4b4d95529264",
+      "schema": "CREATE TABLE `orders` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `customer_alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `product_name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL,\n  `unit_price_vnd` bigint NOT NULL,\n  `created_at_utc` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),\n  PRIMARY KEY (`id`),\n  CONSTRAINT `valid_price` CHECK ((`unit_price_vnd` between 1 and 100000000)),\n  CONSTRAINT `valid_product` CHECK ((`product_name` in (_latin1'Notebook',_latin1'Pen',_latin1'Folder'))),\n  CONSTRAINT `valid_quantity` CHECK ((`quantity` between 1 and 100))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+      "schema_sha256": "501d1f33200fd071b6e137e2ba02103884a3a87424bca92101e1d64084f699d3"
+    },
+    "health": {
+      "database": "ok",
+      "orders_count": 108,
+      "status": "ok"
+    },
+    "containers": [
+      "46a3770fe3c4214e5080e5a61dedaccbff4376b74ea02c664cdf0c0cc459afd9 running 2026-11-17T00:35:02.496962015Z",
+      "9a45fdd044b05215b8b4f371ed2a0f490c696a6ef220ab1df2a1ff087cd6b42f running 2026-11-17T00:35:02.500092558Z"
+    ]
+  },
+  "source_full_baseline_and_container_lifecycle_unchanged": true,
+  "export_command": [
+    "python3",
+    "-B",
+    "SOURCE/metrics/export_metrics.py",
+    "--trial-dir",
+    "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/docs/evidence/windows-preparation-20261117/p3-windows-prep-gate-20261117",
+    "--output-dir",
+    "/workspace/work/MaNhom08_DanhGiaKhaNangPhucHoiRansomware/docs/evidence/windows-preparation-20261117/gate-export"
+  ],
+  "export_exit_code": 0,
+  "windows_execution": "NOT TESTED",
+  "new_restore_outage_performed": false
+}
