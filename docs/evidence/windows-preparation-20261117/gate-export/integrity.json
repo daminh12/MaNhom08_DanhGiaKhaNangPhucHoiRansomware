@@ -1,0 +1,8 @@
+{
+  "status": "NOT TESTED",
+  "reason": "No fresh artifact/DB/Restic check performed by default",
+  "dataset_evidence": {
+    "status": "NOT TESTED",
+    "reason": "Incomplete run may have only partial dataset evidence"
+  }
+}

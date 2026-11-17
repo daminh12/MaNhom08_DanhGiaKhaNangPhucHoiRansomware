@@ -1,0 +1,93 @@
+{
+  "code_commit": "f3b6ca5d06ceb33c54d43bf4172487452b4decc1",
+  "host_os": "Linux",
+  "results": {
+    "recovery": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "SOURCE/tests",
+        "-p",
+        "test_*recovery.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 41,
+      "started_at_utc": "2026-11-17T01:56:15.858390+00:00",
+      "scope": "unit/mock/synthetic fixtures; not a Windows trial",
+      "log_sha256": "517990fc6c4379d58a0989ce9e97238910a3696baa80e6d734c26bbc16ba3aef"
+    },
+    "metrics": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "SOURCE/tests",
+        "-p",
+        "test_*metrics.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 47,
+      "started_at_utc": "2026-11-17T01:56:15.858649+00:00",
+      "scope": "unit/mock/synthetic fixtures; not a Windows trial",
+      "log_sha256": "143331d61c63122f7bdbdc698289a5786a0e6bd759c30f00abfa65f981c3c116"
+    },
+    "backup": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "SOURCE/tests",
+        "-p",
+        "test_backup.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 14,
+      "started_at_utc": "2026-11-17T01:56:15.858770+00:00",
+      "scope": "unit/mock/synthetic fixtures; not a Windows trial",
+      "log_sha256": "cf6a6a9bb6d63d6e3171e82d6bce1351ae5f302405c185e0b1b9a61b465f874a"
+    },
+    "app": {
+      "command": [
+        "docker",
+        "compose",
+        "exec",
+        "-T",
+        "web",
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/tests",
+        "-p",
+        "test_app.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 14,
+      "started_at_utc": "2026-11-17T01:56:15.859083+00:00",
+      "scope": "unit/mock/synthetic fixtures; not a Windows trial",
+      "log_sha256": "b1bd41d763c775add89d4e38476b6e1d708fcd0f400c75de248338e5dc5f8534"
+    }
+  },
+  "total_tests": 116,
+  "native_windows": "NOT TESTED",
+  "init_guard_static": {
+    "status": "PASS",
+    "scope": "Resource checks precede file creation; existing generation code retained byte-for-byte. Native PowerShell NOT TESTED."
+  }
+}

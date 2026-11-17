@@ -22,7 +22,7 @@ import urllib.error
 import urllib.request
 
 from common import (acknowledged_comparison, baseline_for, canonical_api, compare,
-                    full_snapshot, rows_hash, run_id, sha, utc)
+                    encode, full_snapshot, rows_hash, run_id, sha, utc)
 from protocol import AUTOMATED, GUIDED, CODE_FILES, EVIDENCE_FILES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -45,6 +45,17 @@ def write_json(path, data):
 def reject_symlinks(path):
     if any(p.is_symlink() for p in [path, *path.parents]):
         raise ValueError('Symlink components are forbidden in recovery paths')
+
+
+def write_dataset(path, rows):
+    """Publish validated fake orders as canonical JSONL, outside the Restic payload."""
+    path=Path(path)
+    reject_symlinks(path)
+    if not isinstance(rows,list):raise ValueError('Expected a captured list of synthetic orders')
+    digest=rows_hash(rows)  # Validate the entire capture before creating a file.
+    with path.open('xb') as stream:
+        for row in rows:stream.write(encode(row)+b'\n')
+    return {'path':path.name,'row_count':len(rows),'rows_sha256':digest}
 
 
 def committed_sources(commit, hashes):
@@ -91,6 +102,7 @@ class Lab:
         self.target_created = False
         self.t0 = None
         self.result = {'schema_version':2,'run_id':self.rid,'scenario':args.action,'status':'FAILED',
+                       'dataset_evidence_version':1,
                        'measurement_version':GUIDED if getattr(args,'guided',False) else AUTOMATED,
                        'runtime':{'host_os':platform.system(),'os_release':platform.release(),
                                   'os_version':platform.version(),'python':sys.version.split()[0]},
@@ -331,6 +343,8 @@ class Lab:
                 self.source('cp','db:/tmp/group08-'+bid+'/'+name,str(folder/'payload'/name))
             schema,rows=self.capture()
             if baseline_for(schema,rows)!=before:raise ValueError('Source changed during baseline/dump window')
+            dataset=write_dataset(self.work/'source-dataset.jsonl',before_rows)
+            self.event('DATASET_CAPTURED',role='source',**dataset)
             meta_path=folder/'payload/metadata.json'
             meta=json.loads(meta_path.read_text())
             meta.update(business_baseline=before,baseline_sql_sha256=sha(folder/'payload/database.sql'),
@@ -497,6 +511,8 @@ class Lab:
         schema,rows=self.capture(True)
         write_json(self.work/'observed-baseline.json',baseline_for(schema,rows))
         compare(schema,rows,baseline)
+        dataset=write_dataset(self.work/'restored-dataset.jsonl',rows)
+        self.event('DATASET_CAPTURED',role='restored',**dataset)
         self.event('DATA_VERIFIED',row_count=len(rows),rows_sha256=baseline['rows_sha256'],schema_sha256=baseline['schema_sha256'])
         self.result['restored_snapshot_rows']=len(rows)
         self.target('up','-d','web')
@@ -628,6 +644,7 @@ def main():
             execution_hashes={f:sha(ROOT/f) for f in CODE_FILES}
             lab.event('TRIAL_PREPARED',commit=execution_commit,python=sys.version.split()[0],
                       measurement_version=GUIDED if args.guided else AUTOMATED,
+                      dataset_evidence_version=lab.result.get('dataset_evidence_version'),
                       runtime=lab.result.get('runtime',{}),observer_id=secrets.token_hex(16),
                       working_source_sha256=execution_hashes)
             if args.guided:

@@ -1,6 +1,6 @@
 # Báo cáo các phase — Nhóm 08
 
-Cập nhật 16/11/2026 (UTC+7). Đề tài: **Đánh giá khả năng phục hồi trước sự cố
+Cập nhật 17/11/2026 (UTC+7). Đề tài: **Đánh giá khả năng phục hồi trước sự cố
 mã hóa tống tiền bằng mô phỏng an toàn**. Thành viên: Đa Minh, Minh Quân.
 
 Tài liệu này tổng hợp kết quả, nhật ký và truy vết yêu cầu. Đọc
@@ -21,7 +21,7 @@ thực hành Windows. Không có số liệu hoặc chữ ký được tạo tha
 | 5 | Tính RTO/lag, kiểm toàn vẹn, xuất CSV | PASS tái lập corpus đã pin; exact RPO và đạt mục tiêu NOT TESTED |
 | 6 | Review/chạy phần phù hợp của runbook v1.0, soạn v1.1 | PASS một phần trên Linux; nghiệm thu đầy đủ và Minh Quân thực hành Windows NOT TESTED |
 | 7 | Review cuối, Word/PPTX và kiểm artifact | PASS kiểm tài liệu trên Linux; native Office/Windows và nghiệm thu toàn dự án NOT TESTED |
-| Bổ sung Windows | Guided, exporter từng run, session và biểu mẫu | 102 unit PASS; preflight Linux từ chối thiếu disk. Guided phục hồi thật, hai người và video NOT TESTED |
+| Bổ sung Windows | Guided, exporter từng run, session, dataset và biểu mẫu | 116 unit PASS ngày 17/11; preflight Linux từ chối thiếu disk. Guided phục hồi thật, hai người và video NOT TESTED |
 
 **Quyết định:** sẵn sàng review hồ sơ và chuẩn bị thực hành Windows. Chỉ chạy
 diễn tập chính sau Phase 3 Windows và clean preflight trên máy đó PASS. Chưa kết
@@ -260,3 +260,35 @@ chạy thành công trong thư mục tạm, bốn output DOCX/PPTX kiểm ZIP/XM
 ghi đè binary lịch sử. Đây là kiểm tài liệu/tái lập, không là restore, kiểm layout
 mới hoặc nghiệm thu Windows. Các README/manifest trong evidence giữ nguyên theo
 commit lịch sử của chính chúng, không sửa lại để khớp cấu trúc tài liệu mới.
+
+
+## 13. Chuẩn bị buổi thực hành ngày 17/11/2026
+
+Code commit `f3b6ca5d06ceb33c54d43bf4172487452b4decc1` bổ sung guard init:
+phát hiện volume/container nguồn cũ trước khi tạo credential, không ghi đè dữ
+liệu. Guard mới được kiểm thứ tự tĩnh và giữ nguyên byte phần sinh config;
+chạy init native Windows vẫn NOT TESTED.
+
+Backup/restore mới lưu `source-dataset.jsonl`/`restored-dataset.jsonl` ngoài
+payload Restic, trước tail/probe. Seal theo allowlist; exporter đối chiếu byte
+SHA, toàn bộ baseline, capture events/thứ tự và ACK membership từ dataset target.
+CSV có dataset_evidence_status, hai hash và row count. Lượt cũ thiếu sidecar giữ
+NOT TESTED, không tạo bổ sung. Đây là capture cục bộ, không là fresh DB recheck,
+chữ ký hoặc storage độc lập. Restore end-to-end trên code mới vẫn NOT TESTED.
+
+| Kiểm chứng thật ngày 17/11 | Kết quả | Bằng chứng |
+|---|---|---|
+| Recovery/metrics/backup/app | 41 + 47 + 14 + 14 = **116 unit PASS**, không skip trong môi trường này | [Commands và metadata](docs/evidence/windows-preparation-20261117/tests.json), cùng các log unit |
+| New sealed dataset fixtures | PASS: tất cả rows, event binding, sai byte/phase/membership bị từ chối | [Metrics log](docs/evidence/windows-preparation-20261117/metrics-tests.txt); dữ liệu/chronology fixture, không là restore thật |
+| Clean preflight Linux thật | FAILED do thiếu host disk; source_touched=false, target_created=false | [Result](docs/evidence/windows-preparation-20261117/p3-windows-prep-gate-20261117/result.json) |
+| Source trước/sau gate | Full schema/row hash, health và container lifecycle giữ nguyên | [Read-only proof](docs/evidence/windows-preparation-20261117/read-only-verification.json) |
+| Export đúng gate mới | Exit 0; giữ trial FAILED, không sinh RTO giả | [CSV](docs/evidence/windows-preparation-20261117/gate-export/metrics.csv) |
+| Build hướng dẫn bản mới trong work tạm | DOCX/PPTX build và ZIP/XML PASS, không kiểm layout/native Office | [Smoke](docs/evidence/windows-preparation-20261117/guide-smoke.json) |
+| Giữ hồ sơ cũ | 177 file evidence/Office/ảnh giữ nguyên byte so với be0a0d7 | [Preservation](docs/evidence/windows-preparation-20261117/preservation.json) |
+| Native Windows/Guided hai người/video/retest | **NOT TESTED** | Nhóm thực hiện theo HUONGDAN, lưu raw và biên bản thật |
+
+HUONGDAN v1.0 được mở rộng theo ba buổi để giảm tải: lấy đúng branch/daemon,
+file đầu tiên, setup mới/cũ, sổ run qua các bước, Phase 3 trước main, cách mở lại
+terminal, video và đóng gói năm minh chứng. Các lệnh PowerShell/đóng gói đã đối
+chiếu tên file/cú pháp tĩnh, chưa có bằng chứng chạy Windows; không đổi nhãn thành
+v1.1 trước buổi Minh Quân thực hành và vòng ghi lỗi/cải tiến/retest thật.

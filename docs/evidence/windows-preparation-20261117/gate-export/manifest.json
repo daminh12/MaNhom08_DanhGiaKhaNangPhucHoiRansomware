@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "run_id": "p3-windows-prep-gate-20261117",
+  "execution_commit": "f3b6ca5d06ceb33c54d43bf4172487452b4decc1",
+  "inputs": {
+    "result.json": {
+      "sha256": "ba938d39848ea6a2994707691cc5d1dabe82fdca238724521738b43884229c63",
+      "size_bytes": 3220
+    },
+    "events.jsonl": {
+      "sha256": "ad9b19681e8538ab2be7a9e0567c4b21bb54c488e3d71faba248639d65ec74b8",
+      "size_bytes": 7795
+    },
+    "evidence-manifest.json": {
+      "sha256": "1cf1e504826211f03cff4ce57efab95fcbc75e35cea8035891f6db2bd665f30e",
+      "size_bytes": 528
+    }
+  },
+  "processor_sha256": {
+    "SOURCE/metrics/verify_retained.py": "d73ba6ab6298c2b76eb373bff460f0b50a76e91ee9ee0c67679d8c16c4ea2915",
+    "SOURCE/metrics/evidence.py": "dbdabe0256115c9651c0ea0b016240e54876bdbc01afc94f72b3d68113bf269a",
+    "SOURCE/metrics/export_metrics.py": "a627d95db4309aab01a7a4294f0612ca94524dc716fd88765ccdc075f5cf81b7",
+    "SOURCE/metrics/trial_metrics.py": "8116a6d103fa722f08453fadfdce17d4f2f9006ef73a6a14da6d2fd4dd454ef2",
+    "SOURCE/recovery/common.py": "87ea52e0025dbbdf4bd34aca5f875af3cdbe1c4e10fe147551b916563dc329b2",
+    "SOURCE/recovery/protocol.py": "85e18e7e1cea2a41ee7ac262951129dc345bdf0e3f19cda7d9e713f8042d6600",
+    "SOURCE/backup/backup.py": "9f523fbbc841da2472f71c290e7260c031e20d10408e895006eb4b1d58e23fad"
+  },
+  "outputs": {
+    "integrity.json": "2d38eb191b54d7f3d2e14e27d75f578610e4ed70617707a16c2d63ea13755dd2",
+    "metrics.csv": "6173dbe4bb883d3d213ce21ee6bf87bab3232a58ad0d1716945ef9d4d292d766",
+    "Đo_lường_RPO_RTO.csv": "6173dbe4bb883d3d213ce21ee6bf87bab3232a58ad0d1716945ef9d4d292d766",
+    "metrics.json": "c09f831497607579bc9086d0c73ec806f18b1a13edf47636d9f30c9c8b9119d2"
+  },
+  "trust": "Review/pin input manifest separately. This is not a cryptographic signature."
+}

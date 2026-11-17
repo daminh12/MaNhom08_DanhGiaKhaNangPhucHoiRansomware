@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -12,10 +13,11 @@ from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'metrics'))
 import evidence
 import trial_metrics as live
+from common import acknowledged_comparison, encode, rows_hash
 from protocol import CODE_FILES, EVIDENCE_FILES, GUIDED, AUTOMATED
 
 
-class TrialMetricsTests(unittest.TestCase):
+class TrialFixture(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name);self.directory=self.root/'p4-fixture';self.directory.mkdir()
@@ -33,9 +35,16 @@ class TrialMetricsTests(unittest.TestCase):
             e['run_id']='p4-fixture'
             if e['event']=='TARGET_READY':e['volume']=self.result['target_volume']
             if 'snapshot_id' in e:e['snapshot_id']=self.receipt['snapshot_id']
-        # Fake Git blobs are explicit: no fixture can certify a real execution.
-        patcher=patch.object(live,'git_bytes',side_effect=lambda ref,name:name.encode())
-        patcher.start();self.addCleanup(patcher.stop)
+        if getattr(self,'real_git_fixture',False):
+            # The dataset bundle tests use actual Git blob checks and a real seal;
+            # the dataset/timeline are still synthetic, never execution evidence.
+            commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=evidence.ROOT,text=True).strip()
+            self.events[0].update(commit=commit,working_source_sha256={
+                name:hashlib.sha256(evidence.git_bytes(commit,name)).hexdigest() for name in CODE_FILES})
+        else:
+            # Fake Git blobs are explicit: no fixture can certify a real execution.
+            patcher=patch.object(live,'git_bytes',side_effect=lambda ref,name:name.encode())
+            patcher.start();self.addCleanup(patcher.stop)
 
     def dump(self,name,value):
         path=self.directory/name;path.parent.mkdir(parents=True,exist_ok=True)
@@ -80,6 +89,8 @@ class TrialMetricsTests(unittest.TestCase):
         event('FINAL_DATA_VERIFIED',cleanup+3000,row_count=self.result['restored_snapshot_rows']+1)
         self.events.sort(key=lambda e:e['monotonic_ns'])
 
+
+class TrialMetricsTests(TrialFixture):
     def test_export_new_run_without_historical_runtime_or_exact_rpo_claims(self):
         self.write();summary=live.export_trial(self.directory,self.root/'export')
         row=summary['samples'][0]
@@ -113,6 +124,10 @@ class TrialMetricsTests(unittest.TestCase):
         self.write();(self.directory/'result.json').write_text('{}',encoding='utf-8')
         with self.assertRaises(evidence.EvidenceError):live.load_trial(self.directory)
         self.events[0]['working_source_sha256'][CODE_FILES[0]]='0'*64;self.write()
+        with self.assertRaises(evidence.EvidenceError):live.load_trial(self.directory)
+
+    def test_dataset_declaration_cannot_be_changed_without_journal_match(self):
+        self.result['dataset_evidence_version']=1;self.write()
         with self.assertRaises(evidence.EvidenceError):live.load_trial(self.directory)
 
     def test_mixed_run_reversed_clock_and_summary_override_rejected(self):
@@ -210,6 +225,133 @@ class TrialMetricsTests(unittest.TestCase):
         self.events=[e for e in self.events if e['event'] not in ('FAULT_REQUESTED','FAULT_DETECTED','REQUEST_COMPARISON_FINISHED')]
         self.write();row=live.export_trial(self.directory,self.root/'export')['samples'][0]
         self.assertEqual(row['rto_status'],'NOT APPLICABLE');self.assertIsNone(row['observed_rto_seconds'])
+
+
+class DatasetBundleTests(TrialFixture):
+    real_git_fixture=True
+
+    def setUp(self):
+        super().setUp()
+        checkpoint=copy.deepcopy(self.acks[0]['row'])
+        self.rows=[[i,'LAB-DATASET-'+str(i),'Pen',1,25000,'2026-01-01T00:00:00.000000Z']
+                   for i in range(1,checkpoint[0])]+[checkpoint]
+        self.result['dataset_evidence_version']=1
+        self.events[0]['dataset_evidence_version']=1
+        baseline=self.receipt['dump_metadata']['business_baseline']
+        baseline.update(row_count=len(self.rows),rows_sha256=rows_hash(self.rows))
+        evidence.one(self.events,'DATA_VERIFIED').update(row_count=len(self.rows),rows_sha256=baseline['rows_sha256'])
+        evidence.one(self.events,'CAPTURE_FINISHED')['baseline']=copy.deepcopy(baseline)
+        for role,name,boundary in [('source','source-dataset.jsonl','CAPTURE_FINISHED'),
+                                   ('restored','restored-dataset.jsonl','DATA_VERIFIED')]:
+            end=evidence.one(self.events,boundary)
+            self.events.append({'run_id':self.result['run_id'],'event':'DATASET_CAPTURED',
+                'utc':end['utc'],'monotonic_ns':end['monotonic_ns']-1,'role':role,'path':name,
+                'row_count':len(self.rows),'rows_sha256':baseline['rows_sha256']})
+            (self.directory/name).write_bytes(b''.join(encode(row)+b'\n' for row in self.rows))
+        self.events.sort(key=lambda event:event['monotonic_ns'])
+
+    def capture(self,role):
+        return next(event for event in self.events if event['event']=='DATASET_CAPTURED' and event['role']==role)
+
+    def test_sealed_dataset_bundle_exports_actual_membership_without_fresh_db_claim(self):
+        self.write()
+        bundle=live.load_trial(self.directory)
+        self.assertEqual(bundle['restored_rows'],self.rows)
+        row=live.export_trial(self.directory,self.root/'export')['samples'][0]
+        self.assertEqual(row['dataset_evidence_status'],'PASS')
+        self.assertEqual(row['source_dataset_sha256'],row['restored_dataset_sha256'])
+        self.assertEqual((row['recovered_requests'],row['unrecovered_acknowledged_requests']),(1,3))
+        self.assertEqual(row['membership_provenance'],'sealed restored baseline capture; no post-trial DB recheck')
+        self.assertEqual(row['fresh_retained_db_integrity'],'NOT TESTED')
+        self.assertEqual(row['fresh_restic_integrity'],'NOT TESTED')
+
+    def test_resealed_bundle_rejects_missing_duplicate_or_wrong_capture_fields(self):
+        for change in ['missing','duplicate','role','path','hash','count','bool-count']:
+            with self.subTest(change=change):
+                self.setUp();capture=self.capture('source')
+                if change=='missing':self.events.remove(capture)
+                elif change=='duplicate':self.events.append(copy.deepcopy(capture))
+                elif change=='role':capture['role']='unknown'
+                elif change=='path':capture['path']='../source-dataset.jsonl'
+                elif change=='hash':capture['rows_sha256']='0'*64
+                elif change=='count':capture['row_count']+=1
+                else:capture['row_count']=True
+                self.events.sort(key=lambda event:event['monotonic_ns']);self.write()
+                with self.assertRaises(evidence.EvidenceError):live.load_trial(self.directory)
+
+    def test_resealed_bundle_rejects_capture_outside_recorded_phase(self):
+        for role,boundary,offset in [('source','CAPTURE_STARTED',-1),('source','SNAPSHOT_VERIFIED',1),
+                                     ('restored','IMPORT_FINISHED',-1),('restored','DATA_VERIFIED',1),
+                                     ('restored','REQUEST_ACKNOWLEDGED',1)]:
+            with self.subTest(role=role,boundary=boundary):
+                self.setUp()
+                if boundary=='REQUEST_ACKNOWLEDGED':
+                    event=next(event for event in self.events if event['event']==boundary and event.get('request_id')=='recovery-write-probe')
+                else:event=evidence.one(self.events,boundary)
+                self.capture(role)['monotonic_ns']=event['monotonic_ns']+offset
+                self.events.sort(key=lambda event:event['monotonic_ns']);self.write()
+                with self.assertRaises(evidence.EvidenceError):live.load_trial(self.directory)
+
+    def test_resealed_bundle_does_not_trust_reported_membership_over_dataset(self):
+        # The dataset really includes the checkpoint. A self-consistent report
+        # claiming all four ACKs missing must still fail against captured rows.
+        comparison=acknowledged_comparison(self.acks,[],evidence.one(self.events,'FAULT_REQUESTED')['monotonic_ns'])
+        self.result['request_comparison']=comparison
+        evidence.one(self.events,'REQUEST_COMPARISON_FINISHED').update(comparison)
+        self.write();bundle=live.load_trial(self.directory)
+        self.assertEqual(bundle['dataset_evidence']['status'],'PASS')
+        with self.assertRaises(evidence.EvidenceError):live.export_trial(self.directory,self.root/'export')
+
+    def test_resealed_bundle_rejects_noncanonical_or_changed_dataset_bytes(self):
+        for change in ['crlf','old-row']:
+            with self.subTest(change=change):
+                self.setUp();path=self.directory/'restored-dataset.jsonl'
+                if change=='crlf':path.write_bytes(path.read_bytes().replace(b'\n',b'\r\n'))
+                else:
+                    rows=copy.deepcopy(self.rows);rows[0][4]+=1
+                    path.write_bytes(b''.join(encode(row)+b'\n' for row in rows))
+                self.write()
+                with self.assertRaises(evidence.EvidenceError):live.load_trial(self.directory)
+
+    def test_backup_and_restore_require_only_their_own_capture_role(self):
+        for scenario,role,remove in [('backup','source','restored'),('restore','restored','source')]:
+            with self.subTest(scenario=scenario):
+                self.setUp();self.result['scenario']=scenario
+                self.events.remove(self.capture(remove));(self.directory/(remove+'-dataset.jsonl')).unlink()
+                self.write();bundle=live.load_trial(self.directory)
+                self.assertEqual(set(bundle['dataset_evidence']['files']),{role+'-dataset.jsonl'})
+
+
+class DatasetEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        self.rows=[[i,'LAB-'+str(i),'Pen',1,25000,'2026-01-01T00:00:00.000000Z'] for i in range(1,106)]
+        self.data=b''.join(encode(row)+b'\n' for row in self.rows)
+        self.result={'status':'PASS','scenario':'drill','dataset_evidence_version':1,
+                     'backup':{'dump_metadata':{'business_baseline':{'row_count':105,'rows_sha256':rows_hash(self.rows)}}}}
+
+    def test_all_rows_outside_api_limit_match_without_probe_or_tail(self):
+        check=live.verify_datasets(self.result,{'source-dataset.jsonl':self.data,'restored-dataset.jsonl':self.data})
+        self.assertEqual(check['status'],'PASS');self.assertEqual(check['row_count'],105)
+        self.assertEqual(check['files']['source-dataset.jsonl']['sha256'],check['files']['restored-dataset.jsonl']['sha256'])
+
+    def test_changed_old_row_same_count_missing_file_or_extra_probe_rejected(self):
+        changed=copy.deepcopy(self.rows);changed[0][4]+=1
+        extra=self.rows+[[106,'LAB-PROBE','Pen',1,25000,'2026-01-01T00:00:00.000000Z']]
+        for rows in [changed,extra]:
+            with self.subTest(rows=len(rows)),self.assertRaises(evidence.EvidenceError):
+                live.verify_datasets(self.result,{'source-dataset.jsonl':self.data,
+                    'restored-dataset.jsonl':b''.join(encode(row)+b'\n' for row in rows)})
+        with self.assertRaises(evidence.EvidenceError):live.verify_datasets(self.result,{'source-dataset.jsonl':self.data})
+
+    def test_encoding_rewrite_cannot_masquerade_as_original_bytes(self):
+        with self.assertRaises(evidence.EvidenceError):
+            live.verify_datasets(self.result,{'source-dataset.jsonl':self.data,'restored-dataset.jsonl':self.data.replace(b'\n',b'\r\n')})
+
+    def test_older_failed_and_unrelated_cases_never_gain_dataset_pass(self):
+        legacy=copy.deepcopy(self.result);legacy.pop('dataset_evidence_version')
+        self.assertEqual(live.verify_datasets(legacy,{})['status'],'NOT TESTED')
+        self.assertEqual(live.verify_datasets(self.result|{'status':'ABORTED'},{})['status'],'NOT TESTED')
+        self.assertEqual(live.verify_datasets(self.result|{'scenario':'preflight'},{})['status'],'NOT APPLICABLE')
 
 
 if __name__=='__main__':unittest.main()

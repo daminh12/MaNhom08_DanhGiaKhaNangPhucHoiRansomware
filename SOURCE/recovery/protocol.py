@@ -14,6 +14,7 @@ CODE_FILES = (
 EVIDENCE_FILES = (
     'result.json', 'events.jsonl', 'acknowledgements.json', 'backup-receipt.json',
     'observed-baseline.json', 'target-grants.txt',
+    'source-dataset.jsonl', 'restored-dataset.jsonl',
     'extracted/manifest.json', 'extracted/payload/metadata.json',
     'extracted/verified.json',
 )

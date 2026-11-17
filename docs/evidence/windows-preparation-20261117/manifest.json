@@ -1,0 +1,81 @@
+{
+  "scope": "Linux unit, read-only failed gate, document preparation; Windows NOT TESTED",
+  "files": {
+    "app-tests.txt": {
+      "sha256": "b1bd41d763c775add89d4e38476b6e1d708fcd0f400c75de248338e5dc5f8534",
+      "size_bytes": 2060
+    },
+    "backup-tests.txt": {
+      "sha256": "cf6a6a9bb6d63d6e3171e82d6bce1351ae5f302405c185e0b1b9a61b465f874a",
+      "size_bytes": 1687
+    },
+    "document-checks.json": {
+      "sha256": "72cc39952b6998fca9a23c5cb90c71c57fd152b18292c84b83767ff947ea4160",
+      "size_bytes": 219
+    },
+    "export-console.txt": {
+      "sha256": "730ed87826702605d3c391a273ada419fce6e312ce7d7dd374b463785bdf2b68",
+      "size_bytes": 175
+    },
+    "gate-export/integrity.json": {
+      "sha256": "2d38eb191b54d7f3d2e14e27d75f578610e4ed70617707a16c2d63ea13755dd2",
+      "size_bytes": 226
+    },
+    "gate-export/manifest.json": {
+      "sha256": "ba2bd539fc4654a821a8ecef00bd4c4927edadfb2edaf25b33c5694658c710ec",
+      "size_bytes": 1809
+    },
+    "gate-export/metrics.csv": {
+      "sha256": "6173dbe4bb883d3d213ce21ee6bf87bab3232a58ad0d1716945ef9d4d292d766",
+      "size_bytes": 1791
+    },
+    "gate-export/metrics.json": {
+      "sha256": "c09f831497607579bc9086d0c73ec806f18b1a13edf47636d9f30c9c8b9119d2",
+      "size_bytes": 2934
+    },
+    "gate-export/Đo_lường_RPO_RTO.csv": {
+      "sha256": "6173dbe4bb883d3d213ce21ee6bf87bab3232a58ad0d1716945ef9d4d292d766",
+      "size_bytes": 1791
+    },
+    "guide-smoke.json": {
+      "sha256": "4cec408e233f496f369fe02a1aa546c28910fa1e163687af5ddfeb4d322f51da",
+      "size_bytes": 690
+    },
+    "metrics-tests.txt": {
+      "sha256": "143331d61c63122f7bdbdc698289a5786a0e6bd759c30f00abfa65f981c3c116",
+      "size_bytes": 6912
+    },
+    "p3-windows-prep-gate-20261117/events.jsonl": {
+      "sha256": "ad9b19681e8538ab2be7a9e0567c4b21bb54c488e3d71faba248639d65ec74b8",
+      "size_bytes": 7795
+    },
+    "p3-windows-prep-gate-20261117/evidence-manifest.json": {
+      "sha256": "1cf1e504826211f03cff4ce57efab95fcbc75e35cea8035891f6db2bd665f30e",
+      "size_bytes": 528
+    },
+    "p3-windows-prep-gate-20261117/result.json": {
+      "sha256": "ba938d39848ea6a2994707691cc5d1dabe82fdca238724521738b43884229c63",
+      "size_bytes": 3220
+    },
+    "preflight-console.txt": {
+      "sha256": "ba938d39848ea6a2994707691cc5d1dabe82fdca238724521738b43884229c63",
+      "size_bytes": 3220
+    },
+    "preservation.json": {
+      "sha256": "5630bb9bfa75ebafcc9ffd9ab9dc0d6f6ce24d9ca7dfb217f330199500ab27ec",
+      "size_bytes": 214
+    },
+    "read-only-verification.json": {
+      "sha256": "8ce73b00ae7be26630fb1829ad89564ca57cf83dffe56fe799d4d83ba6244c76",
+      "size_bytes": 3832
+    },
+    "recovery-tests.txt": {
+      "sha256": "517990fc6c4379d58a0989ce9e97238910a3696baa80e6d734c26bbc16ba3aef",
+      "size_bytes": 5963
+    },
+    "tests.json": {
+      "sha256": "c79624e49304e1fe1448410ad6b1f06a2ef4041db5242e1f74704a0beadf092e",
+      "size_bytes": 2363
+    }
+  }
+}

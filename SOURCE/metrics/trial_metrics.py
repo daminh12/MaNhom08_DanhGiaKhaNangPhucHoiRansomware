@@ -6,13 +6,63 @@ from pathlib import Path
 import re
 
 from evidence import (EvidenceError, artifact_check, close_number, decode, full_snapshot,
-                      git_bytes, membership, one, ordered, safe_path, seconds, sha, timeline, utc)
+                      git_bytes, membership, one, ordered, rows_hash, safe_path, seconds, sha, timeline, utc)
 from protocol import AUTOMATED, GUIDED, CODE_FILES, EVIDENCE_FILES
 from export_metrics import FIELDS, csv_cell
 
 EXTRA_FIELDS = ['measurement_version', 'host_os', 'os_release', 'os_version',
                 'execution_commit', 'observer_id', 'operator_confirmation',
-                'containment_status', 'containment_seconds']
+                'containment_status', 'containment_seconds', 'dataset_evidence_status',
+                'source_dataset_sha256', 'restored_dataset_sha256', 'dataset_row_count']
+
+
+def verify_datasets(result, raw):
+    """Bind synthetic dataset sidecars to the snapshot's independently captured baseline."""
+    version=result.get('dataset_evidence_version')
+    if version is None:
+        return {'status':'NOT TESTED','reason':'Run predates dataset sidecars; no files invented'}
+    if type(version) is not int or version!=1:raise EvidenceError('Unsupported dataset evidence version')
+    if result.get('status')!='PASS':
+        return {'status':'NOT TESTED','reason':'Incomplete run may have only partial dataset evidence'}
+    required={'backup':['source-dataset.jsonl'], 'restore':['restored-dataset.jsonl'],
+              'drill':['source-dataset.jsonl','restored-dataset.jsonl']}.get(result.get('scenario'),[])
+    if not required:return {'status':'NOT APPLICABLE'}
+    baseline=result['backup']['dump_metadata']['business_baseline']
+    checked={}
+    for name in required:
+        if name not in raw:raise EvidenceError('Missing synthetic dataset evidence: '+name)
+        rows=[decode(line) for line in raw[name].splitlines()]
+        digest=rows_hash(rows)
+        # Checking byte SHA too enforces the original compact UTF-8/LF representation.
+        if len(rows)!=baseline['row_count'] or digest!=baseline['rows_sha256'] or hashlib.sha256(raw[name]).hexdigest()!=digest:
+            raise EvidenceError('Synthetic dataset differs from the selected baseline: '+name)
+        checked[name]={'sha256':digest,'row_count':len(rows)}
+    return {'status':'PASS','files':checked,'row_count':baseline['row_count'],
+            'scope':'Snapshot baseline only; excludes tail requests and the later recovery write probe'}
+
+
+def verify_dataset_events(events, datasets):
+    """A valid sidecar must agree with its recorded capture and phase boundary."""
+    expected={'source-dataset.jsonl':'source','restored-dataset.jsonl':'restored'}
+    files=datasets['files']
+    captures=[event for event in events if event['event']=='DATASET_CAPTURED']
+    if len(captures)!=len(files) or {event.get('role') for event in captures}!={expected[name] for name in files}:
+        raise EvidenceError('Missing, duplicate or unexpected dataset capture role')
+    for name,record in files.items():
+        capture=next(event for event in captures if event['role']==expected[name])
+        if (capture.get('path')!=name or type(capture.get('row_count')) is not int
+                or capture['row_count']!=record['row_count'] or capture.get('rows_sha256')!=record['sha256']):
+            raise EvidenceError('Dataset capture event disagrees with sealed file: '+name)
+        if expected[name]=='source':
+            start,end,_=ordered(events,['CAPTURE_STARTED','CAPTURE_FINISHED','SNAPSHOT_VERIFIED'])
+            if not start['monotonic_ns']<=capture['monotonic_ns']<=end['monotonic_ns']:
+                raise EvidenceError('Source dataset capture is outside the consistent backup window')
+        else:
+            imported,verified=ordered(events,['IMPORT_FINISHED','DATA_VERIFIED'])
+            probes=[event for event in events if event['event']=='REQUEST_SENT' and event.get('request_id')=='recovery-write-probe']
+            if (len(probes)!=1 or not imported['monotonic_ns']<=capture['monotonic_ns']<=verified['monotonic_ns']
+                    or capture['monotonic_ns']>probes[0]['monotonic_ns']):
+                raise EvidenceError('Restored dataset must be captured after import and before verification/probe')
 
 
 def load_trial(directory):
@@ -42,6 +92,8 @@ def load_trial(directory):
             'events':events,'inputs':inputs,'directory':directory}
     timeline(bundle)
     prepared=events[0];version=result.get('measurement_version')
+    if prepared.get('dataset_evidence_version')!=result.get('dataset_evidence_version'):
+        raise EvidenceError('Dataset evidence version differs between result and journal')
     if version not in (AUTOMATED,GUIDED) or prepared.get('measurement_version')!=version:
         raise EvidenceError('Unsupported/inconsistent measurement version')
     if version==GUIDED and result['scenario']!='drill':raise EvidenceError('Guided protocol only supports drill')
@@ -90,6 +142,11 @@ def load_trial(directory):
             raise EvidenceError('Archive event selected a different snapshot')
         if bundle['name']!='corrupt' and decode(raw['observed-baseline.json'])!=metadata['business_baseline']:
             raise EvidenceError('Full observed baseline differs from selected backup')
+    bundle['dataset_evidence']=verify_datasets(result,raw)
+    if bundle['dataset_evidence']['status']=='PASS':
+        verify_dataset_events(events,bundle['dataset_evidence'])
+        if 'restored-dataset.jsonl' in bundle['dataset_evidence']['files']:
+            bundle['restored_rows']=[decode(line) for line in raw['restored-dataset.jsonl'].splitlines()]
     return bundle
 
 
@@ -134,6 +191,10 @@ def analyze_trial(bundle):
                clock_basis='same observer monotonic_ns; UTC retained for cross-reference',
                uncertain_requests=len(uncertain|(sent-acknowledged)),
                notes='New run; recorded runtime and source pin. Local hashes are not signatures; no independent storage/SLA claim.')
+    datasets=bundle.get('dataset_evidence',{'status':'NOT TESTED'})
+    row.update(dataset_evidence_status=datasets['status'],dataset_row_count=datasets.get('row_count'),
+               source_dataset_sha256=datasets.get('files',{}).get('source-dataset.jsonl',{}).get('sha256'),
+               restored_dataset_sha256=datasets.get('files',{}).get('restored-dataset.jsonl',{}).get('sha256'))
     if r['status'] not in ('PASS','FAILED','ABORTED'):raise EvidenceError('Unsupported trial status')
     ended=one(events,'TRIAL_ENDED');returned=one(events,'POST_TRIAL_RETURN_SOURCE_STARTED',False)
     if returned and returned['monotonic_ns']<ended['monotonic_ns']:raise EvidenceError('Return-source occurred inside trial')
@@ -144,7 +205,8 @@ def analyze_trial(bundle):
         finished=one(events,'POST_TRIAL_RETURN_SOURCE_FINISHED')
         if not returned or finished['monotonic_ns']<returned['monotonic_ns'] or finished.get('health')!=r.get('source_after_return'):
             raise EvidenceError('Return-source success lacks matching health evidence')
-    integrity={'status':'NOT TESTED','reason':'No fresh artifact/DB/Restic check performed by default'}
+    integrity={'status':'NOT TESTED','reason':'No fresh artifact/DB/Restic check performed by default',
+               'dataset_evidence':datasets}
     if r['status']!='PASS':
         fault=one(events,'FAULT_REQUESTED',False)
         if fault:row.update(fault_at_utc=fault['utc'],rto_status='NOT TESTED (censored)',rpo_status='NOT TESTED')
@@ -166,6 +228,7 @@ def analyze_trial(bundle):
         payload=bundle['directory']/'extracted/payload'
         if (payload/'database.sql').exists():
             integrity=artifact_check(bundle,bundle['directory'].parent)
+            integrity['dataset_evidence']=datasets
             row['fresh_artifact_integrity']=integrity['status']
         row.update(snapshot_id=r['backup']['snapshot_id'],manifest_sha256=r['backup']['manifest_sha256'])
     if name=='corrupt':
@@ -233,7 +296,15 @@ def analyze_trial(bundle):
             if stable[0]['monotonic_ns']<final or one(events,'FINAL_DATA_VERIFIED')['row_count']!=ready['row_count']:
                 raise EvidenceError('Final stable/data gate mismatch')
             row['operator_confirmation']='RECORDED; human confirmations are not identity authentication'
-        comparison,lower,upper,provenance=membership(bundle,start['monotonic_ns'])
+        observations=None
+        if 'restored_rows' in bundle:
+            observations={'trial_run_id':r['run_id'],'snapshot_id':receipt['snapshot_id'],
+                          'request_observations':[{'request_id':ack['request_id'],
+                              'matching_rows':[data for data in bundle['restored_rows'] if data[1]==ack['alias']]}
+                              for ack in bundle['acks']]}
+        comparison,lower,upper,provenance=membership(bundle,start['monotonic_ns'],observations)
+        if observations is not None:
+            provenance='sealed restored baseline capture; no post-trial DB recheck'
         row.update(backup_verified_at_utc=snapshot['utc'],backup_age_since_verified_seconds=seconds(start['monotonic_ns'],snapshot['monotonic_ns']),
                    acknowledged_requests=len(bundle['acks']),recovered_requests=len(comparison['recovered_requests']),
                    unrecovered_acknowledged_requests=len(comparison['unrecovered_acknowledged']),duplicate_requests=len(comparison['duplicates']),
